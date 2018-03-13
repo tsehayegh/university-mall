@@ -1,9 +1,69 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
+	
 	<title>University Mall</title>
+	<meta charset="utf-8">
+	<!-- inset view port here -->
+	<link rel="stylesheet" type="text/css" href="main.css">
+
 </head>
 <body>
-	<p>Hello World</p>
+
+	<!--map -->
+	<div id = "map-canvas"></div>
+
+	<!--Overlay form -->
+	<form role = "main" class = "action-section overlay" action ="" method = "submit">
+		<fieldset>
+			<legend>The Prestigious University</legend>
+			<label for = "action-choice">Choose</label>
+			<select name = "action-selection" id = "action-choice">
+				<option value = "Search/Add New Class">Search/Add New Class</option>
+				<option value = "Drop/Cancel Class">Drop/Cancel Class</option>
+				<option value = "Show my Schedule">Show my Schedule</option>
+				<option value = "Show my Dashboard">Show my Dashboard</option>
+			</select>
+			<button class = "submit-button">Submit</button>
+		</fieldset>
+	</form>
+	<Section class = "course-selection overlay">
+		<h2>Course selection</h2>
+		<ul>
+			<li>
+				<select>
+					<option>Central Campus</option>
+				</select>
+				<select>
+					<option>ENG-111</option>
+				</select>
+				<select>
+					<option>01</option>
+				</select>
+				<select>
+					<option>08:00 AM</option>
+				</select>
+				<select>
+					<option>08:55 AM</option>
+				</select>
+				<select>
+					<option>Monday, Wednesday, Friday</option>
+				</select>
+			</li>
+
+		</ul>
+	</Section>
+
+	<!--jQuery Scripts -->
+	<script
+  		src="https://code.jquery.com/jquery-3.3.1.js"
+  		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  		crossorigin="anonymous"></script>
+    <script type="text/javascript" src = "	state.js"></script>
+  	<script type="text/javascript" src = "index.js"></script>
+
+   <script async defer
+  		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8ewk_eql9xEaHcL7xeFtfkNG5Gc1DSmQ&callback=initMap">
+  	</script>
 </body>
 </html>

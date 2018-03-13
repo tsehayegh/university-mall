@@ -1,0 +1,53 @@
+html, body, div,
+h1, h2, h3, p, 
+a, ol, ul, li,
+fieldset, form, 
+label, legend, section{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+  border: 1px solid black;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#map-canvas {
+	height: 100%;
+}
+
+#map-canvas {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+  z-index: 0;
+  border: 1px solid black;
+}
+
+
+.action-section{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid black;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
+  z-index: 10;
+  background-color: rgb(173, 198, 216);
+}
