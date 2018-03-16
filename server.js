@@ -16,7 +16,7 @@ app.get('/sections', (req, res) => {
 	Section
 		.find()
 		.then(sections => {
-			res.json({
+			res.send({
 				sections: sections.map(
 					(section) => section.serialize())
 			});

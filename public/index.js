@@ -16,26 +16,31 @@ function initMap() {
  publicState.directionsDisplay = new google.maps.DirectionsRenderer;
 }
 
-//Render sections
+//Render sections 
 function renderSections(){
 	$.get('./sections', function(data){
-		data.map((sections) => {
-			$('.search-result-list').html('Hello world');
-			//$('.search-result-list').append(`<li>${sections.course}</li>`);
+		$('.search-result-list').empty();
+		data.sections.map((sections) => {
+			let courseName = sections["course-name"];
+			$('.search-result-list').append(
+				`<li>
+					<input type="checkbox" name="${courseName}" value = "${courseName}" id="${courseName}">
+					${courseName}: ${sections.title} | ${sections.section} | ${sections["credit-hours"]} | 
+					${sections["start-time"]} - ${sections["end-time"]} | ${sections["start-date"]}- 
+					${sections["end-date"]} | ${sections.campus} | ${sections.mon}${sections.tue}${sections.wed}
+					${sections.thu}${sections.fri}${sections.sat}
+				</li>`);
 		});
 	})
 }
 
 function chooseAction(){
-	$('#action-section').on("submit", function(event){
+	$('.action-section').on("submit", function(event){
 		event.preventDefault();
-		console.log('test1');
 		if($('#action-choice').val() === "Add New Class") {
-			console.log('test2');
 			renderSections();
 		} else {
 			$('.search-result-list').html('No Data');
-			console.log('test3');
 		}
 	})
 }

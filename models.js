@@ -9,8 +9,8 @@ const sectionsSchema = mongoose.Schema({
 	"section": {type: String, required: true},
 	"credit-hours": {type: Number, required: true},
 	"semester": {type: String, required: true},
-	"start-date": {type: Date, required: true},
-	"end-date": {type: Date, required: true},
+	"start-date": {type: String, required: true},
+	"end-date": {type: String, required: true},
 	"start-time": {type: String, required: true},
 	"end-time": {type: String, required: true},
 	"monday": {type: String},
@@ -19,20 +19,21 @@ const sectionsSchema = mongoose.Schema({
 	"thursday": {type: String},
 	"friday": {type: String},
 	"saturday": {type: String},
-	"campus": {type: String, required: true},
-	"instructor": {type: String}
+	"campus": {type: String, required: true}
 });
 
 sectionsSchema.virtual('course').get(function(){
 	return `${this["course-name"]}: ${this.title}`;
 });
 
+
 //a virtual for instructor's full name can be created in here
 
 sectionsSchema.methods.serialize = function() {
 	return {
 		id: this._id,
-		course: this.course,
+		"course-name": this["course-name"],
+		"title": this.title,
 		"section": this.section,
 		"credit-hours": this["credit-hours"],
 		"semester": this.semester,
@@ -40,12 +41,12 @@ sectionsSchema.methods.serialize = function() {
 		"end-date": this["end-date"],
 		"start-time": this["start-time"],
 		"end-time": this["end-time"],
-		"monday": this.monday,
-		"tuesday": this.tuesday,
-		"wednesday": this.wednesday,
-		"thursday": this.thursday,
-		"friday": this.friday,
-		"saturday": this.saturday,
+		"mon": this.monday,
+		"tue": this.tuesday,
+		"wed": this.wednesday,
+		"thu": this.thursday,
+		"fri": this.friday,
+		"sat": this.saturday,
 		"campus": this.campus,
 		"instructor": this.instructor
 	};
