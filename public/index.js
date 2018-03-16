@@ -16,19 +16,27 @@ function initMap() {
  publicState.directionsDisplay = new google.maps.DirectionsRenderer;
 }
 
-//Render sections 
+//========================================================
+//GET -- Search for classes 
 function renderSections(){
-	$.get('./sections', function(data){
+	$.get('/sections', function(data){
 		$('.search-result-list').empty();
+		const days = ["mon", "tue", "wed", "thu", "fri", "sat"];
 		data.sections.map((sections) => {
-			let courseName = sections["course-name"];
+			let meetingDays = [];
+			for(let i = 0; i< days.length; i++) {
+				if(sections[days[i]] === "Y") {
+					
+					meetingDays.push(days[i].toUpperCase());
+				}
+			}
+			meetingDays = meetingDays.join(',');
 			$('.search-result-list').append(
 				`<li>
-					<input type="checkbox" name="${courseName}" value = "${courseName}" id="${courseName}">
-					${courseName}: ${sections.title} | ${sections.section} | ${sections["credit-hours"]} | 
+					<input type="checkbox" name="${sections.courseName}" value = "${sections.courseName}" id="${sections.courseName}">
+					${sections.courseName}: ${sections.title} | ${sections.section} | ${sections["credit-hours"]} | 
 					${sections["start-time"]} - ${sections["end-time"]} | ${sections["start-date"]}- 
-					${sections["end-date"]} | ${sections.campus} | ${sections.mon}${sections.tue}${sections.wed}
-					${sections.thu}${sections.fri}${sections.sat}
+					${sections["end-date"]} | ${sections.campus} campus| ${meetingDays}
 				</li>`);
 		});
 	})
@@ -45,3 +53,13 @@ function chooseAction(){
 	})
 }
 $(chooseAction);
+
+//======================================================
+//POST - register for a class
+
+//PUT -- update sections
+
+//DELETE -- drop a registered section
+
+
+

@@ -12,7 +12,7 @@ const {DATABASE_URL, PORT} = require('../config');
 
 chai.use(chaiHttp);
 
-describe('index page', function(){
+describe('main page', function(){
 	before(function(){
 		return runServer(DATABASE_URL);
 	});
@@ -21,12 +21,14 @@ describe('index page', function(){
 		return closeServer();
 	});
 
-	it('should check if rending sections work', function(){
+	it('should check if rendering sections work', function(){
 		return chai.request(app)
 			.get('/sections')
 		 	.then(function(res){
 				expect(res).to.have.status(200);
 				expect(res).to.be.json;
+				expect(res.body.sections).to.be.a('array');
+				expect(res.body.sections).to.have.lengthOf.at.least(1);
 			});
 	});
 });

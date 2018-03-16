@@ -32,7 +32,7 @@ sectionsSchema.virtual('course').get(function(){
 sectionsSchema.methods.serialize = function() {
 	return {
 		id: this._id,
-		"course-name": this["course-name"],
+		"courseName": this["course-name"],
 		"title": this.title,
 		"section": this.section,
 		"credit-hours": this["credit-hours"],

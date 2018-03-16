@@ -2,31 +2,18 @@
 
 const express = require('express');
 
-const mongoose = require('mongoose');
+
 
 const {PORT, DATABASE_URL } = require('./config'); 
 const {app, runServer, closeServer} = require('./serverConnection');
 const {Section} = require('./models');
 
+const router = require('./sectionsRouter');
 
-app.use(express.static('public'));
 
 
-app.get('/sections', (req, res) => {
-	Section
-		.find()
-		.then(sections => {
-			res.send({
-				sections: sections.map(
-					(section) => section.serialize())
-			});
-		})
-		.catch(err => {
-			console.log(err);
-			res.status(500).json({message: 'Internal server error'});
-		})
+app.use('/', router);
 
-});
 
 /*
 //open sever connection
