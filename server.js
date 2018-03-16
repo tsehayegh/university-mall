@@ -28,17 +28,17 @@ app.get('/sections', (req, res) => {
 
 });
 
-
+/*
 //open sever connection
 function openSeverConnection(){
-	return runServer(app,DATABASE_URL);
+	return runServer(app, DATABASE_URL);
 }
 
 //close server connection
 function closeSeverConnection(){
 	return closeServer();
 }
-
+*/
 
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
