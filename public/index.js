@@ -15,3 +15,33 @@ function initMap() {
 });
  publicState.directionsDisplay = new google.maps.DirectionsRenderer;
 }
+
+//Render sections 
+function renderSections(){
+	$.get('./sections', function(data){
+		$('.search-result-list').empty();
+		data.sections.map((sections) => {
+			let courseName = sections["course-name"];
+			$('.search-result-list').append(
+				`<li>
+					<input type="checkbox" name="${courseName}" value = "${courseName}" id="${courseName}">
+					${courseName}: ${sections.title} | ${sections.section} | ${sections["credit-hours"]} | 
+					${sections["start-time"]} - ${sections["end-time"]} | ${sections["start-date"]}- 
+					${sections["end-date"]} | ${sections.campus} | ${sections.mon}${sections.tue}${sections.wed}
+					${sections.thu}${sections.fri}${sections.sat}
+				</li>`);
+		});
+	})
+}
+
+function chooseAction(){
+	$('.action-section').on("submit", function(event){
+		event.preventDefault();
+		if($('#action-choice').val() === "Add New Class") {
+			renderSections();
+		} else {
+			$('.search-result-list').html('No Data');
+		}
+	})
+}
+$(chooseAction);

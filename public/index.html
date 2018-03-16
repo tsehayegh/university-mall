@@ -14,53 +14,104 @@
 	<div id = "map-canvas"></div>
 
 	<!--Overlay form -->
-	<form role = "main" class = "action-section overlay" action ="" method = "submit">
-		<fieldset>
-			<legend>The Prestigious University</legend>
-			<label for = "action-choice">Choose</label>
-			<select name = "action-selection" id = "action-choice">
-				<option value = "Search/Add New Class">Search/Add New Class</option>
-				<option value = "Drop/Cancel Class">Drop/Cancel Class</option>
-				<option value = "Show my Schedule">Show my Schedule</option>
-				<option value = "Show my Dashboard">Show my Dashboard</option>
-			</select>
-			<button class = "submit-button">Submit</button>
-		</fieldset>
-	</form>
-	<Section class = "course-selection overlay">
-		<h2>Course selection</h2>
-		<ul>
-			<li>
-				<select>
-					<option>Central Campus</option>
+	<main class = "overall">
+		<form role = "main" class = "action-section" action = "#" method = "submit">
+			<fieldset>
+				<legend>The Prestigious University</legend>
+				<label for = "action-choice">Preferred Action</label>
+				<select name = "actionSelection" id = "action-choice">
+					<option value = "No Action"></option>
+					<option value = "Add New Class">Add New Class</option>
+					<option value = "Drop a Class">Drop Class</option>
+					<option value = "My Schedule">My Schedule</option>
+					<option value = "My Dashboard">My Dashboard</option>
 				</select>
+				<button class = "submit-button">Submit</button>
+			</fieldset>
+		</form>
+		<form class = "course-selection">
+			<fieldset>
+				<legend>Search for a section</legend>
 				<select>
-					<option>ENG-111</option>
+					<option value = "any">Any Campus</option>
+					<option value = "central">Central Campus</option>
+					<option value = "city View">City View Campus</option>
+					<option value = "merancas">Merancas Campus</option>
+					<option value = "levine">Levine Campus</option>
+					<option value = "harper">Harper Campus</option>
+					<option value = "harris">Harris Campus</option>
+					<option value = "cato">Cato Campus</option>
+					<option value = "online">Online</option>
 				</select>
-				<select>
-					<option>01</option>
+				<select class = "subject">
+					<option></option>
+					<option>ENG</option>
+					<option>MAT</option>
+					<option>BIO</option>
+					<option>PHY</option>
 				</select>
-				<select>
-					<option>08:00 AM</option>
+				<select class = "course-number">
+					<option></option>
+					<option>101</option>
+					<option>111</option>
+					<option>112</option>
+					<option>113</option>
 				</select>
-				<select>
-					<option>08:55 AM</option>
+				<label for = "tue">start-time</label>
+				<select id = "start-time">
+					<option></option>
+					<option>6AM</option>
+					<option>7AM</option>
+					<option>8AM</option>
+					<option>9AM</option>
+					<option>10AM</option>
+					<option>11AM</option>
+					<option>12PM</option>
+					<option>1PM</option>
+					<option>2PM</option>
+					<option>3PM</option>
+					<option>5PM</option>
+					<option>6PM</option>
+					<option>7PM</option>
+					<option>8PM</option>
+					<option>9PM</option>
 				</select>
-				<select>
-					<option>Monday, Wednesday, Friday</option>
-				</select>
-			</li>
 
-		</ul>
-	</Section>
+				<input type="checkbox" name="Mon" value = "Mon" id="mon">
+				<label for = "mon">Mon</label>
+				<input type="checkbox" name="Tue" value = "Tue" id = "tue">
+				<label for = "tue">Tue</label>
+				<input type="checkbox" name="Wed" value = "wed" id = "wed">
+				<label for = "wed">Wed</label>
+				<input type="checkbox" name="Thu" value = "Thu" id = "thu">
+				<label for = "thu">Thu</label>
+				<input type="checkbox" name="Fri" value = "Fri" id = "fri">
+				<label for = "fri">Fri</label>
+				<input type="checkbox" name="Sat" value = "Sat" id = "sat">
+				<label for = "sat">Sat</label>					
+				<button class = "search-button">Search</button>
 
+				<div class = "sec-search-result">
+					<ul class = "search-result-list">
+						<li>Update this with search results</li>
+					</ul>
+				</div>
+			</fieldset>
+		</form>
+		<form class = "registered-classes">
+			<legend>Registered Classes</legend>
+			<fieldset class = "my-classes">
+			</fieldset>
+			
+		</form>
+	</main>
 	<!--jQuery Scripts -->
 	<script
   		src="https://code.jquery.com/jquery-3.3.1.js"
   		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
   		crossorigin="anonymous"></script>
-    <script type="text/javascript" src = "	state.js"></script>
-  	<script type="text/javascript" src = "index.js"></script>
+    <script src = "/state.js"></script>
+  	<script src = "/index.js"></script>
 
    <script async defer
   		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8ewk_eql9xEaHcL7xeFtfkNG5Gc1DSmQ&callback=initMap">
