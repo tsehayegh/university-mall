@@ -32,11 +32,12 @@ function renderSections(){
 			}
 			meetingDays = meetingDays.join(',');
 			$('.search-result-list').append(
-				`<li>
-					<input type="checkbox" name="${sections.courseName}" value = "${sections.courseName}" id="${sections.courseName}">
-					${sections.courseName}: ${sections.title} | ${sections.section} | ${sections["credit-hours"]} | 
-					${sections["start-time"]} - ${sections["end-time"]} | ${sections["start-date"]}- 
-					${sections["end-date"]} | ${sections.campus} campus| ${meetingDays}
+				`<li id = "${sections.coursename}" >
+					<input type="checkbox" name="${sections.coursename}" value = "${sections.coursename}" 
+							id="${sections.coursename}" class = "chkbox">
+					${sections.coursename}: ${sections.title} | ${sections.section} | ${sections.credithours} | 
+					${sections.starttime} - ${sections.endtime} | ${sections.startdate}- 
+					${sections.enddate} | ${sections.campus} campus| ${meetingDays}
 				</li>`);
 		});
 	})
@@ -53,6 +54,26 @@ function chooseAction(){
 	})
 }
 $(chooseAction);
+
+
+function updateSectionCart(){
+	let $list = $("#itemList");
+	$('.search-result-list').on('change', 'li input[type="checkbox"]', function(event){
+		event.preventDefault();
+
+		const currentListId = $(this).attr('id');
+		const checked = $(`.search-result-list li[id=${currentListId}]`).html();
+
+		if(this.checked) {
+			$('.sec-cart-list').append(`<li id = ${currentListId}>${checked}</li>`);
+		} else {
+			$(`.sec-cart-list li[id=${currentListId}]`).slideUp('fast',function(){
+            $(this).remove();
+        	});
+		}
+	});
+}
+$(updateSectionCart);
 
 //======================================================
 //POST - register for a class

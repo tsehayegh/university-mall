@@ -11,8 +11,6 @@ const mongoose = require('mongoose');
 //import port, database configuration from config.js
 const {PORT, DATABASE_URL} = require('./config');
 
-
-
 let server;
 
 function runServer(databaseUrl, port = PORT) {
