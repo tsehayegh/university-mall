@@ -24,18 +24,18 @@ router.use(function(req, res, next) {
   next();
 });
 router.get('/sections', (req, res, next) => {
-	const praramsOptions = ["coursename", "title","section","credithours","semester","startdate",
+	const queryOptions = ["subject", "coursenumber", "title","section","credithours","semester","startdate",
 		 "enddate","starttime","endtime","monday","tuesday","wednesday",
 		 "thursday","friday","saturday","campus"];
-	const queryOptions = {};
-	for (let i = 0; i< praramsOptions.length; i++){
-		if(req.query[praramsOptions[i]]){
-			queryOptions[praramsOptions[i]] = req.query[praramsOptions[i]];
+	const queries = {};
+	for (let i = 0; i< queryOptions.length; i++){
+		if(req.query[queryOptions[i]]){
+			queries[queryOptions[i]] = req.query[queryOptions[i]];
 		};
 	};
-	console.log(queryOptions);
+	console.log(queries);
 	Section
-		.find(queryOptions)
+		.find(queries)
 		.then(sections => {
 			res.send({
 				sections: sections.map(
@@ -49,9 +49,8 @@ router.get('/sections', (req, res, next) => {
 });
 
 //search course based on query params
-
 router.get('/sections/:campus?/:monday?', (req, res, next) => {
-	const praramsOptions = ["coursename", "title","section","credithours","semester","startdate",
+	const praramsOptions = ["subject", "coursenumber", "title","section","credithours","semester","startdate",
 		 "enddate","starttime","endtime","monday","tuesday","wednesday",
 		 "thursday","friday","saturday","campus"];
 	const queryOptions = {};
@@ -60,8 +59,6 @@ router.get('/sections/:campus?/:monday?', (req, res, next) => {
 			queryOptions[praramsOptions[i]] = req.params[praramsOptions[i]];
 		};
 	};
-	console.log(queryOptions);
-
 	Section
 		.find(queryOptions)
 		.then(sections => {
