@@ -9,10 +9,11 @@ const {app, runServer, closeServer} = require('./serverConnection');
 const {Section} = require('./models');
 
 const router = require('./sectionsRouter');
-
+const studentsRouter = require('./studentsRouter');
 
 
 app.use('/', router);
+app.use('/', studentsRouter);
 
 
 /*

@@ -51,6 +51,8 @@ sectionsSchema.methods.serialize = function() {
 		"fri": this.friday,
 		"sat": this.saturday,
 		"campus": this.campus,
+		"campuslat": this.campuslat,
+		"campuslng": this.campuslng,
 		"instructor": this.instructor
 	};
 }
@@ -68,6 +70,7 @@ const studentsSchema = mongoose.Schema({
 	"subject": {type: String, required: true},
 	"coursenumber":{type: String, required: true},
 	"title": {type: String, required: true},
+	"section": {type: String, required: true},
 	"credithours": {type: Number, required: true},
 	"grade": {type: String},
 	"status": {type: String, required: true},
@@ -100,6 +103,7 @@ studentsSchema.methods.serialize = function() {
 		subject: this.subject,
 		coursenumber: this.coursenumber,
 		title: this.title,
+		section: this.section,
 		credithours: this.credithours,
 		grade: this.grade,
 		status: this.status,

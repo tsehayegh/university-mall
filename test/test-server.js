@@ -30,5 +30,16 @@ describe('main page', function(){
 				expect(res.body.sections).to.be.a('array');
 			});
 	});
+
+	it('should check if getting students data', function(){
+		return chai.request(app)
+			.get('/students')
+			.then(function(res){
+				expect(res).to.have.status(200);
+				expect(res).to.be.json;
+				expect(res.body.studentrecords).to.be.a('array');
+			});
+	});
+
 });
 

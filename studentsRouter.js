@@ -26,6 +26,31 @@ studentsRouter.get('/students/:studentid', (req, res, next) => {
 		});
 });
 
+//GET - based on query filters to check duplicate of registration
+studentsRouter.get('/students', (req, res, next) => {
+	const queryOptions = ["studentid", "subject", "coursenumber", "semester"];
+	const queries = {};
+	for (let i = 0; i< queryOptions.length; i++){
+		if(req.query[queryOptions[i]]){
+			queries[queryOptions[i]] = req.query[queryOptions[i]];
+		};
+	};
+	console.log('check for already registered class', queries, req.body);
+	Student
+		.find(queries)
+		.then(studentrecords => {
+			res.send({
+				studentrecords: studentrecords.map(
+					(studentrecord) => studentrecord.serialize())
+			});
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(500).json({message: 'Internal server error'});
+		});
+});
+
+
 //===========================
 //POST- Register for classes
 studentsRouter.post('/students',(req, res) =>{
@@ -66,7 +91,8 @@ studentsRouter.post('/students',(req, res) =>{
 			sat: req.body.sat,
 			campus: req.body.campus,
 			campuslat: req.body.campuslat,
-			campuslng: req.body.campuslng
+			campuslng: req.body.campuslng,
+			instructor: req.body.instructor
 		})
 		.then(student => res.status(200).json(student.serialize()))
 		.catch(err => {

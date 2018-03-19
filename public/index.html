@@ -6,7 +6,8 @@
 	<meta charset="utf-8">
 	<!-- inset view port here -->
 	<link rel="stylesheet" type="text/css" href="main.css">
-
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto|Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -14,10 +15,26 @@
 	<div id = "map-canvas"></div>
 
 	<!--Overlay form -->
-	<main class = "overall">
-		<form role = "main" class = "action-section" action = "#" method = "submit">
+	<main class = "main-container">
+		<form role = "main" class = "action-section" action = "/public" method = "submit">
 			<fieldset>
 				<legend>The Prestigious University</legend>
+				<label for = "studentId">Student ID:</label>
+				<input type="text" id = "studentId" required>
+				<label for = "firstName">First Name:</label>
+				<input type="text" id = "firstName" required>
+				<label for = "lastName">Last Name</label>
+				<input type="text" id = "lastName" required>
+
+				<label for = "semester-choice">Semester</label>
+				<select name = "semesterSelection" id = "semester-choice">
+					<option value = "Any"></option>
+					<option value = "2018FA">2018FA</option>
+					<option value = "2018SU">2018SU</option>
+					<option value = "2018SP">2018SP</option>
+					<option value = "2017FA">2017FA</option>
+				</select>
+
 				<label for = "action-choice">Preferred Action</label>
 				<select name = "actionSelection" id = "action-choice">
 					<option value = "No Action"></option>
@@ -28,11 +45,13 @@
 				</select>
 				<button class = "submit-button">Submit</button>
 			</fieldset>
+			<p class = "display-error"></p>
 		</form>
-		<form class = "course-selection">
+		<form class = "course-selection hidden">
 			<fieldset>
 				<legend>Search for a section</legend>
-				<select class = "campuses">
+				<label for = "campus-choice">Campus</label>
+				<select class = "campuses" id = "campus-choice">
 					<option value = "any"></option>
 					<option value = "central">Central</option>
 					<option value = "city View">CityView</option>
@@ -43,55 +62,23 @@
 					<option value = "cato">Cato</option>
 					<option value = "online">Online</option>
 				</select>
-				<select class = "subject">
+				<label for = "subject-choice">Subject</label>
+				<select class = "subject" id = "subject-choice">
 					<option></option>
 					<option>ENG</option>
 					<option>MAT</option>
 					<option>BIO</option>
 					<option>PHY</option>
 				</select>
-				<select class = "course-number">
+				<label for = "course-number-choice">Course Number</label>
+				<select class = "course-number" id = "course-number-choice">
 					<option></option>
 					<option>110</option>
 					<option>111</option>
 					<option>112</option>
 					<option>171</option>
 				</select>
-				<label for = "tue">start-time</label>
-				<select id = "start-time">
-					<option></option>
-					<option>6AM</option>
-					<option>7AM</option>
-					<option>8AM</option>
-					<option>9AM</option>
-					<option>10AM</option>
-					<option>11AM</option>
-					<option>12PM</option>
-					<option>1PM</option>
-					<option>2PM</option>
-					<option>3PM</option>
-					<option>5PM</option>
-					<option>6PM</option>
-					<option>7PM</option>
-					<option>8PM</option>
-					<option>9PM</option>
-				</select>
-
-				<input type="checkbox" name="Mon" value = "Mon" id="mon">
-				<label for = "mon">Mon</label>
-				<input type="checkbox" name="Tue" value = "Tue" id = "tue">
-				<label for = "tue">Tue</label>
-				<input type="checkbox" name="Wed" value = "wed" id = "wed">
-				<label for = "wed">Wed</label>
-				<input type="checkbox" name="Thu" value = "Thu" id = "thu">
-				<label for = "thu">Thu</label>
-				<input type="checkbox" name="Fri" value = "Fri" id = "fri">
-				<label for = "fri">Fri</label>
-				<input type="checkbox" name="Sat" value = "Sat" id = "sat">
-				<label for = "sat">Sat</label>
-
 				<button class = "search-button">Search</button>
-
 				<div class = "sec-search-result">
 					<h2>Search Results</h2>
 					<ul class = "search-result-list">
@@ -109,13 +96,17 @@
 				</ul>
 
 			</fieldset>
+			<button class = "register-button">Register</button>
 		</form>
 
 		<form class = "registered-classes">
 			<legend>Registered Classes</legend>
 			<fieldset class = "my-classes">
+				<ul class = "sec-registered-list">
+					
+				</ul>
 			</fieldset>
-			<button class = "register-button">Register</button>
+			
 		</form>
 	</main>
 	<!--jQuery Scripts -->

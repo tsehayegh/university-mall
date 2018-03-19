@@ -28,7 +28,7 @@ html, body {
 
 #map-canvas {
   height: 100%;
-  width: 100%;
+  width: 25%;
   position: absolute;
   top:0;
   left: 0;
@@ -37,7 +37,7 @@ html, body {
 }
 
 
-.overall{
+.main-container{
   position: absolute;
   top: 0;
   right: 0;
@@ -52,4 +52,19 @@ html, body {
   background-color: rgb(173, 198, 216);
 }
 
+.sec-search-result {
+  color:blue;
+}
+
+.sec-cart {
+  color: red;
+}
+
+.registered-classes {
+  color: green;
+}
+
+.hidden {
+  display: none;
+}
 
