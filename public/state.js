@@ -5,6 +5,7 @@ let publicState = (function() {
       infoWindow: null,
       markers: [],
       directionsDisplay: null,
-      currentLocation: {}
+      currentLocation: {},
+      days: ["mon", "tue", "wed", "thu", "fri", "sat"]
    };
 }());

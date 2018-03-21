@@ -74,7 +74,7 @@ const studentsSchema = mongoose.Schema({
 	"credithours": {type: Number, required: true},
 	"grade": {type: String},
 	"status": {type: String, required: true},
-	"startdate": {type: String},
+	"startdate": {type: String, required: true},
 	"enddate": {type: String, required: true},
 	"starttime": {type: String, required: true},
 	"endtime": {type: String, required: true},
@@ -125,10 +125,11 @@ studentsSchema.methods.serialize = function() {
 }
 
 const Student = mongoose.model("Student", studentsSchema);
+const Cart = mongoose.model("Cart", studentsSchema);
 
 //======================================
 //export models
-module.exports = {Section, Student};
+module.exports = {Section, Student, Cart};
 
 
 
