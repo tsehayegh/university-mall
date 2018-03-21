@@ -1,5 +1,7 @@
 
 
+let tempCartList = [];
+
 //Initialize google maps
 function initMap() {
   let currentLoc = {lat: 35.227085, lng: -80.843124};
@@ -28,14 +30,12 @@ function chooseAction(){
 		} else {
 			$('.search-result-list').html('');
 		}
-
 		const studentid = $('#studentId').val();
 		const selectedSemester = $('#semester-choice').val();
 		let searchURL = `/students/?studentid=${studentid}&semester=${selectedSemester}`;
 		pullRegisteredClasses(searchURL);
 		pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
 	})
-
 }
 $(chooseAction);
 
@@ -43,14 +43,29 @@ function toggleHiddenClass(classToToggle){
 	$(classToToggle).toggleClass("hidden")
 }
 
-
 //GET -- Search for classes 
 function renderSections(searchURL){
 	$.get(searchURL, function(data){
 		$('.search-result-list').empty();
+
 		data.sections.map((sec) => {
 			const singleData = sec;
-			appendDataToList(singleData, '.search-result-list');
+			const courseName = `${sec.subject}-${sec.coursenumber}`;
+			let courseAlreadyInCart = false;
+			let courseAlreadyRegistered = false;
+			$('.sec-cart-list li').each(function(index){
+				if (courseName === $(this).attr('id')) {
+					courseAlreadyInCart = true;
+				}
+			})
+			$('.sec-registered-list li').each(function(index){
+				if (courseName === $(this).attr('id')) {
+					courseAlreadyRegistered = true;
+				}
+			})
+			if(courseAlreadyInCart === false && courseAlreadyRegistered === false ){
+				appendDataToList(singleData, '.search-result-list');
+			}
 		})
 	});
 }
@@ -74,7 +89,7 @@ function appendDataToList(data, listClassName){
 		}
 	}
 	meetingDays = meetingDays.join(',');
-	const sectionname = `${data.subject}-${data.coursenumber}-${data.section}`;
+	const sectionname = `${data.subject}-${data.coursenumber}`;
 	$(listClassName).append(
 		`<li id = "${sectionname}" tabindex ='0', data-starttime = ${data.starttime}>
 			<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
@@ -90,8 +105,14 @@ function appendDataToList(data, listClassName){
 function updateSectionCart(){
 	$('.search-result-list').on('change', 'li input[type="checkbox"]', function(event){
 		event.preventDefault();
-		const currentListId = $(this).attr('id');
 
+		const currentListId = $(this).attr('id');
+		let courseAleardyInCart = false;
+		$('.sec-cart-list li').each(function(index){
+			if(currentListId === $(this).attr('id')){
+				courseAleardyInCart = true;
+			}
+		})
 		const checked = $(`.search-result-list li[id=${currentListId}]`).html();
 		const sectionName = currentListId.split("-");
 		const subject = sectionName[0];
@@ -110,8 +131,12 @@ function updateSectionCart(){
 					if(data.studentrecords.length > 0){
 						displayErrorMessage('You have already registered for the course!')
 					} else {
-
-						$('.sec-cart-list').append(`<li id = ${currentListId}>${checked}</li>`);
+						if (courseAleardyInCart) {
+							displayErrorMessage('Course is already in cart!')
+						} else {
+							$('.sec-cart-list').append(`<li id = ${currentListId}>${checked}</li>`);
+						}
+						
 					}
 				}
 			});
@@ -125,6 +150,9 @@ function updateSectionCart(){
 }
 $(updateSectionCart);
 
+
+
+
 //Display error message or instruction
 function displayErrorMessage(errorMessage){
 	$('.display-error').html(errorMessage);
@@ -133,8 +161,7 @@ function displayErrorMessage(errorMessage){
 
 //======================================================
 //POST - register for a class
-function getSectionsOnCart(searchURL, ajaxURL, registrationStatus){
-
+function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 	$.get(searchURL, function(result){
 		result.sections.map((sec) => {
 
@@ -170,12 +197,13 @@ function getSectionsOnCart(searchURL, ajaxURL, registrationStatus){
 				    campuslng: sec.campuslng,
 				    instructor: sec.instructor
 				}),
-				success: function(data, status){
+				success: function(data){
 					if (registrationStatus === 'reg'){
 						registrationSuccessful(data, status);
 						addMarkerOnCampusLocation(data.campus, data.campuslat, data.campuslng);
 					} else if (registrationStatus === 'cart') {
-
+						const sectionname = `${data.subject}-${data.coursenumber}`;
+						displayErrorMessage('Course saved in cart successfully!');
 					};
 				},
 				error: function(jqXhr, textStatus, errorThrown){
@@ -190,16 +218,15 @@ function getSectionsOnCart(searchURL, ajaxURL, registrationStatus){
 	
 };
 
-function registrationSuccessful(data, success){
+function registrationSuccessful(data){
 	appendDataToList(data, '.sec-registered-list');
 	sortList();
-	const sectionname = `${data.subject}-${data.coursenumber}-${data.section}`;
+	const sectionname = `${data.subject}-${data.coursenumber}`;
 	$(`.sec-cart-list li[id=${sectionname}]`).slideUp('fast',function(){
         $(this).remove();
      });
 	let searchURL = `/search/cart/?studentid=${data.studentid}
-						&subject=${data.subject}&coursenumber=${data.coursenumber}
-						&${data.section}`;
+						&subject=${data.subject}&coursenumber=${data.coursenumber}`;
 	clearSelectedRecordFromCart(searchURL);
 }
 
@@ -207,14 +234,12 @@ function registerForClasses(){
 	$('.register-button').on('click', function(event){
 		event.preventDefault();
 		$('.sec-cart-list li').each(function(index){
-
 			const sectionName = $(this).attr('id').split("-");
 			let searchURL = `/sections/?subject=`+sectionName[0];
 			searchURL = searchURL+`&coursenumber=`+sectionName[1];
-			searchURL = searchURL+`&section=`+sectionName[2];
-			getSectionsOnCart(searchURL, '/students', 'reg');
+		
+			registerOrSaveSectionsInCart(searchURL, '/students', 'reg');
 			$(`.search-result-list li[type="checkbox"]:checked`).each(function(){
-				console.log('How many checked from search result list');
 					$(this).remove();
 		     });
 		});
@@ -231,9 +256,8 @@ function saveClassesToCart(){
 
 			let searchURL = `/sections/?subject=`+sectionName[0];
 			searchURL = searchURL+`&coursenumber=`+sectionName[1];
-			searchURL = searchURL+`&section=`+sectionName[2];
 
-			getSectionsOnCart(searchURL, '/students/cart','cart');
+			registerOrSaveSectionsInCart(searchURL, '/students/cart','cart');
 		});
 	});
 }
@@ -253,7 +277,7 @@ function pullRegisteredClasses(searchURL){
 			}
 			meetingDays = meetingDays.join(',');
 
-			const sectionname = `${student.subject}-${student.coursenumber}-${student.section}`;
+			const sectionname = `${student.subject}-${student.coursenumber}`;
 
 			$('.sec-registered-list').append(
 				`<li id = "${sectionname}" tabindex ='0', data-starttime = ${student.starttime}>
@@ -284,8 +308,9 @@ function pullClassesFromCart(searchURL){
 				}
 			}
 			meetingDays = meetingDays.join(',');
-			const sectionname = `${cart.subject}-${cart.coursenumber}-${cart.section}`;
+			const sectionname = `${cart.subject}-${cart.coursenumber}`;
 			
+
 			$('.sec-cart-list').append(
 				`<li id = "${sectionname}" tabindex ='0', data-starttime = ${cart.starttime}>
 					<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
@@ -315,6 +340,7 @@ function sortList() {
 
 //DELETE - delete selected record(s)
 function clearSelectedRecordFromCart(searchURL){
+	console.log(searchURL);
 	$.get(searchURL, function(data){
 		data.carts.map((cart) => {
 			const ajaxURL = `/delete/cart/${cart.id}`;
@@ -327,6 +353,27 @@ function clearSelectedRecordFromCart(searchURL){
 		}); 
 	})
 }
+
+function clearStudentRecordFromCart(){
+	$('.clear-cart-button').on('click', function(event){
+		event.preventDefault();
+		console.log('clearing');
+		$('.sec-cart-list li').each(function(index){
+			console.log(index);
+
+			const studentid = $('#studentId').val(); 
+			const sectionName = $(this).attr('id').split("-");
+			const searchURL = `/search/cart/?studentid=${studentid}&subject=${sectionName[0]}&coursenumber=${sectionName[1]}`;
+			
+			clearSelectedRecordFromCart(searchURL);
+		});
+		$('.sec-cart-list').empty();
+
+	})
+	
+}
+$(clearStudentRecordFromCart);
+
 
 //add campus markers
 function addMarkerOnCampusLocation(campus, lat, lng){
