@@ -33,7 +33,7 @@ router.get('/sections', (req, res, next) => {
 			queries[queryOptions[i]] = req.query[queryOptions[i]];
 		};
 	};
-	console.log(queries);
+
 	Section
 		.find(queries)
 		.then(sections => {

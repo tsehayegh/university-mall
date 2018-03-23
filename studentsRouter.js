@@ -36,7 +36,7 @@ studentsRouter.get('/students', (req, res, next) => {
 			queries[queryOptions[i]] = req.query[queryOptions[i]];
 		};
 	};
-	console.log('queries to cart', queries);
+
 	Student
 		.find(queries)
 		.then(studentrecords => {
@@ -114,7 +114,7 @@ studentsRouter.get('/search/cart', (req, res, next) => {
 			queries[queryOptions[i]] = req.query[queryOptions[i]];
 		};
 	};
-	console.log('queries to cart', queries)
+
 	Cart
 		.find(queries)
 		.then(carts => {
