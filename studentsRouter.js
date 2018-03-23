@@ -28,13 +28,15 @@ studentsRouter.get('/students/:studentid', (req, res, next) => {
 
 //GET - based on query filters to check duplicate of registration
 studentsRouter.get('/students', (req, res, next) => {
-	const queryOptions = ["studentid", "subject", "coursenumber", "semester"];
+	const queryOptions = ["studentid", "subject", "coursenumber", "semester",
+						 "mon", "tue", "wed", "thu", "fri", "sat"];
 	const queries = {};
 	for (let i = 0; i< queryOptions.length; i++){
 		if(req.query[queryOptions[i]]){
 			queries[queryOptions[i]] = req.query[queryOptions[i]];
 		};
 	};
+	console.log('queries to cart', queries);
 	Student
 		.find(queries)
 		.then(studentrecords => {
@@ -65,6 +67,7 @@ studentsRouter.post('/students',(req, res) =>{
 			return res.status(400).send(errorMessage);
 		}
 	}
+
 	Student
 		.create({
 			studentid: req.body.studentid,
