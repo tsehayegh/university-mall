@@ -4,7 +4,7 @@ const express = require('express');
 
 
 
-const {PORT, DATABASE_URL } = require('./config'); 
+const {PORT, DATABASE_URL, TEST_DATABASE_URL} = require('./config'); 
 const {app, runServer, closeServer} = require('./serverConnection');
 const {Section, Student, Cart} = require('./models');
 
@@ -38,5 +38,10 @@ if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
+/*
+if (require.main === module) {
+  runServer(TEST_DATABASE_URL).catch(err => console.error(err));
+}
+*/
 
 module.exports = {app, runServer, closeServer};
