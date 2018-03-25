@@ -80,7 +80,6 @@ function refreshSearchResult(){
 }
 
 function appendDataToList(data, listClassName){
-
 	let meetingDays = [];
 	for(let i = 0; i< publicState.days.length; i++) {
 		if(data[publicState.days[i]] === "Y") {
@@ -90,7 +89,10 @@ function appendDataToList(data, listClassName){
 	meetingDays = meetingDays.join(',');
 	const sectionname = `${data.subject}-${data.coursenumber}-${data.section}`;
 	$(listClassName).append(
-		`<li id = "${sectionname}" tabindex ='0', data-starttime = ${data.starttime}>
+		`<li id = "${sectionname}" tabindex ='0' 
+					data-starttime = ${data.starttime}
+					data-meetingdays = ${meetingDays}
+					data-campus = ${data.campus}>
 			<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
 					id="${sectionname}" class = "chkbox">
 			${data.subject}-${data.coursenumber}: ${data.title} | 
@@ -99,6 +101,7 @@ function appendDataToList(data, listClassName){
 			${data.enddate} | ${data.campus} campus | (${data.campuslat},${data.campuslng}) | 
 			${meetingDays} | ${data.instructor}
 		</li>`);
+	//console.log($(listClassName).html());
 	sortList(listClassName);	
 }
 
@@ -113,6 +116,8 @@ function updateSectionCart(){
 			}
 		})
 		const checked = $(`.search-result-list li[id=${currentListId}]`).html();
+		console.log($(`.search-result-list li[id=${currentListId}]`).data());
+
 		const sectionName = currentListId.split("-");
 		const subject = sectionName[0];
 		const coursenumber = sectionName[1];
@@ -123,6 +128,11 @@ function updateSectionCart(){
 
 		const studentid = $('#studentId').val();
 		const selectedSemester = $('#semester-choice').val();
+
+		//check for multiple campus registration in here
+		checkMultipleCampusRegistration(currentListId);
+
+		//checking for already registered or saved in cart clases
 		if(this.checked) {
 			$.ajax({
 				type: 'GET',
@@ -130,6 +140,7 @@ function updateSectionCart(){
 				data: ajaxData,
 				success: function(data){
 					if(data.studentrecords.length > 0){
+						
 						displayErrorMessage('You have already registered for the course!')
 					} else {
 						if (courseAleardyInCart) {
@@ -166,6 +177,25 @@ function updateSectionCart(){
 }
 $(updateSectionCart);
 
+function checkMultipleCampusRegistration(currentListId){
+	const checkedMeetingDaysArray = $(`.search-result-list li[id=${currentListId}]`).attr("data-meetingdays").toLowerCase().split(',');
+	const checkedCampus = $(`.search-result-list li[id=${currentListId}]`).attr("data-campus").toLowerCase();  
+	checkedMeetingDaysArray.map(function(day) {
+		$('.sec-cart-list li').each(function(index){		
+				const campusCart = $(this).attr("data-campus").toLowerCase();
+				const meetingDaysCartArray = $(this).attr("data-meetingdays").toLowerCase().split(',');
+
+				for(let i = 0; i < meetingDaysCartArray.length; i++){
+					if(day === meetingDaysCartArray[i]){
+						if(checkedCampus !== campusCart){
+							displayErrorMessage('Registering for multiple campuses! Make sure you have enough time to get to your classes');
+						}
+					}
+				}
+		})
+	});
+}
+
 
 function appendCheckedListsToCart(){
 	$('.search-result-list input[type=checkbox]:checked').each(function(){
@@ -174,7 +204,12 @@ function appendCheckedListsToCart(){
 		$(`.sec-cart-list li[id=${currentListId}]`).slideUp('fast',function(){
         	$(this).remove();
     	});
-		$('.sec-cart-list').append(`<li id = ${currentListId}>${checkedList}</li>`);	
+		checkedData = $(`.search-result-list li[id=${currentListId}]`).data();
+		$('.sec-cart-list').append(`<li id = ${currentListId} 
+								data-starttime = ${checkedData.starttime}
+								data-meetingdays = ${checkedData.meetingdays}
+								data-campus = ${checkedData.campus}>
+								${checkedList}</li>`);	
 	});
 }
 
@@ -296,7 +331,7 @@ function saveClassesToCart(){
 		$(`.sec-cart-list`).empty();
 		studentid = $('#studentId').val();
 		
-		appendCheckedListsToCart(currentListId);
+		appendCheckedListsToCart();
 		pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
 		refreshSearchResult();
 	});
@@ -319,7 +354,10 @@ function pullRegisteredClasses(searchURL){
 			console.log('meetingDays',meetingDays);
 			const sectionname = `${student.subject}-${student.coursenumber}`;
 			$('.sec-registered-list').append(
-				`<li id = "${sectionname}" tabindex ='0', data-starttime = ${student.starttime}>
+				`<li id = "${sectionname}" tabindex ='0' 
+							data-starttime = ${student.starttime}
+							data-meetingdays = ${meetingDays},
+							data-campus = ${student.campus}>
 					<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
 							id="${sectionname}" class = "chkbox">
 					${student.subject}-${student.coursenumber}: ${student.title} | 
@@ -338,8 +376,6 @@ function checkDailyScheduleConflict(){
 	studentid = $('#studentId').val();
 	semester = $('#semester-choice').val();
 	const ajaxData = `studentid=${studentid}&semester=${semester}&${today}=Y`;
-	console.log('daily schedule checking ajaxData',ajaxData);
-
 		$.ajax({
 			url: '/students',
 			type: 'GET', 
@@ -366,11 +402,10 @@ function checkDailyScheduleConflict(){
 						});
 				}
 				calcAndDisplayRoute(orig, waypts, dest);
-
 				for (let i = 0; i < data.studentrecords.length; i++) {
 					const sectionname = `${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}`;
 					$('.sec-registered-today-list').append(
-						`<li id = "${sectionname}" tabindex ='0', data-starttime = ${data.studentrecords[i].starttime}>
+						`<li id = "${sectionname}" tabindex ='0' data-starttime = ${data.studentrecords[i].starttime}>
 							<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
 									id="${sectionname}" class = "chkbox">
 							${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}-${data.studentrecords[i].section} |
@@ -404,10 +439,12 @@ function sortJsonObject(data){
 	});
 }
 
+
+
+
+
 function pullClassesFromCart(searchURL){
-
 	$.get(searchURL, function(data){
-
 		data.carts.map((cart) => {
 			let meetingDays = [];
 			for(let i = 0; i< publicState.days.length; i++) {
@@ -418,7 +455,10 @@ function pullClassesFromCart(searchURL){
 			meetingDays = meetingDays.join(',');
 			const sectionname = `${cart.subject}-${cart.coursenumber}`;
 			$('.sec-cart-list').append(
-				`<li id = "${sectionname}" tabindex ='0', data-starttime = ${cart.starttime}>
+				`<li id = "${sectionname}" tabindex ='0' 
+							data-starttime = ${cart.starttime}
+							data-meetingdays = ${meetingDays},
+							data-campus = ${cart.campus}>
 					<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
 							id="${sectionname}" class = "chkbox">
 					${cart.subject}-${cart.coursenumber}: ${cart.title} | 
