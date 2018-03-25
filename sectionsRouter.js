@@ -25,8 +25,8 @@ router.use(function(req, res, next) {
 });
 router.get('/sections', (req, res, next) => {
 	const queryOptions = ["subject", "coursenumber", "title","section","credithours","semester","startdate",
-		 "enddate","starttime","endtime","monday","tuesday","wednesday",
-		 "thursday","friday","saturday","campus"];
+		 "enddate","starttime","endtime","sun","mon","tue","wed",
+		 "thu","fri","sat","campus"];
 	const queries = {};
 	for (let i = 0; i< queryOptions.length; i++){
 		if(req.query[queryOptions[i]]){
@@ -48,11 +48,12 @@ router.get('/sections', (req, res, next) => {
 		});
 });
 
+/*
 //search course based on query params
-router.get('/sections/:campus?/:monday?', (req, res, next) => {
+router.get('/sections', (req, res, next) => {
 	const praramsOptions = ["subject", "coursenumber", "title","section","credithours","semester","startdate",
-		 "enddate","starttime","endtime","monday","tuesday","wednesday",
-		 "thursday","friday","saturday","campus"];
+		 "enddate","starttime","endtime","sun","mon","tue","wed",
+		 "thu","fri","sat","campus"];
 	const queryOptions = {};
 	for (let i = 0; i< praramsOptions.length; i++){
 		if(req.params[praramsOptions[i]]){
@@ -72,6 +73,7 @@ router.get('/sections/:campus?/:monday?', (req, res, next) => {
 			res.status(500).json({message: 'Internal server error'});
 		});
 });
+*/
 
 //=============================================================
 

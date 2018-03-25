@@ -66,7 +66,21 @@ function renderSections(searchURL){
 	});
 }
 
+function refreshSearchResult(){
+	let searchURL = `/sections/?campus=${$('.campuses option:selected').text().toLowerCase()}`;
+	searchURL = searchURL+`&subject=${$('.subject option:selected').text().toLowerCase()}`;
+	searchURL = searchURL+`&coursenumber=${$('.course-number option:selected').text()}`;
+	$.get(searchURL, function(data){
+		$('.search-result-list').empty();
+		data.sections.map((sec) => {
+			const singleData = sec;
+			appendDataToList(singleData, '.search-result-list');
+		})
+	});
+}
+
 function appendDataToList(data, listClassName){
+
 	let meetingDays = [];
 	for(let i = 0; i< publicState.days.length; i++) {
 		if(data[publicState.days[i]] === "Y") {
@@ -74,8 +88,7 @@ function appendDataToList(data, listClassName){
 		}
 	}
 	meetingDays = meetingDays.join(',');
-	const sectionname = `${data.subject}-${data.coursenumber}`;
-
+	const sectionname = `${data.subject}-${data.coursenumber}-${data.section}`;
 	$(listClassName).append(
 		`<li id = "${sectionname}" tabindex ='0', data-starttime = ${data.starttime}>
 			<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
@@ -141,11 +154,9 @@ function updateSectionCart(){
 
 		} else {
 			displayErrorMessage('');
-
 			$(`.sec-cart-list li[id=${currentListId}]`).slideUp('fast',function(){
             	$(this).remove();
         	});
-
 			 $(`.sec-cart-list`).empty();
 			appendCheckedListsToCart();
 			pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
@@ -160,7 +171,6 @@ function appendCheckedListsToCart(){
 	$('.search-result-list input[type=checkbox]:checked').each(function(){
 		const currentListId = $(this).attr("id");
 		const checkedList = $(`.search-result-list li[id=${currentListId}]`).html();
-		console.log($(this).attr("id"));
 		$(`.sec-cart-list li[id=${currentListId}]`).slideUp('fast',function(){
         	$(this).remove();
     	});
@@ -181,6 +191,8 @@ function displayErrorMessage(errorMessage){
 function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 	clearAllRecordsFromCart();
 	$.get(searchURL, function(result){
+		console.log('result from sections pull', result);
+		console.log('ajaxURL', ajaxURL);
 		result.sections.map((sec) => {
 			$.ajax({
 				url: ajaxURL,
@@ -203,6 +215,7 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 				    enddate: sec.enddate,
 				    starttime: sec.starttime,
 				    endtime: sec.endtime,
+				    sun: sec.sun,
 				    mon: sec.mon,
 				    tue: sec.tue,
 				    wed: sec.wed,
@@ -216,6 +229,7 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 				}),
 				success: function(data){
 					if (registrationStatus === 'reg'){
+						console.log('registraton successful',data);
 						registrationSuccessful(data, status);
 					} else if (registrationStatus === 'cart') {
 						const sectionname = `${data.subject}-${data.coursenumber}`;
@@ -232,7 +246,10 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 
 function registrationSuccessful(data){
 	appendDataToList(data, '.sec-registered-list');
+	checkDailyScheduleConflict();
+
 	sortList('.sec-registered-list');
+
 	const sectionname = `${data.subject}-${data.coursenumber}`;
 	$(`.sec-cart-list li[id=${sectionname}]`).slideUp('fast',function(){
         $(this).remove();
@@ -249,10 +266,13 @@ function registerForClasses(){
 			const sectionName = $(this).attr('id').split("-");
 			let searchURL = `/sections/?subject=`+sectionName[0];
 			searchURL = searchURL+`&coursenumber=`+sectionName[1];
+			searchURL = searchURL+`&section=`+sectionName[2];
 			registerOrSaveSectionsInCart(searchURL, '/students', 'reg');
+
 		});
-
-
+		clearAllRecordsFromCart();
+		refreshSearchResult();
+		checkDailyScheduleConflict();
 	});
 }
 $(registerForClasses);
@@ -260,20 +280,25 @@ $(registerForClasses);
 function saveClassesToCart(){
 	$('.save-cart-button').on('click', function(event){
 		let currentListId;
+		selectedSemester = $('#semester-choice').val();
 		event.preventDefault();
 		$('.sec-cart-list li input[type="checkbox"]').each(function(index){
 			currentListId = $(this).attr('id');
 			let sectionName = $(this).attr('id').split("-");
 			let searchURL = `/sections/?subject=`+sectionName[0];
 			searchURL = searchURL+`&coursenumber=`+sectionName[1];
+			searchURL = searchURL+`&section=`+sectionName[2];
+			searchURL = searchURL+`&semester=${selectedSemester}`;
+			console.log('save to cart', searchURL);
 			registerOrSaveSectionsInCart(searchURL, '/students/cart','cart');
 		});
 		
 		$(`.sec-cart-list`).empty();
 		studentid = $('#studentId').val();
-		selectedSemester = $('#semester-choice').val();
+		
 		appendCheckedListsToCart(currentListId);
 		pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
+		refreshSearchResult();
 	});
 }
 $(saveClassesToCart);
@@ -291,6 +316,7 @@ function pullRegisteredClasses(searchURL){
 				}
 			}
 			meetingDays = meetingDays.join(',');
+			console.log('meetingDays',meetingDays);
 			const sectionname = `${student.subject}-${student.coursenumber}`;
 			$('.sec-registered-list').append(
 				`<li id = "${sectionname}" tabindex ='0', data-starttime = ${student.starttime}>
@@ -312,45 +338,48 @@ function checkDailyScheduleConflict(){
 	studentid = $('#studentId').val();
 	semester = $('#semester-choice').val();
 	const ajaxData = `studentid=${studentid}&semester=${semester}&${today}=Y`;
-			$.ajax({
-				url: '/students',
-				type: 'GET', 
-				dataType: 'json',
-				data: `studentid=${studentid}&semester=${semester}&${today}=Y`,
-				success: function(data){
-					if( data.studentrecords.length > 0) {
-					$('.sec-registered-today-list').empty();
-					let waypts = [];
-					let orig ={};
-					let dest = {};
-					const  maxDataCount = data.studentrecords.length;
-					sortJsonObject(data.studentrecords);
-					orig.lat = data.studentrecords[0].campuslat;
-					orig.lng = data.studentrecords[0].campuslng;
-					dest.lat = data.studentrecords[maxDataCount-1].campuslat;
-					dest.lng = data.studentrecords[maxDataCount-1].campuslng;
-					for(let i = 1; i < maxDataCount-1; i++){
-							waypts.push({
-								location: {lat:data.studentrecords[i].campuslat,
-											lng: data.studentrecords[i].campuslng},
-								stopover: true
-							});
-					}
-					calcAndDisplayRoute(orig, waypts, dest);
+	console.log('daily schedule checking ajaxData',ajaxData);
 
-					for (let i = 0; i < data.studentrecords.length; i++) {
-						const sectionname = `${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}`;
-						$('.sec-registered-today-list').append(
-							`<li id = "${sectionname}" tabindex ='0', data-starttime = ${data.studentrecords[i].starttime}>
-								<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
-										id="${sectionname}" class = "chkbox">
-								${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}-${data.studentrecords[i].section} |
-								 ${data.studentrecords[i].credithours} | 
-								${data.studentrecords[i].starttime} - ${data.studentrecords[i].endtime} 
-								${data.studentrecords[i].campus} campus 
-							</li>`);
-						sortList('sec-registered-today-list');
-					}
+		$.ajax({
+			url: '/students',
+			type: 'GET', 
+			dataType: 'json',
+			data: ajaxData,
+			success: function(data){
+				console.log('Data from daily checking schedule',data);
+				if( data.studentrecords.length > 0) {
+				$('.sec-registered-today-list').empty();
+				let waypts = [];
+				let orig ={};
+				let dest = {};
+				const  maxDataCount = data.studentrecords.length;
+				sortJsonObject(data.studentrecords);
+				orig.lat = data.studentrecords[0].campuslat;
+				orig.lng = data.studentrecords[0].campuslng;
+				dest.lat = data.studentrecords[maxDataCount-1].campuslat;
+				dest.lng = data.studentrecords[maxDataCount-1].campuslng;
+				for(let i = 1; i < maxDataCount-1; i++){
+						waypts.push({
+							location: {lat:data.studentrecords[i].campuslat,
+										lng: data.studentrecords[i].campuslng},
+							stopover: true
+						});
+				}
+				calcAndDisplayRoute(orig, waypts, dest);
+
+				for (let i = 0; i < data.studentrecords.length; i++) {
+					const sectionname = `${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}`;
+					$('.sec-registered-today-list').append(
+						`<li id = "${sectionname}" tabindex ='0', data-starttime = ${data.studentrecords[i].starttime}>
+							<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
+									id="${sectionname}" class = "chkbox">
+							${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}-${data.studentrecords[i].section} |
+							 ${data.studentrecords[i].credithours} | 
+							${data.studentrecords[i].starttime} - ${data.studentrecords[i].endtime} 
+							${data.studentrecords[i].campus} campus 
+						</li>`);
+					sortList('sec-registered-today-list');
+				}
 			}
 		}
 		});
@@ -376,7 +405,7 @@ function sortJsonObject(data){
 }
 
 function pullClassesFromCart(searchURL){
-	console.log('pull classes from cart')
+
 	$.get(searchURL, function(data){
 
 		data.carts.map((cart) => {
@@ -425,7 +454,7 @@ function clearSelectedRecordFromCart(){
 		const searchURL = `/search/cart/?studentid=${studentid}&subject=${sectionName[0]}&coursenumber=${sectionName[1]}`;
 		const checked = $(`.sec-cart-list li[id=${currentListId}]`).html();
 		if(this.checked) {
-			console.log(currentListId);
+			console.log('deleting');
 			$.get(searchURL, function(data){
 				data.carts.map((cart) => {
 					const ajaxURL = `/delete/cart/${cart.id}`;
@@ -433,10 +462,10 @@ function clearSelectedRecordFromCart(){
 						url: ajaxURL,
 						type: 'DELETE',
 						success: function(result){
-							console.log('remove selected cart');
-							$(this).remove();
-							$(`.sec-cart-list`).empty();
-							appendCheckedListsToCart(currentListId);
+							
+							$(`.sec-cart-list li[id=${currentListId}]`).remove();
+							//$(`.sec-cart-list`).empty();
+							//appendCheckedListsToCart(currentListId);
 							pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
 						}
 					});
@@ -455,13 +484,14 @@ function clearAllRecordsFromCart(){
 		const searchURL = `/search/cart/?studentid=${studentid}&subject=
 							${sectionName[0]}&coursenumber=${sectionName[1]}&
 							semester=${selectedSemester}`;
+			console.log('search to delete', searchURL);
 			$.get(searchURL, function(data){
 				data.carts.map((cart) => {
 					$.ajax({
 						url: `/delete/cart/${cart.id}`,
 						type: 'DELETE',
 						success: function(result){
-
+							console.log('delete successful');
 						}
 					});
 				}); 

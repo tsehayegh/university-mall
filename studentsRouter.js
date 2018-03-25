@@ -29,7 +29,7 @@ studentsRouter.get('/students/:studentid', (req, res, next) => {
 //GET - based on query filters to check duplicate of registration
 studentsRouter.get('/students', (req, res, next) => {
 	const queryOptions = ["studentid", "subject", "coursenumber", "semester",
-						 "mon", "tue", "wed", "thu", "fri", "sat"];
+						 "section", "sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 	const queries = {};
 	for (let i = 0; i< queryOptions.length; i++){
 		if(req.query[queryOptions[i]]){
@@ -85,6 +85,7 @@ studentsRouter.post('/students',(req, res) =>{
 			enddate: req.body.enddate,
 			starttime: req.body.starttime,
 			endtime: req.body.endtime,
+			sun: req.body.sun,
 			mon: req.body.mon,
 			tue: req.body.tue,
 			wed: req.body.wed,
@@ -160,6 +161,7 @@ studentsRouter.post('/students/cart',(req, res) =>{
 			enddate: req.body.enddate,
 			starttime: req.body.starttime,
 			endtime: req.body.endtime,
+			sun: req.body.sun,
 			mon: req.body.mon,
 			tue: req.body.tue,
 			wed: req.body.wed,
