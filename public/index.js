@@ -91,6 +91,7 @@ function appendDataToList(data, listClassName){
 	$(listClassName).append(
 		`<li id = "${sectionname}" tabindex ='0' 
 					data-starttime = ${data.starttime}
+					data-endtime = ${data.endtime}
 					data-meetingdays = ${meetingDays}
 					data-campus = ${data.campus}>
 			<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
@@ -179,16 +180,20 @@ $(updateSectionCart);
 
 function checkMultipleCampusRegistration(currentListId){
 	const checkedMeetingDaysArray = $(`.search-result-list li[id=${currentListId}]`).attr("data-meetingdays").toLowerCase().split(',');
-	const checkedCampus = $(`.search-result-list li[id=${currentListId}]`).attr("data-campus").toLowerCase();  
+	let checkedCampus = $(`.search-result-list li[id=${currentListId}]`).data().campus; 
+	const totalListCountInCart = $('.sec-cart-list li').length;
+	const endtime = convertToDateTime($(`.search-result-list li[id=${currentListId}]`).data().endtime);
 	checkedMeetingDaysArray.map(function(day) {
-		$('.sec-cart-list li').each(function(index){		
+		$('.sec-cart-list li').each(function(index){
+			sortList();		
 				const campusCart = $(this).attr("data-campus").toLowerCase();
 				const meetingDaysCartArray = $(this).attr("data-meetingdays").toLowerCase().split(',');
-
 				for(let i = 0; i < meetingDaysCartArray.length; i++){
 					if(day === meetingDaysCartArray[i]){
+						//if(checkedCampus !== campusCart && index === totalListCountInCart - 1)
 						if(checkedCampus !== campusCart){
-							displayErrorMessage('Registering for multiple campuses! Make sure you have enough time to get to your classes');
+							const starttime = convertToDateTime($(this).attr("data-endtime"));
+								displayErrorMessage('Registering for multiple campuses! Make sure you have enough time to get to your classes');
 						}
 					}
 				}
@@ -196,6 +201,21 @@ function checkMultipleCampusRegistration(currentListId){
 	});
 }
 
+function convertToDateTime(time){
+	const _time = new Date();
+	var hours = Number(time.match(/^(\d+)/)[1]);
+	var minutes = Number(time.match(/:(\d+)/)[1]);
+	return _time.setHours(hours, minutes);
+
+
+	//var AMPM = time.match(/\s(.*)$/)[1];
+	//if(AMPM === "PM" && hours<12) hours = hours+12;
+	//if(AMPM === "AM" && hours ===12) hours = hours-12;
+	//const milliseconds = _time.setHours(hours, minutes);
+	//const seconds = Math.floor(milliseconds/1000);
+	//let minute = Math.floor(seconds/60);
+	//minute = minute % 60;
+}
 
 function appendCheckedListsToCart(){
 	$('.search-result-list input[type=checkbox]:checked').each(function(){
@@ -207,13 +227,12 @@ function appendCheckedListsToCart(){
 		checkedData = $(`.search-result-list li[id=${currentListId}]`).data();
 		$('.sec-cart-list').append(`<li id = ${currentListId} 
 								data-starttime = ${checkedData.starttime}
+								data-endtime = ${checkedData.endtime}
 								data-meetingdays = ${checkedData.meetingdays}
 								data-campus = ${checkedData.campus}>
 								${checkedList}</li>`);	
 	});
 }
-
-
 
 //Display error message or instruction
 function displayErrorMessage(errorMessage){
@@ -226,8 +245,6 @@ function displayErrorMessage(errorMessage){
 function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 	clearAllRecordsFromCart();
 	$.get(searchURL, function(result){
-		console.log('result from sections pull', result);
-		console.log('ajaxURL', ajaxURL);
 		result.sections.map((sec) => {
 			$.ajax({
 				url: ajaxURL,
@@ -264,7 +281,7 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 				}),
 				success: function(data){
 					if (registrationStatus === 'reg'){
-						console.log('registraton successful',data);
+
 						registrationSuccessful(data, status);
 					} else if (registrationStatus === 'cart') {
 						const sectionname = `${data.subject}-${data.coursenumber}`;
@@ -324,7 +341,7 @@ function saveClassesToCart(){
 			searchURL = searchURL+`&coursenumber=`+sectionName[1];
 			searchURL = searchURL+`&section=`+sectionName[2];
 			searchURL = searchURL+`&semester=${selectedSemester}`;
-			console.log('save to cart', searchURL);
+
 			registerOrSaveSectionsInCart(searchURL, '/students/cart','cart');
 		});
 		
@@ -351,12 +368,13 @@ function pullRegisteredClasses(searchURL){
 				}
 			}
 			meetingDays = meetingDays.join(',');
-			console.log('meetingDays',meetingDays);
+
 			const sectionname = `${student.subject}-${student.coursenumber}`;
 			$('.sec-registered-list').append(
 				`<li id = "${sectionname}" tabindex ='0' 
 							data-starttime = ${student.starttime}
-							data-meetingdays = ${meetingDays},
+							data-endtime = ${student.endtime}
+							data-meetingdays = ${meetingDays}
 							data-campus = ${student.campus}>
 					<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
 							id="${sectionname}" class = "chkbox">
@@ -405,7 +423,11 @@ function checkDailyScheduleConflict(){
 				for (let i = 0; i < data.studentrecords.length; i++) {
 					const sectionname = `${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}`;
 					$('.sec-registered-today-list').append(
-						`<li id = "${sectionname}" tabindex ='0' data-starttime = ${data.studentrecords[i].starttime}>
+						`<li id = "${sectionname}" tabindex ='0' 
+									data-starttime = ${data.studentrecords[i].starttime}
+									data-endtime = ${data.studentrecords[i].endtime}
+									data-campus = ${data.studentrecords[i].campus}
+									data-meetingdays = ${today}>
 							<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
 									id="${sectionname}" class = "chkbox">
 							${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}-${data.studentrecords[i].section} |
@@ -457,7 +479,8 @@ function pullClassesFromCart(searchURL){
 			$('.sec-cart-list').append(
 				`<li id = "${sectionname}" tabindex ='0' 
 							data-starttime = ${cart.starttime}
-							data-meetingdays = ${meetingDays},
+							data-endtime = ${cart.endtime}
+							data-meetingdays = ${meetingDays}
 							data-campus = ${cart.campus}>
 					<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
 							id="${sectionname}" class = "chkbox">

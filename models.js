@@ -34,7 +34,7 @@ const sectionsSchema = mongoose.Schema({
 
 sectionsSchema.methods.serialize = function() {
 	return {
-		id: this._id,
+		"id": this._id,
 		"subject": this.subject,
 		"coursenumber": this.coursenumber,
 		"title": this.title,
@@ -57,7 +57,7 @@ sectionsSchema.methods.serialize = function() {
 		"campuslng": this.campuslng,
 		"instructor": this.instructor
 	};
-}
+};
 
 
 const Section = mongoose.model("Section", sectionsSchema);
@@ -126,7 +126,7 @@ studentsSchema.methods.serialize = function() {
 		campuslng:this.campuslng,
 		instructor:this.instructor
 	};
-}
+};
 
 const Student = mongoose.model("Student", studentsSchema);
 const Cart = mongoose.model("Cart", studentsSchema);

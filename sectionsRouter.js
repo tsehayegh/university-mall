@@ -48,32 +48,25 @@ router.get('/sections', (req, res, next) => {
 		});
 });
 
-/*
+
 //search course based on query params
-router.get('/sections', (req, res, next) => {
-	const praramsOptions = ["subject", "coursenumber", "title","section","credithours","semester","startdate",
-		 "enddate","starttime","endtime","sun","mon","tue","wed",
-		 "thu","fri","sat","campus"];
-	const queryOptions = {};
-	for (let i = 0; i< praramsOptions.length; i++){
-		if(req.params[praramsOptions[i]]){
-			queryOptions[praramsOptions[i]] = req.params[praramsOptions[i]];
-		};
-	};
+router.get('/sections/:id', (req, res, next) => {
+	let id = req.params.id;
+	console.log(mongoose.Types.ObjectId(req.params.id));
+	if (!(id.match(/^[0-9a-fA-F]{24}$/))) {
+		console.log(id);
+  		id = mongoose.Types.ObjectId(id);
+  		console.log(id);
+	}
 	Section
-		.find(queryOptions)
-		.then(sections => {
-			res.send({
-				sections: sections.map(
-					(section) => section.serialize())
-			});
-		})
+		.findById(req.params.id)
+		.then(section => res.json(section.serialize()))
 		.catch(err => {
 			console.log(err);
 			res.status(500).json({message: 'Internal server error'});
 		});
 });
-*/
+
 
 //=============================================================
 

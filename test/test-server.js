@@ -7,55 +7,22 @@ const expect = chai.expect;
 const should = chai.should();
 const faker = require('faker');
 const mongoose = require('mongoose');
-
-const {app, runServer, closeServer} = require('../server');
-const {PORT, DATABASE_URL, TEST_DATABASE_URL} = require('../config'); 
-const {Section, Student, Cart} = require('../models');
-
+const bodyParser = require('body-parser');
+mongoose.Promise = global.Promise;
 chai.use(chaiHttp);
 
-describe('main page', function(){
-	before(function(){
-		return runServer(TEST_DATABASE_URL);
-	});
+const {app, runServer, closeServer} = require('../server');
+const {TEST_DATABASE_URL} = require('../config'); 
+const {Section, Student, Cart} = require('../models');
 
-	after(function(){
-		return closeServer();
-	});
 
-	it('should check if rendering sections work', function(){
-		return chai.request(app)
-			.get('/sections')
-		 	.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.json;
-				expect(res.body.sections).to.be.a('array');
-			});
-	});
+//==================================
 
-	it('should check if getting students data', function(){
-		return chai.request(app)
-			.get('/students')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.json;
-				expect(res.body.studentrecords).to.be.a('array');
-			});
-	});
-
-});
-
-function seedSectionsData(){
-	const seedData = [];
-	for(let i = 1; i <= 10; i++){
-		seedData.push(generateSectionsData());
-	}
-	return Sections.insertMany(seedData);
-}
 
 function generateRandomValues(arrayDocument){
 	return arrayDocument[Math.floor(Math.random()*arrayDocument.length)];
 }
+//=======
 
 const seedDocuments = {
 	subject: ['eng', 'mat', 'phy', 'chm', 'bio'],
@@ -108,7 +75,114 @@ function generateSectionsData() {
 	instructor: generateRandomValues(seedDocuments.instructor)
   };
 }
-console.log(generateSectionsData());
+//=======
+function seedSectionsData(){
+	const seedData = [];
+	for(let i = 1; i <= 10; i++){
+		seedData.push(generateSectionsData());
+	}
+	return Section.insertMany(seedData);
+}
+//=======
+
+function deleteDB(){
+	return new Promise((resolve, reject)=>{
+		Section.remove({}, function(err){
+			console.log('Delete database');
+		})
+		.then((result) => resolve(resolve))
+		.catch((err) => reject(err));
+	});
+}
+//===================================================
+
+describe('Testing class registration app, university-mall', function(){
+
+	before(function(){
+		return runServer(TEST_DATABASE_URL);
+	});
+
+	beforeEach(function(){
+		return seedSectionsData();
+	});
+
+	afterEach(function(){
+		return deleteDB();
+	});
+
+	after(function(){
+		return closeServer();
+	})
+
+	describe('GET sections endpoint', function(){
+
+		it('should return all existing sections', function(){
+			let res;
+			return chai.request(app)
+				.get('/sections')
+				.then((_res) => {
+					res = _res;
+					expect(res).to.have.status(200);
+					expect(res.body.sections).to.have.lengthOf.at.least(1);
+					return Section.count();
+				})
+				.then((count) => {
+					expect(res.body.sections).to.have.lengthOf(count);
+				});
+		});
+
+		it('should return sections with right fields', function(){
+			let resSection;
+			return chai.request(app)
+				.get('/sections')
+				.then(function(res) {
+					expect(res).to.have.status(200);
+					expect(res.body.sections).to.be.a('array');
+					expect(res.body.sections).to.have.lengthOf.at.least(1);
+					res.body.sections.forEach(function(section) {
+						expect(section).to.be.a('object');
+						expect(section).to.include.keys(
+							'id', 'subject', 'title', 'coursenumber', 'section',
+							'credithours', 'semester', 'startdate', 'enddate', 
+							'starttime', 'endtime', 'sun','mon', 'tue', 'wed',
+							'thu', 'fri', 'sat', 'campus', 'campuslat', 'campuslng',
+							'instructor'
+							);
+					});
+					resSection = res.body.sections[0];
+					return Section.findById(resSection.id);
+				})
+				.then(function(section) {
+					expect(resSection.id).to.equal(section.id);
+					expect(resSection.subject).to.equal(section.subject);
+					expect(resSection.title).to.equal(section.title);
+					expect(resSection.coursenumber).to.equal(section.coursenumber);
+					expect(resSection.section).to.equal(section.section);
+					expect(resSection.credithours).to.equal(section.credithours);
+					expect(resSection.semester).to.equal(section.semester);
+					expect(resSection.startdate).to.equal(section.startdate);
+					expect(resSection.enddate).to.equal(section.enddate);
+					expect(resSection.starttime).to.equal(section.starttime);
+					expect(resSection.endtime).to.equal(section.endtime);
+					expect(resSection.sun).to.equal(section.sun);
+					expect(resSection.mon).to.equal(section.mon);
+					expect(resSection.tue).to.equal(section.tue);
+					expect(resSection.wed).to.equal(section.wed);
+					expect(resSection.thu).to.equal(section.thu);
+					expect(resSection.fri).to.equal(section.fri);
+					expect(resSection.sat).to.equal(section.sat);
+					expect(resSection.campus).to.equal(section.campus);
+					expect(resSection.campuslat).to.equal(section.campuslat);
+					expect(resSection.campuslng).to.equal(section.campuslng);
+					expect(resSection.instructor).to.equal(section.instructor);
+				});
+		});
+	});
+
+	
+
+});
+
 
 
 
