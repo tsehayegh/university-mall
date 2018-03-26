@@ -101,7 +101,7 @@ studentsRouter.post('/students',(req, res) =>{
 		.catch(err => {
 			console.log(err);
 			res.status(500).json({message: 'Internal server error'});
-		})
+		});
 });
 
 
@@ -182,7 +182,39 @@ studentsRouter.post('/students/cart',(req, res) =>{
 
 //======================
 
-//PUT - use PUT method to update grades and status based on studentid and coursename
+//PUT - use PUT method to update grades based on studentid and coursename
+studentsRouter.put('/students/:studentid/:subject/:coursenumber/:semester', (req, res) => {
+	const reqFields =  ['studentid', 'subject', 'coursenumber', 'semester'];
+	console.log(req.body.grade)
+	for (let i = 0; i < reqFields.length; i++){
+		const field = reqFields[i];
+		if(!(req.params[field] && req.body[field] && req.params[field] === req.body[field])) {
+			const reqParam = req.params[field];
+			const reqBody =  req.body[field];
+			const errorMessage = `Request path ${field} ${reqParam} and request body ${field} ${reqBody} must match`;
+			console.log(errorMessage);
+			res.status(400).json({message: errorMessage});
+		};
+	};
+
+	const toUpdate = {};
+	const updateableFields  = ['grade', 'firstname'];
+
+	updateableFields.forEach(field => {
+		console.log(field, req.body[field]);
+		if (field in req.body) {
+			toUpdate[field] = req.body[field];
+		}
+	});
+	Student
+		.findOneAndUpdate({studentid: req.body.studentid,
+							subject: req.body.subject,
+							coursenumber: req.body.subject,
+							semester: req.body.semester}, {new: true}, 
+							{ $set: toUpdate})
+		.then(student => res.status(204).send())
+		.catch(err => res.status(500).json({message: 'Internal server error'}))
+})
 
 
 //DELETE - use DELETE method to delete registered class based on studentid and coursename
@@ -194,6 +226,12 @@ studentsRouter.delete('/delete/cart/:id', (req, res) => {
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
+studentsRouter.delete('/students/:id', (req, res) => {
+  Student
+    .findByIdAndRemove(req.params.id)
+    .then(cart => res.status(204).end())
+    .catch(err => res.status(500).json({ message: 'Internal server error' }));
+});
 
 
 //Export module

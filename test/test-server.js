@@ -25,11 +25,13 @@ function generateRandomValues(arrayDocument){
 //=======
 
 const seedDocuments = {
+	studentid: ['001', '002','003', '004','005','006','007','008','009','010'],
 	subject: ['eng', 'mat', 'phy', 'chm', 'bio'],
 	title: ['Englis', 'Maths', 'Physics', 'Chemistry', 'Biology'],
 	coursenumber: ['101', '111', '112', '113', '115', '121', '211', '215', '171'],
 	section: ['01', '02', '03', '04', '05', '06', '07', '08', '09'],
 	credithours: [3, 3.5, 2, 1, 4, 4.5, 2.5 ],
+	grade: ['A', 'B', 'C', 'D', 'F', 'I', 'W'],
 	semester: ['2018SP', '2018SU', '2018FA', '2019SP', '2019SU', '2019SU', '2019FA'],
 	startdate: ["08/15/2018", "08/20/2018"],
 	enddate: ["12/11/2018", "12/20/2018"],
@@ -75,6 +77,37 @@ function generateSectionsData() {
 	instructor: generateRandomValues(seedDocuments.instructor)
   };
 }
+
+function generateStudentsData() {
+  return {
+  	studentid: generateRandomValues(seedDocuments.studentid),
+  	firstname: faker.name.firstName(),
+  	lastname: faker.name.lastName(),
+	subject: generateRandomValues(seedDocuments.subject),
+	title: generateRandomValues(seedDocuments.title),
+	coursenumber: generateRandomValues(seedDocuments.coursenumber),
+	section: generateRandomValues(seedDocuments.section),
+	credithours: generateRandomValues(seedDocuments.credithours),
+	grade: generateRandomValues(seedDocuments.grade),
+	semester: generateRandomValues(seedDocuments.semester),
+	startdate: generateRandomValues(seedDocuments.startdate),
+	enddate: generateRandomValues(seedDocuments.enddate),
+	starttime: generateRandomValues(seedDocuments.starttime),
+	endtime: generateRandomValues(seedDocuments.starttime),
+	sun: generateRandomValues(seedDocuments.sun),
+	mon: generateRandomValues(seedDocuments.mon),
+	tue: generateRandomValues(seedDocuments.tue),
+	wed: generateRandomValues(seedDocuments.wed),
+	thu: generateRandomValues(seedDocuments.thu),
+	fri: generateRandomValues(seedDocuments.fri),
+	sat: generateRandomValues(seedDocuments.sat),
+	campus: generateRandomValues(seedDocuments.campus),
+	campuslat: generateRandomValues(seedDocuments.campuslat),
+	campuslng: generateRandomValues(seedDocuments.campuslng),
+	instructor: generateRandomValues(seedDocuments.instructor)
+  };
+}
+
 //=======
 function seedSectionsData(){
 	const seedData = [];
@@ -83,6 +116,7 @@ function seedSectionsData(){
 	}
 	return Section.insertMany(seedData);
 }
+
 //=======
 
 function deleteDB(){
@@ -179,7 +213,42 @@ describe('Testing class registration app, university-mall', function(){
 		});
 	});
 
-	
+
+
+
+	describe('DELETE endpoint - sections', function(){
+		it('delete selected section by id', function(){
+			let section;
+			return Section
+				.findOne()
+				.then(function(_section){
+					
+					section = _section;
+					return chai.request(app).delete(`/sections/${section.id}`);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(204);
+					return Section.findById(section.id);
+				})
+				.then(function(_section) {
+					expect(_section).to.be.null;
+				})
+		})
+	});
+
+	describe('POST endpoint - sections', function(){
+		it('should add a new section', function(){
+			const newSection =  generateSectionsData();
+			console.log(newSection);
+			return chai.request(app)
+				.post('/sections')
+				.send(newSection)
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.json;
+				})
+		})
+	});
 
 });
 
