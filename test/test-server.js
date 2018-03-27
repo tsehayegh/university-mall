@@ -18,7 +18,6 @@ const {Section, Student, Cart} = require('../models');
 
 //==================================
 
-
 function generateRandomValues(arrayDocument){
 	return arrayDocument[Math.floor(Math.random()*arrayDocument.length)];
 }
@@ -32,6 +31,7 @@ const seedDocuments = {
 	section: ['01', '02', '03', '04', '05', '06', '07', '08', '09'],
 	credithours: [3, 3.5, 2, 1, 4, 4.5, 2.5 ],
 	grade: ['A', 'B', 'C', 'D', 'F', 'I', 'W'],
+	status: ['reg', 'cart'],
 	semester: ['2018SP', '2018SU', '2018FA', '2019SP', '2019SU', '2019SU', '2019FA'],
 	startdate: ["08/15/2018", "08/20/2018"],
 	enddate: ["12/11/2018", "12/20/2018"],
@@ -89,6 +89,7 @@ function generateStudentsData() {
 	section: generateRandomValues(seedDocuments.section),
 	credithours: generateRandomValues(seedDocuments.credithours),
 	grade: generateRandomValues(seedDocuments.grade),
+	status: generateRandomValues(seedDocuments.status),
 	semester: generateRandomValues(seedDocuments.semester),
 	startdate: generateRandomValues(seedDocuments.startdate),
 	enddate: generateRandomValues(seedDocuments.enddate),
@@ -118,8 +119,21 @@ function seedSectionsData(){
 }
 
 //=======
+function seedStudentsData(){
+	const seedData = [];
+	for(let i = 1; i <= 10; i++){
+		seedData.push(generateStudentsData());
+	}
+	return Student.insertMany(seedData);
+}
+//=======
+function seedData(){
+	seedSectionsData();
+	seedStudentsData();
+}
 
-function deleteDB(){
+//=======
+function deleteSectionsDB(){
 	return new Promise((resolve, reject)=>{
 		Section.remove({}, function(err){
 			console.log('Delete database');
@@ -127,6 +141,22 @@ function deleteDB(){
 		.then((result) => resolve(resolve))
 		.catch((err) => reject(err));
 	});
+}
+
+//=======
+function deleteStudentsDB(){
+	return new Promise((resolve, reject)=>{
+		Student.remove({}, function(err){
+			console.log('Delete database');
+		})
+		.then((result) => resolve(resolve))
+		.catch((err) => reject(err));
+	});
+}
+//=======
+function deleteDB(){
+	deleteSectionsDB();
+	deleteStudentsDB();
 }
 //===================================================
 
@@ -137,7 +167,7 @@ describe('Testing class registration app, university-mall', function(){
 	});
 
 	beforeEach(function(){
-		return seedSectionsData();
+		return seedData();
 	});
 
 	afterEach(function(){
@@ -157,6 +187,7 @@ describe('Testing class registration app, university-mall', function(){
 				.then((_res) => {
 					res = _res;
 					expect(res).to.have.status(200);
+
 					expect(res.body.sections).to.have.lengthOf.at.least(1);
 					return Section.count();
 				})
@@ -213,8 +244,49 @@ describe('Testing class registration app, university-mall', function(){
 		});
 	});
 
+	describe('POST endpoint - sections', function(){
+		it('should add a new section', function(){
+			const newSection =  generateSectionsData();
+			return chai.request(app)
+				.post('/sections')
+				.send(newSection)
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.json;
+					expect(res.body).to.be.a('object');
+					expect(res.body).to.have.include.keys(
+						'id', 'subject', 'title', 'coursenumber', 'section',
+						'credithours', 'semester', 'startdate', 'enddate',
+						'starttime', 'endtime', 'sun', 'mon', 'tue', 'wed',
+						'thu', 'fri', 'sat', 'campus', 'campuslat', 'campuslng',
+						'instructor');
+					expect(res.body.id).to.not.be.null;
+					expect(res.body.subject).to.equal(newSection.subject);
+					expect(res.body.title).to.equal(newSection.title);
+					expect(res.body.coursenumber).to.equal(newSection.coursenumber);
+					expect(res.body.section).to.equal(newSection.section);
+					expect(res.body.credithours).to.equal(newSection.credithours);
+					expect(res.body.semester).to.equal(newSection.semester);
+					expect(res.body.startdate).to.equal(newSection.startdate);
+					expect(res.body.enddate).to.equal(newSection.enddate);
+					expect(res.body.starttime).to.equal(newSection.starttime);
+					expect(res.body.endtime).to.equal(newSection.endtime);
+					expect(res.body.sun).to.equal(newSection.sun);
+					expect(res.body.mon).to.equal(newSection.mon);
+					expect(res.body.tue).to.equal(newSection.tue);
+					expect(res.body.wed).to.equal(newSection.wed);
+					expect(res.body.thu).to.equal(newSection.thu);
+					expect(res.body.fri).to.equal(newSection.fri);
+					expect(res.body.sat).to.equal(newSection.sat);
+					expect(res.body.campus).to.equal(newSection.campus);
+					expect(res.body.campuslat).to.equal(newSection.campuslat);
+					expect(res.body.campuslng).to.equal(newSection.campuslng);
+					expect(res.body.instructor).to.equal(newSection.instructor);
 
 
+				})
+		})
+	});
 
 	describe('DELETE endpoint - sections', function(){
 		it('delete selected section by id', function(){
@@ -222,7 +294,6 @@ describe('Testing class registration app, university-mall', function(){
 			return Section
 				.findOne()
 				.then(function(_section){
-					
 					section = _section;
 					return chai.request(app).delete(`/sections/${section.id}`);
 				})
@@ -236,18 +307,76 @@ describe('Testing class registration app, university-mall', function(){
 		})
 	});
 
-	describe('POST endpoint - sections', function(){
-		it('should add a new section', function(){
-			const newSection =  generateSectionsData();
-			console.log(newSection);
+	describe('GET endpoint - students', function(){
+
+		it('should return all students records', function(){
+			let res;
 			return chai.request(app)
-				.post('/sections')
-				.send(newSection)
-				.then(function(res){
+				.get('/students')
+				.then((_res) => {
+					res = _res;
 					expect(res).to.have.status(200);
-					expect(res).to.be.json;
+					expect(res.body.studentrecords).to.be.a('array');
+					expect(res.body.studentrecords).to.have.length.of.at.least(1);
+					return Student.count();
 				})
-		})
+				.then((count) => {
+					expect(res.body.studentrecords).to.have.lengthOf(count);
+				});
+		});
+
+		
+
+		it('should return students with right fields', function(){
+			let resStudent;
+			return chai.request(app)
+				.get('/students')
+				.then(function(res) {
+					expect(res).to.have.status(200);
+					expect(res.body.studentrecords).to.be.a('array');
+					expect(res.body.studentrecords).to.have.lengthOf.at.least(1);
+					res.body.studentrecords.forEach(function(student) {
+						expect(student).to.be.a('object');
+						expect(student).to.include.keys(
+							'id', 'studentid', 'fullname', 'subject', 'title', 
+							'coursenumber', 'section', 'credithours', 'grade', 'status', 
+							'semester', 'startdate', 'enddate','starttime', 'endtime', 
+							'sun','mon', 'tue', 'wed','thu', 'fri', 'sat', 'campus', 
+							'campuslat', 'campuslng','instructor'
+							);
+					});
+					resStudent = res.body.studentrecords[0];
+					return Student.findById(resStudent.id);
+				})
+				.then(function(student) {
+					expect(resStudent.id).to.equal(student.id);
+					expect(resStudent.fullname).to.equal(student.fullname);
+					expect(resStudent.subject).to.equal(student.subject);
+					expect(resStudent.title).to.equal(student.title);
+					expect(resStudent.coursenumber).to.equal(student.coursenumber);
+					expect(resStudent.section).to.equal(student.section);
+					expect(resStudent.credithours).to.equal(student.credithours);
+					expect(resStudent.grade).to.equal(student.grade);
+					expect(resStudent.status).to.equal(student.status);
+					expect(resStudent.semester).to.equal(student.semester);
+					expect(resStudent.startdate).to.equal(student.startdate);
+					expect(resStudent.enddate).to.equal(student.enddate);
+					expect(resStudent.starttime).to.equal(student.starttime);
+					expect(resStudent.endtime).to.equal(student.endtime);
+					expect(resStudent.sun).to.equal(student.sun);
+					expect(resStudent.mon).to.equal(student.mon);
+					expect(resStudent.tue).to.equal(student.tue);
+					expect(resStudent.wed).to.equal(student.wed);
+					expect(resStudent.thu).to.equal(student.thu);
+					expect(resStudent.fri).to.equal(student.fri);
+					expect(resStudent.sat).to.equal(student.sat);
+					expect(resStudent.campus).to.equal(student.campus);
+					expect(resStudent.campuslat).to.equal(student.campuslat);
+					expect(resStudent.campuslng).to.equal(student.campuslng);
+					expect(resStudent.instructor).to.equal(student.instructor);
+				});
+		});
+		
 	});
 
 });

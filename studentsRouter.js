@@ -26,6 +26,16 @@ studentsRouter.get('/students/:studentid', (req, res, next) => {
 		});
 });
 
+studentsRouter.get('/students/:id', (req, res, next) => {
+	Student
+		.findById(req.params.id)
+		.then(student => res.json(student))
+		.catch(err => {
+			console.log(err);
+			res.status(500).json({message: 'Internal server error'});
+		});
+});
+
 //GET - based on query filters to check duplicate of registration
 studentsRouter.get('/students', (req, res, next) => {
 	const queryOptions = ["studentid", "subject", "coursenumber", "semester",
