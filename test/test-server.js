@@ -1,17 +1,20 @@
 'use strict';
 
-const mocha = require('mocha');
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const expect = chai.expect;
-const should = chai.should();
 const faker = require('faker');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+
+
+const expect = chai.expect;
+
+
 mongoose.Promise = global.Promise;
+
 chai.use(chaiHttp);
 
-const {app, runServer, closeServer} = require('../server');
+const { app, runServer, closeServer } = require('../server');
 const {TEST_DATABASE_URL} = require('../config'); 
 const {Section, Student, Cart} = require('../models');
 
@@ -187,7 +190,7 @@ describe('Testing class registration app, university-mall', function(){
 				.then((_res) => {
 					res = _res;
 					expect(res).to.have.status(200);
-					expect(res.body.sections).to.have.lengthOf.at.least(1);
+					//expect(res.body.sections).to.have.lengthOf.at.least(1);
 					return Section.count();
 				})
 				.then((count) => {
@@ -326,7 +329,6 @@ describe('Testing class registration app, university-mall', function(){
 		});
 
 		
-
 		it('should return students with right fields', function(){
 			let resStudent;
 			return chai.request(app)
@@ -379,6 +381,126 @@ describe('Testing class registration app, university-mall', function(){
 		
 	});
 
+	describe('POST endpoint - students', function(){
+
+		it('should add new student record', function(){
+			const newStudent = generateStudentsData();
+			let fullname;
+			return chai.request(app)
+				.post('/students')
+				.send(newStudent)
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.json;
+					expect(res.body).to.be.a('object');
+					expect(res.body).to.include.keys(
+							'id', 'studentid', 'fullname', 'subject', 'title', 
+							'coursenumber', 'section', 'credithours', 'grade', 'status', 
+							'semester', 'startdate', 'enddate','starttime', 'endtime', 
+							'sun','mon', 'tue', 'wed','thu', 'fri', 'sat', 'campus', 
+							'campuslat', 'campuslng','instructor');
+					fullname = newStudent.firstname + " " + newStudent.lastname;
+					expect(res.body.id).to.not.be.null;
+					expect(res.body.fullname).to.equal(fullname);
+					expect(res.body.subject).to.equal(newStudent.subject);
+					expect(res.body.title).to.equal(newStudent.title);
+					expect(res.body.coursenumber).to.equal(newStudent.coursenumber);
+					expect(res.body.section).to.equal(newStudent.section);
+					expect(res.body.credithours).to.equal(newStudent.credithours);
+					expect(res.body.grade).to.equal(newStudent.grade);
+					expect(res.body.status).to.equal(newStudent.status);
+					expect(res.body.semester).to.equal(newStudent.semester);
+					expect(res.body.startdate).to.equal(newStudent.startdate);
+					expect(res.body.enddate).to.equal(newStudent.enddate);
+					expect(res.body.starttime).to.equal(newStudent.starttime);
+					expect(res.body.endtime).to.equal(newStudent.endtime);
+					expect(res.body.sun).to.equal(newStudent.sun);
+					expect(res.body.mon).to.equal(newStudent.mon);
+					expect(res.body.tue).to.equal(newStudent.tue);
+					expect(res.body.wed).to.equal(newStudent.wed);
+					expect(res.body.thu).to.equal(newStudent.thu);
+					expect(res.body.fri).to.equal(newStudent.fri);
+					expect(res.body.sat).to.equal(newStudent.sat);
+					expect(res.body.campus).to.equal(newStudent.campus);
+					expect(res.body.campuslat).to.equal(newStudent.campuslat);
+					expect(res.body.campuslng).to.equal(newStudent.campuslng);
+					expect(res.body.instructor).to.equal(newStudent.instructor);
+
+					return Student.findById(res.body.id);
+				})
+				.then(function(studen){
+					expect(studen.fullname).to.equal(fullname);
+					expect(studen.subject).to.equal(newStudent.subject);
+					expect(studen.title).to.equal(newStudent.title);
+					expect(studen.coursenumber).to.equal(newStudent.coursenumber);
+					expect(studen.section).to.equal(newStudent.section);
+					expect(studen.credithours).to.equal(newStudent.credithours);
+					expect(studen.grade).to.equal(newStudent.grade);
+					expect(studen.status).to.equal(newStudent.status);
+					expect(studen.semester).to.equal(newStudent.semester);
+					expect(studen.startdate).to.equal(newStudent.startdate);
+					expect(studen.enddate).to.equal(newStudent.enddate);
+					expect(studen.starttime).to.equal(newStudent.starttime);
+					expect(studen.endtime).to.equal(newStudent.endtime);
+					expect(studen.sun).to.equal(newStudent.sun);
+					expect(studen.mon).to.equal(newStudent.mon);
+					expect(studen.tue).to.equal(newStudent.tue);
+					expect(studen.wed).to.equal(newStudent.wed);
+					expect(studen.thu).to.equal(newStudent.thu);
+					expect(studen.fri).to.equal(newStudent.fri);
+					expect(studen.sat).to.equal(newStudent.sat);
+					expect(studen.campus).to.equal(newStudent.campus);
+					expect(studen.campuslat).to.equal(newStudent.campuslat);
+					expect(studen.campuslng).to.equal(newStudent.campuslng);
+					expect(studen.instructor).to.equal(newStudent.instructor);
+				});
+		});
+	});
+
+	describe('PUT endpoint - students', function(){
+		it('should update fields you send over', function(){
+			const updateData ={
+					grade: 'B',
+					status: 'cmpl'
+				};
+			return Student
+				.findOne()
+				.then(function(student){
+					console.log(student);
+					updateData.id = student.id;
+					return chai.request(app)
+						.put(`/students/${student.id}`)
+						.send(updateData) 
+				})
+				.then(function(res){
+					expect(res).to.have.status(204);
+					return Student.findById(updateData.id);
+				})
+				.then(function(student){
+					expect(student.grade).to.equal(updateData.grade);
+					expect(student.status).to.equal(updateData.status);
+				})	
+		});
+	});
+
+	describe('DELETE endpoint - students', function(){
+		it('delete selected student record', function(){
+			let student;
+			return Student
+				.findOne()
+				.then(function(_student){
+					student = _student;
+					return chai.request(app).delete(`/students/${student.id}`);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(204);
+					return Student.findById(student.id);
+				})
+				.then(function(_student) {
+					expect(_student).to.be.null;
+				})
+		})
+	});
 });
 
 
