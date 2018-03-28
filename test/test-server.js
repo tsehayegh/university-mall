@@ -5,27 +5,19 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
-
-
 const expect = chai.expect;
-
-
 mongoose.Promise = global.Promise;
-
 chai.use(chaiHttp);
-
 const { app, runServer, closeServer } = require('../server');
 const {TEST_DATABASE_URL} = require('../config'); 
 const {Section, Student, Cart} = require('../models');
 
 
 //==================================
-
 function generateRandomValues(arrayDocument){
 	return arrayDocument[Math.floor(Math.random()*arrayDocument.length)];
 }
 //=======
-
 const seedDocuments = {
 	studentid: ['001', '002','003', '004','005','006','007','008','009','010'],
 	subject: ['eng', 'mat', 'phy', 'chm', 'bio'],
@@ -161,28 +153,24 @@ function deleteDB(){
 	deleteSectionsDB();
 	deleteStudentsDB();
 }
+
+
 //===================================================
-
 describe('Testing class registration app, university-mall', function(){
-
 	before(function(){
 		return runServer(TEST_DATABASE_URL);
 	});
-
 	beforeEach(function(){
 		return seedData();
 	});
-
 	afterEach(function(){
 		return deleteDB();
 	});
-
 	after(function(){
 		return closeServer();
 	})
 
-	describe('GET sections endpoint', function(){
-
+	describe('GET endpoint - sections', function(){
 		it('should return all existing sections', function(){
 			let res;
 			return chai.request(app)
@@ -205,8 +193,7 @@ describe('Testing class registration app, university-mall', function(){
 				.then(function(res) {
 					expect(res).to.have.status(200);
 					expect(res.body.sections).to.be.a('array');
-
-					//expect(res.body.sections).to.have.lengthOf.at.least(1);
+					expect(res.body.sections).to.have.lengthOf.at.least(1);
 					res.body.sections.forEach(function(section) {
 						expect(section).to.be.a('object');
 						expect(section).to.include.keys(
@@ -285,8 +272,6 @@ describe('Testing class registration app, university-mall', function(){
 					expect(res.body.campuslat).to.equal(newSection.campuslat);
 					expect(res.body.campuslng).to.equal(newSection.campuslng);
 					expect(res.body.instructor).to.equal(newSection.instructor);
-
-
 				})
 		})
 	});
@@ -466,7 +451,6 @@ describe('Testing class registration app, university-mall', function(){
 			return Student
 				.findOne()
 				.then(function(student){
-					console.log(student);
 					updateData.id = student.id;
 					return chai.request(app)
 						.put(`/students/${student.id}`)

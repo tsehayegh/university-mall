@@ -36,9 +36,8 @@
 				<label for = "action-choice">Preferred Action</label>
 				<select name = "actionSelection" id = "action-choice">
 					<option value = "No Action"></option>
-					<option value = "Add New Class">Add New Class</option>
-					<option value = "Drop a Class">Drop a Class</option>
-					<option value = "My Schedule">Instructor</option>
+					<option value = "Student">Student</option>
+					<option value = "Instructor">Instructor</option>
 				</select>
 				<button class = "submit-button">Submit</button>
 			</fieldset>
@@ -108,6 +107,31 @@
 				<button class  = "drop-class-button">Drop a Class</button>
 			</fieldset>
 			
+		</form>
+		<form class = "instructor-space">
+				<legend class = "enter-grades"> </legend>
+				<fieldset>
+					<label for = "grade-choice">Grade</label>
+					<select name = "gradeSection" id = "grade-choice">
+						<option value = "Any"></option>
+						<option value = "A">A</option>
+						<option value = "B">B</option>
+						<option value = "C">C</option>
+						<option value = "D">D</option>
+						<option value = "F">F</option>
+						<option value = "I">I</option>
+						<option value = "W">W</option>
+						<option value = "u">Audit</option>
+					</select>
+					<label for = "status-choice">Course Status</label>
+					<select name = "statusSection" id = "status-choice">
+						<option value = "Any"></option>
+						<option value = "reg">Registered</option>
+						<option value = "cmpl">Completed</option>
+						<option value = "aud">Audited</option>
+					</select>
+					<button class = "grade-button">Enter Grades</button>
+				</fieldset>
 		</form>
 
 		<form class = "registered-classes-today">

@@ -1,18 +1,16 @@
 
 'use strict';
 
-//This module will create a connection to server
-
+//This module will create a connection to a server
 const express = require('express');
 const app = express();
-
 const mongoose = require('mongoose');
 
 //import port, database configuration from config.js
 const {PORT, DATABASE_URL} = require('./config');
-
 let server;
 
+//a function to run a server
 function runServer(databaseUrl, port = PORT) {
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
@@ -31,6 +29,7 @@ function runServer(databaseUrl, port = PORT) {
   });
 }
 
+//a function to close a server
 function closeServer() {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
@@ -45,11 +44,11 @@ function closeServer() {
   });
 }
 
-
+/*
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 }
-
+*/
 
 module.exports = {app, runServer, closeServer };
 

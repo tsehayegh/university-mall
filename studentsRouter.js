@@ -16,28 +16,9 @@ studentsRouter.use(express.static(__dirname + '/public'));
 
 //==========================================================
 //GET - Display student records 
-studentsRouter.get('/students/:studentid', (req, res, next) => {
-	Student
-		.find({"studentid": req.params.studentid})
-		.then(student => res.json(student))
-		.catch(err => {
-			console.log(err);
-			res.status(500).json({message: 'Internal server error'});
-		});
-});
-
-studentsRouter.get('/students/:id', (req, res, next) => {
-	Student
-		.findById(req.params.id)
-		.then(student => res.json(student))
-		.catch(err => {
-			console.log(err);
-			res.status(500).json({message: 'Internal server error'});
-		});
-});
 
 //GET - based on query filters to check duplicate of registration
-studentsRouter.get('/students', (req, res, next) => {
+studentsRouter.get('/students', (req, res) => {
 	const queryOptions = ["studentid", "subject", "coursenumber", "semester",
 						 "section", "sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 	const queries = {};
@@ -61,6 +42,15 @@ studentsRouter.get('/students', (req, res, next) => {
 		});
 });
 
+studentsRouter.get('/students/:id', (req, res) => {
+	Student
+		.findById(req.params.id)
+		.then(student => res.json(student))
+		.catch(err => {
+			console.log(err);
+			res.status(500).json({message: 'Internal server error'});
+		});
+});
 
 //===========================
 //POST- Register for classes
@@ -193,22 +183,16 @@ studentsRouter.post('/students/cart',(req, res) =>{
 
 //======================
 
-//PUT - use PUT method to update grades based on studentid and coursename
+//PUT - use PUT method to update grades based on automatic mongodb id
 studentsRouter.put('/students/:id', (req, res) => {
 	const reqFields =  ['studentid', 'subject', 'coursenumber', 'semester'];
-
 	if(!(req.params.id && req.body.id&& req.params.id === req.body.id)) {
-		const reqParam = req.params.id;
-		const reqBody =  req.body.id;
 		const errorMessage = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
 		console.log(errorMessage);
 		res.status(400).json({message: errorMessage});
 	};
-
-
 	const toUpdate = {};
 	const updateableFields  = ['grade', 'status'];
-
 	updateableFields.forEach(field => {
 		if (field in req.body) {
 			toUpdate[field] = req.body[field];
@@ -221,8 +205,7 @@ studentsRouter.put('/students/:id', (req, res) => {
 })
 
 
-//DELETE - use DELETE method to delete registered class based on studentid and coursename
-
+//DELETE - use DELETE method to delete class based on student id and coursename
 studentsRouter.delete('/delete/cart/:id', (req, res) => {
   Cart
     .findByIdAndRemove(req.params.id)
@@ -240,3 +223,4 @@ studentsRouter.delete('/students/:id', (req, res) => {
 
 //Export module
 module.exports = studentsRouter;
+
