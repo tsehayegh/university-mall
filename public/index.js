@@ -322,10 +322,13 @@ function registerForClasses(){
 	$('.register-button').on('click', function(event){
 		event.preventDefault();
 		$('.sec-cart-list li').each(function(index){
+
 			const sectionName = $(this).attr('id').split("-");
+
 			let searchURL = `/sections/?subject=`+sectionName[0];
 			searchURL = searchURL+`&coursenumber=`+sectionName[1];
 			searchURL = searchURL+`&section=`+sectionName[2];
+
 			registerOrSaveSectionsInCart(searchURL, '/students', 'reg');
 		});
 		clearAllRecordsFromCart();
@@ -358,9 +361,7 @@ function saveClassesToCart(){
 			cartURL = cartURL+`&coursenumber=`+sectionName[1];
 
 			$.get(cartURL, function(data){
-				console.log(data);
 					if(!(data.cart)){
-						console.log(data.carts);
 						registerOrSaveSectionsInCart(searchURL, '/students/cart','cart');
 					}
 
@@ -468,7 +469,6 @@ function checkDailyScheduleConflict(){
 
 function pullClassesFromCart(searchURL){
 	$.get(searchURL, function(data){
-		console.log(data);
 		$('.sec-cart-list').empty();
 		data.carts.map((cart) => {
 			let meetingDays = [];
@@ -481,8 +481,7 @@ function pullClassesFromCart(searchURL){
 			const endtime = cart.endtime.toLowerCase().replace(/\s+/g, '');
 			const meetingdays = meetingDays;
 			meetingDays = meetingDays.join(',');
-			const sectionname = `${cart.subject}-${cart.coursenumber}`;
-
+			const sectionname = `${cart.subject}-${cart.coursenumber}-${cart.section}`;
 			$('.sec-cart-list').append(
 				`<li id = "${sectionname}" tabindex ='0' 
 							data-starttime = ${starttime}
