@@ -19,8 +19,10 @@ studentsRouter.use(express.static(__dirname + '/public'));
 
 //GET - based on query filters to check duplicate of registration
 studentsRouter.get('/students', (req, res) => {
-	const queryOptions = ["studentid", "subject", "coursenumber", "semester",
-						 "section", "sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+	const queryOptions = ['studentid', 'subject', 'coursenumber', 'semester', 
+						 'startdate', 'enddate', 'starttime', 'endtime',
+						 'section', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat',
+						 'campus', 'instructor'];
 	const queries = {};
 	for (let i = 0; i< queryOptions.length; i++){
 		if(req.query[queryOptions[i]]){

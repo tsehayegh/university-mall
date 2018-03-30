@@ -180,15 +180,18 @@ function checkMultipleCampusRegistration(currentListId){
 	let checkedCampus = $(`.search-result-list li[id=${currentListId}]`).data().campus; 
 	const totalListCountInCart = $('.sec-cart-list li').length;
 	const endtime = convertToDateTime($(`.search-result-list li[id=${currentListId}]`).attr("data-endtime"));
+
+	console.log(endtime);
 	checkedMeetingDaysArray.map(function(day) {
 		$('.sec-cart-list li').each(function(index){
-			sortList($('.sec-cart-list'));		
+			sortList($('.sec-cart-list li'));		
 				const campusCart = $(this).attr("data-campus").toLowerCase();
 				const meetingDaysCartArray = $(this).attr("data-meetingdays").toLowerCase().split(',');
 				for(let i = 0; i < meetingDaysCartArray.length; i++){
 					if(day === meetingDaysCartArray[i]){
 						if(checkedCampus !== campusCart){
-							const starttime = convertToDateTime($(this).attr("data-endtime"));
+							const starttime = convertToDateTime($(this).attr("data-starttime"));
+							console.log(Math.abs(starttime - endtime));
 							displayErrorMessage('Registering for multiple campuses! Make sure you have enough time to get to your classes');
 						}
 					}
@@ -204,7 +207,7 @@ function checkScheduleConflict(currentListId){
 	const endtime = convertToDateTime($(`.search-result-list li[id=${currentListId}]`).attr("data-endtime"));
 	checkedMeetingDaysArray.map(function(day) {
 		$('.sec-cart-list li').each(function(index){
-			sortList($('.sec-cart-list'));		
+			sortList($('.sec-cart-list li'));		
 				const campusCart = $(this).attr("data-campus").toLowerCase();
 				const meetingDaysCartArray = $(this).attr("data-meetingdays").toLowerCase().split(',');
 				for(let i = 0; i < meetingDaysCartArray.length; i++){
@@ -343,12 +346,9 @@ function saveClassesToCart(){
 		event.preventDefault();
 		let currentListId;
 		const studentid = $('#studentId').val();
-
 		const selectedSemester = $('#semester-choice').val();
-
-		$('.sec-cart-list li input[type="checkbox"]').each(function(index){
+		$('.sec-cart-list li').each(function(index){
 			currentListId = $(this).attr('id');
-
 			let sectionName = $(this).attr('id').split("-");
 			let searchURL = `/sections/?subject=`+sectionName[0];
 			searchURL = searchURL+`&coursenumber=`+sectionName[1];
@@ -361,10 +361,10 @@ function saveClassesToCart(){
 			cartURL = cartURL+`&coursenumber=`+sectionName[1];
 
 			$.get(cartURL, function(data){
-					if(!(data.cart)){
+					if((data.carts.length === 0)){
+						console.log(data);
 						registerOrSaveSectionsInCart(searchURL, '/students/cart','cart');
 					}
-
 			});
 		});
 		//$(`.sec-cart-list`).empty();
@@ -500,8 +500,6 @@ function pullClassesFromCart(searchURL){
 			sortList('.sec-cart-list');
 		}); 
 	});
-
-
 }
 
 function TrimColon(text){
@@ -510,13 +508,15 @@ function TrimColon(text){
 
 function convertToDateTime(time){
 	const _time = new Date();
-	let hours;
 	const ampm = time.substr(-2);
-	let hrmin = time.trim().substr(0, time.length-2);
-	hrmin = TrimColon(hrmin).split(":");
-	if(ampm === "pm" && hrmin[0] <12) hours = hours + 12; 
-	if(ampm === "am" && hrmin[0] === 12) hours = hours - 12;
-	return _time.setHours(hours, hrmin[1]);
+	let hourMinute = time.trim().substr(0, time.length-2);
+	hourMinute = TrimColon(hourMinute).split(":");
+	let hours = Number(hourMinute[0]);
+	const minutes = Number(hourMinute[1]);
+	if(ampm === "pm" && hours <12) hours = Math.floor(+hours + +12); 
+	if(ampm === "am" && hours === 12) hours = Math.floor(+hours - +12);
+	return Math.floor(+hours + +minutes);
+	//return Math.floor(_time.setHours(hours, minutes)/60000);
 }
 
 //Sortin JSON object
@@ -525,15 +525,15 @@ function sortJsonObject(data){
 		const _a = new Date();
 		const _b = new Date();
 		if (a.starttime.substr(-2) === 'AM'){
-			_a.setHours(a.starttime.split(":")[0]);
+			_a.setHours(Number(a.starttime.split(":")[0]));
 
 		} else {
-			_a.setHours(a.starttime.split(":")[0]+12);
+			_a.setHours(Number(a.starttime.split(":")[0]) + +12);
 		}
 		if (b.starttime.substr(-2) === 'AM'){
-			_b.setHours(b.starttime.split(":")[0]);
+			_b.setHours(Number(b.starttime.split(":")[0]));
 		} else {
-			_b.setHours(b.starttime.split(":")[0]+12);
+			_b.setHours(Number(b.starttime.split(":")[0]) + +12);
 		}
 		return _a - _b;
 	});
@@ -544,7 +544,8 @@ function sortJsonObject(data){
 function sortList(listElemToSort) {
   $(listElemToSort).html(
     $(listElemToSort).children('li').sort(function (a,b){
-      	return new Date('1970/01/01 ' + $(a).data('starttime')) - new Date('1970/01/01 ' + $(b).data('starttime'));
+    	return convertToDateTime($(a).data('starttime')) - convertToDateTime($(b).data('starttime'));
+      	//return new Date('1970/01/01 ' + $(a).data('starttime')) - new Date('1970/01/01 ' + $(b).data('starttime'));
     })
   );
 };
@@ -758,4 +759,10 @@ function calcAndDisplayRoute(orig, waypts, dest) {
 	})
 }
 
+//clear route information
+function clearRoute(){
+    if (publicState.directionsDisplay != null) {
+      publicState.directionsDisplay.setMap(null);
+  }
+}
 

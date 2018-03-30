@@ -7,11 +7,12 @@ const faker = require('faker');
 const mongoose = require('mongoose');
 const expect = chai.expect;
 mongoose.Promise = global.Promise;
-chai.use(chaiHttp);
+
 const { app, runServer, closeServer } = require('../server');
-const {TEST_DATABASE_URL} = require('../config'); 
+const {TEST_DATABASE_URL, DATABASE_URL} = require('../config'); 
 const {Section, Student, Cart} = require('../models');
 
+chai.use(chaiHttp);
 
 //==================================
 function generateRandomValues(arrayDocument){
@@ -140,9 +141,8 @@ function deleteSectionsDB(){
 
 //=======
 function deleteStudentsDB(){
-	return new Promise((resolve, reject)=>{
+	return new Promise((resolve, reject) => {
 		Student.remove({}, function(err){
-			console.log('Delete database');
 		})
 		.then((result) => resolve(resolve))
 		.catch((err) => reject(err));
@@ -168,25 +168,28 @@ describe('Testing class registration app, university-mall', function(){
 	});
 	after(function(){
 		return closeServer();
-	})
-
+	});
+	
 	describe('GET endpoint - sections', function(){
+		this.timeout(5000);
+
 		it('should return all existing sections', function(){
+
 			let res;
 			return chai.request(app)
 				.get('/sections')
-				.then((_res) => {
+				.then(function(_res) {
 					res = _res;
 					expect(res).to.have.status(200);
-					//expect(res.body.sections).to.have.lengthOf.at.least(1);
 					return Section.count();
 				})
-				.then((count) => {
+				.then(function(count) {
 					expect(res.body.sections).to.have.lengthOf(count);
 				});
 		});
-
+		
 		it('should return sections with right fields', function(){
+
 			let resSection;
 			return chai.request(app)
 				.get('/sections')
@@ -272,11 +275,11 @@ describe('Testing class registration app, university-mall', function(){
 					expect(res.body.campuslat).to.equal(newSection.campuslat);
 					expect(res.body.campuslng).to.equal(newSection.campuslng);
 					expect(res.body.instructor).to.equal(newSection.instructor);
-				})
-		})
+				});
+		});
 	});
 
-	describe('DELETE endpoint - sections', function(){
+		describe('DELETE endpoint - sections', function(){
 		it('delete selected section by id', function(){
 			let section;
 			return Section
@@ -291,9 +294,10 @@ describe('Testing class registration app, university-mall', function(){
 				})
 				.then(function(_section) {
 					expect(_section).to.be.null;
-				})
-		})
+				});
+		});
 	});
+
 
 	describe('GET endpoint - students', function(){
 
@@ -366,7 +370,8 @@ describe('Testing class registration app, university-mall', function(){
 		
 	});
 
-	describe('POST endpoint - students', function(){
+
+		describe('POST endpoint - students', function(){
 
 		it('should add new student record', function(){
 			const newStudent = generateStudentsData();
@@ -467,7 +472,8 @@ describe('Testing class registration app, university-mall', function(){
 		});
 	});
 
-	describe('DELETE endpoint - students', function(){
+
+		describe('DELETE endpoint - students', function(){
 		it('delete selected student record', function(){
 			let student;
 			return Student
@@ -482,8 +488,53 @@ describe('Testing class registration app, university-mall', function(){
 				})
 				.then(function(_student) {
 					expect(_student).to.be.null;
+				});
+		});
+	});
+
+	describe('PUT endpoint - students', function(){
+		it('should update fields you send over', function(){
+			const updateData ={
+					grade: 'B',
+					status: 'cmpl'
+				};
+			return Student
+				.findOne()
+				.then(function(student){
+					updateData.id = student.id;
+					return chai.request(app)
+						.put(`/students/${student.id}`)
+						.send(updateData) 
 				})
-		})
+				.then(function(res){
+					expect(res).to.have.status(204);
+					return Student.findById(updateData.id);
+				})
+				.then(function(student){
+					expect(student.grade).to.equal(updateData.grade);
+					expect(student.status).to.equal(updateData.status);
+				});	
+		});
+	});
+
+
+		describe('DELETE endpoint - students', function(){
+		it('delete selected student record', function(){
+			let student;
+			return Student
+				.findOne()
+				.then(function(_student){
+					student = _student;
+					return chai.request(app).delete(`/students/${student.id}`);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(204);
+					return Student.findById(student.id);
+				})
+				.then(function(_student) {
+					expect(_student).to.be.null;
+				});
+		});
 	});
 });
 

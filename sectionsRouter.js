@@ -16,14 +16,8 @@ router.use(express.static(__dirname + '/public'));
 
 //==========================================================
 //return all courses
-router.use(function(req, res, next) {
-  for (let key in req.query)
-  { 
-    req.query[key.toLowerCase()] = req.query[key];
-  }
-  next();
-});
-router.get('/sections', (req, res, next) => {
+
+router.get('/sections', (req, res) => {
 	const queryOptions = ["subject", "coursenumber", "title","section","credithours","semester","startdate",
 		 "enddate","starttime","endtime","sun","mon","tue","wed",
 		 "thu","fri","sat","campus"];
@@ -49,22 +43,16 @@ router.get('/sections', (req, res, next) => {
 });
 
 //search course based on query params
-router.get('/sections/:id', (req, res, next) => {
-	let id = req.params.id;
-	console.log(mongoose.Types.ObjectId(req.params.id));
-	if (!(id.match(/^[0-9a-fA-F]{24}$/))) {
-		console.log(id);
-  		id = mongoose.Types.ObjectId(id);
-  		console.log(id);
-	}
+router.get('/sections/:id', (req, res) => {
 	Section
 		.findById(req.params.id)
-		.then(section => res.json(section.serialize()))
+		.then(section => res.json(section))
 		.catch(err => {
 			console.log(err);
 			res.status(500).json({message: 'Internal server error'});
 		});
 });
+
 
 router.post('/sections', (req, res) =>{
 	const requiredFields = ['subject', 'coursenumber', 'title', 'section','semester',
