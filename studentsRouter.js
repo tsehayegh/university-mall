@@ -111,7 +111,11 @@ studentsRouter.post('/students',(req, res) =>{
 
 //GET - pull sections/classes saved on Cart
 studentsRouter.get('/search/cart', (req, res, next) => {
-	const queryOptions = ["studentid", "subject", "coursenumber", "semester"];
+	const queryOptions = ['studentid', 'firstname', 'lastname', 'semester',
+							'subject', 'coursenumber', 'title', 'section',
+							'credithours', 'grade', 'status', 'startdate', 'enddate',
+							'starttime', 'endtime', 'campus', 'campuslat',
+							'campuslng', 'instructor'];
 	const queries = {};
 	for (let i = 0; i< queryOptions.length; i++){
 		if(req.query[queryOptions[i]]){
