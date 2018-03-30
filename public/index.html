@@ -15,8 +15,7 @@
 	<div id = "map-canvas"></div>
 
 	<!--Overlay form -->
-	<main class = "main-container">
-		<form role = "main" class = "action-section" action = "/public" method = "submit">
+		<form role = "main" class = "landing-page" action = "/public" method = "submit">
 			<fieldset>
 				<legend>The Prestigious University</legend>
 				<label for = "studentId">Student ID:</label>
@@ -40,12 +39,8 @@
 					<option value = "Instructor">Instructor</option>
 				</select>
 				<button class = "submit-button">Submit</button>
-			</fieldset>
-			<p class = "display-error"></p>
-		</form>
-		<form class = "course-selection hidden">
-			<fieldset>
-				<legend>Search for a section</legend>
+			
+				<h1>Search for a section</h1>
 				<label for = "campus-choice">Campus</label>
 				<select class = "campuses" id = "campus-choice">
 					<option value = "any"></option>
@@ -75,13 +70,21 @@
 					<option>171</option>
 				</select>
 				<button class = "search-button">Search</button>
+			</fieldset>
+
+			
+		</form>
+
+	<main class = "main-container">
+		<form class = "course-selection hidden">
+			<fieldset>
+				<legend>Search Results</legend>
+				<p class = "display-error"></p>
 				<div class = "sec-search-result">
-					<h2>Search Results</h2>
 					<ul class = "search-result-list">
 						<li></li>
 					</ul>				
 				</div>
-
 			</fieldset>
 		</form>
 
@@ -107,31 +110,29 @@
 				<button class  = "drop-class-button">Drop a Class</button>
 			</fieldset>
 			
-		</form>
-		<form class = "instructor-space">
-				<legend class = "enter-grades"> </legend>
-				<fieldset>
-					<label for = "grade-choice">Grade</label>
-					<select name = "gradeSection" id = "grade-choice">
-						<option value = "Any"></option>
-						<option value = "A">A</option>
-						<option value = "B">B</option>
-						<option value = "C">C</option>
-						<option value = "D">D</option>
-						<option value = "F">F</option>
-						<option value = "I">I</option>
-						<option value = "W">W</option>
-						<option value = "u">Audit</option>
-					</select>
-					<label for = "status-choice">Course Status</label>
-					<select name = "statusSection" id = "status-choice">
-						<option value = "Any"></option>
-						<option value = "reg">Registered</option>
-						<option value = "cmpl">Completed</option>
-						<option value = "aud">Audited</option>
-					</select>
-					<button class = "grade-button">Enter Grades</button>
-				</fieldset>
+		
+			<section class = "instructor-space">
+						<label for = "grade-choice">Grade</label>
+						<select name = "gradeSection" id = "grade-choice">
+							<option value = "Any"></option>
+							<option value = "A">A</option>
+							<option value = "B">B</option>
+							<option value = "C">C</option>
+							<option value = "D">D</option>
+							<option value = "F">F</option>
+							<option value = "I">I</option>
+							<option value = "W">W</option>
+							<option value = "u">Audit</option>
+						</select>
+						<label for = "status-choice">Course Status</label>
+						<select name = "statusSection" id = "status-choice">
+							<option value = "Any"></option>
+							<option value = "reg">Registered</option>
+							<option value = "cmpl">Completed</option>
+							<option value = "aud">Audited</option>
+						</select>
+						<button class = "grade-button">Enter Grades</button>
+			</section>
 		</form>
 
 		<form class = "registered-classes-today">
@@ -143,9 +144,9 @@
 			</fieldset>
 			
 		</form>
-
-
 	</main>
+
+
 	<!--jQuery Scripts -->
 	<script
   		src="https://code.jquery.com/jquery-3.3.1.js"
