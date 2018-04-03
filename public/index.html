@@ -3,115 +3,147 @@
 <head>
 	
 	<title>University Mall</title>
-	<meta charset="utf-8">
-	<!-- inset view port here -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<link rel="stylesheet" type="text/css" href="main.css">
+	<link rel="stylesheet" type="text/css" href="responsive-design.css">
+
+
     <link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto|Roboto+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+	<div class = "background-space"></div>
+	<div class = "container row">
+		<div id = "map-canvas" class = "map-canvas col-6"></div>
+			<form class = "user-role">
+				<fieldset>
+					<legend class = "app-header">The Prestigious University</legend>
+					<p>This app, University Mall, will help you to: (a)search for classes, (b)save classes in cart, (c)register for classes, or (d)enter grades (instructors only).</p> 
 
-	<!--map -->
-	<div id = "map-canvas"></div>
+					<p>If you are ready, select your role from the dropdown menue below and click <em>Start</em> button!</p>
 
-	<!--Overlay form -->
-		<form role = "main" class = "landing-page" action = "/public" method = "submit">
+					<label for = "role-choice">Select your role</label>
+					<select id = "role-choice" name = "myRole">
+						<option value = "Student">Student</option>
+						<option value = "Instructor">Instructor</option>
+					</select>
+					<button class = "start-button">Start</button>
+				</fieldset>
+			</form>
+
+		<form role = "main" class = "landing-page col-6 hidden" action = "/public" method = "submit">
 			<fieldset>
-				<legend>The Prestigious University</legend>
-				<label for = "studentId">Student ID:</label>
-				<input type="text" id = "studentId" required>
-				<label for = "firstName">First Name:</label>
-				<input type="text" id = "firstName" required>
-				<label for = "lastName">Last Name</label>
-				<input type="text" id = "lastName" required>
-				<label for = "semester-choice">Semester</label>
-				<select name = "semesterSelection" id = "semester-choice">
-					<option value = "Any"></option>
-					<option value = "2018FA">2018FA</option>
-					<option value = "2018SU">2018SU</option>
-					<option value = "2018SP">2018SP</option>
-					<option value = "2017FA">2017FA</option>
-				</select>
-				<label for = "action-choice">Preferred Action</label>
-				<select name = "actionSelection" id = "action-choice">
-					<option value = "No Action"></option>
-					<option value = "Student">Student</option>
-					<option value = "Instructor">Instructor</option>
-				</select>
-				<button class = "submit-button">Submit</button>
-			
-				<h1>Search for a section</h1>
-				<label for = "campus-choice">Campus</label>
-				<select class = "campuses" id = "campus-choice">
-					<option value = "any"></option>
-					<option value = "central">Central</option>
-					<option value = "city View">CityView</option>
-					<option value = "merancas">Merancas</option>
-					<option value = "levine">Levine</option>
-					<option value = "harper">Harper</option>
-					<option value = "harris">Harris</option>
-					<option value = "cato">Cato</option>
-					<option value = "online">Online</option>
-				</select>
-				<label for = "subject-choice">Subject</label>
-				<select class = "subject" id = "subject-choice">
-					<option></option>
-					<option>ENG</option>
-					<option>MAT</option>
-					<option>BIO</option>
-					<option>PHY</option>
-				</select>
-				<label for = "course-number-choice">Course Number</label>
-				<select class = "course-number" id = "course-number-choice">
-					<option></option>
-					<option>110</option>
-					<option>111</option>
-					<option>112</option>
-					<option>171</option>
-				</select>
-				<button class = "search-button">Search</button>
-			</fieldset>
-
-			
-		</form>
-
-	<main class = "main-container">
-		<form class = "course-selection hidden">
-			<fieldset>
-				<legend>Search Results</legend>
-				<p class = "display-error"></p>
-				<div class = "sec-search-result">
-					<ul class = "search-result-list">
-						<li></li>
-					</ul>				
-				</div>
-			</fieldset>
-		</form>
-
-		<form class = "sec-cart">
-			<legend> Sections in Cart</legend>
-			<fieldset>
-				<ul class = "sec-cart-list">
-				</ul>
-
-			</fieldset>
-			<button class = "register-button">Register</button>
-			<button class = "save-cart-button">Save to Cart</button>
-			<button class = "clear-cart-button">Delete Selected From Cart</button>
-			<button class = "clear-all-cart-button">Delete All From Cart</button>
-		</form>
-
-		<form class = "registered-classes">
-			<legend>Registered Classes</legend>
-			<fieldset class = "my-classes">
-				<ul class = "sec-registered-list">
+				<legend class = "app-header">The Prestigious University</legend>
+					<section class = "user-info"> 
+						<div class = 'group'>
+							<label for = "studentId">Student ID:</label>
+							<input type="text" id = "studentId" required placeholder = "Enter your student id">
+						</div>
+						<div class = "group">
+							<label for = "firstName">First Name:</label>
+							<input type="text" id = "firstName" required placeholder="Enter your first name">
+						</div>
+						<div class = "group">
+							<label for = "lastName">Last Name</label>
+							<input type="text" id = "lastName" required placeholder="Enter your last name">
+						</div>
+						<div class = "group">
+							<label for = "semester-choice">Semester</label>
+							<select name = "semesterSelection" id = "semester-choice">
+								<option value = "2018FA">Fall 2018</option>
+								<option value = "2018SU">Summer 2018</option>
+								<option value = "2018SP">Spring 2018</option>
+								<option value = "2017FA">Fall 2017</option>
+							</select>
+						</div>
+						<div class = "group">
+							<label for = "action-choice">Your Role</label>
+							<select name = "actionSelection" id = "action-choice">
+								<option value = "Student">Student</option>
+								<option value = "Instructor">Instructor</option>
+							</select>
+						</div>
+						<button class = "submit-button">Submit</button>
 					
-				</ul>
-				<button class  = "drop-class-button">Drop a Class</button>
+
+					<h1>Search for sections</h1>
+					<div class = "group">
+						<label for = "campus-choice">Campus</label>
+						<select class = "campuses" id = "campus-choice">
+							<option value = "any"></option>
+							<option value = "central">Central</option>
+							<option value = "city View">CityView</option>
+							<option value = "merancas">Merancas</option>
+							<option value = "levine">Levine</option>
+							<option value = "harper">Harper</option>
+							<option value = "harris">Harris</option>
+							<option value = "cato">Cato</option>
+							<option value = "online">Online</option>
+						</select>
+					</div>
+					<div class = "group">
+						<label for = "subject-choice">Subject</label>
+						<select class = "subject" id = "subject-choice">
+							<option></option>
+							<option>ENG</option>
+							<option>MAT</option>
+							<option>BIO</option>
+							<option>PHY</option>
+						</select>
+					</div>
+					<div class = "group">
+						<label for = "course-number-choice">Course Number</label>
+						<select class = "course-number" id = "course-number-choice">
+							<option></option>
+							<option>110</option>
+							<option>111</option>
+							<option>112</option>
+							<option>171</option>
+						</select>
+					</div>
+					<button class = "search-button btn" disabled>Search</button>
+				</section>
 			</fieldset>
-			
-		
-			<section class = "instructor-space">
+
+		</form>
+
+		<main class = "main-container col-6 hidden">
+			<form class = "course-selection frm">
+				<fieldset>
+					<legend>Search Results</legend>
+					<label class = "display-error"></label>
+					<div class = "sec-search-result">
+						<ul class = "search-result-list">
+						</ul>				
+					</div>
+				</fieldset>
+			</form>
+
+			<form class = "sec-cart frm">
+				<legend> Sections in Cart</legend>
+				<fieldset>
+					<ul class = "sec-cart-list">
+					</ul>
+					<div class = "cart-button">
+						<button class = "register-button btn" disabled>Register</button>
+						<button class = "save-cart-button btn" disabled>Save to Cart</button>
+						<button class = "clear-cart-button btn" disabled>Delete Selected</button>
+						<button class = "clear-all-cart-button btn" disabled>Delete All</button>
+					</div>
+				</fieldset>
+			</form> 
+
+			<form class = "registered-classes frm">
+				<legend>Registered Classes</legend>
+				<fieldset class = "my-classes">
+					<ul class = "sec-registered-list">
+					</ul>
+					<button class  = "drop-class-button btn" disabled>Drop Selected</button>
+
+					<section class = "instructor-space">
+						<div class = "group">
 						<label for = "grade-choice">Grade</label>
 						<select name = "gradeSection" id = "grade-choice">
 							<option value = "Any"></option>
@@ -124,38 +156,35 @@
 							<option value = "W">W</option>
 							<option value = "u">Audit</option>
 						</select>
-						<label for = "status-choice">Course Status</label>
+						<label for = "status-choice">Status</label>
 						<select name = "statusSection" id = "status-choice">
-							<option value = "Any"></option>
-							<option value = "reg">Registered</option>
 							<option value = "cmpl">Completed</option>
+							<option value = "reg">Registered</option>
 							<option value = "aud">Audited</option>
 						</select>
-						<button class = "grade-button">Enter Grades</button>
-			</section>
-		</form>
+						</div>
+						<button class = "grade-button btn" disabled>Enter Grades</button>
+					</section>
 
-		<form class = "registered-classes-today">
-			<legend>Today's Schedule</legend>
-			<fieldset class = "my-classes-today">
-				<ul class = "sec-registered-today-list">
-					
-				</ul>
-			</fieldset>
-			
-		</form>
-	</main>
+				</fieldset>
+			</form>
 
+			<form class = "registered-classes-today frm">
+				<legend>Today's Schedule</legend>
+				<fieldset class = "my-classes-today">
+					<ul class = "sec-registered-today-list">
+					</ul>
+				</fieldset>
+			</form>
+		</main>
+
+	</div>
 
 	<!--jQuery Scripts -->
-	<script
-  		src="https://code.jquery.com/jquery-3.3.1.js"
-  		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  		crossorigin="anonymous"></script>
+	<script src = "https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src = "/state.js"></script>
   	<script src = "/index.js"></script>
   	
-
    <script async defer
   		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_QwlMKtRUYkhg4QXxm-EHdukRYJ1RnPs&libraries=geometry,places&callback=initMap">
   	</script>

@@ -9,22 +9,39 @@ label, legend, section{
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  outline-style: none;
 }
 
 body {
-  line-height: 1;
   border: 1px solid black;
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+
+ol, ul {
+  list-style: none;
+}
+
+* {
+  font-family: 'Roboto', serif;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 #map-canvas,
-..main-container {
+.main-container {
 	height: 100%;
+  overflow: auto;
 }
 
 legend, h1, button {
@@ -33,75 +50,185 @@ legend, h1, button {
 
 }
 
-#map-canvas {
+legend {
+  font-size: 1.2em;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid white;
+}
+
+.background-space {
+  width: 100%;
   height: 100%;
-  width: 40%;
+  background-color: rgb(160, 196,210);
+  z-index: 1000;
+}
+
+.user-role {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  vertical-align: middle;
+  background-color: rgb(160, 196,210);
+  border: 1px solid black;
+  font-size: 18px;
+  line-height: 1.2em;
+  padding: 5px;
+}
+
+
+#map-canvas {
+  height: 50%;
   position: absolute;
-  top:35%;
+  top:50%;
   left: 0;
   z-index: 1;
-  border: 2px solid black;
+  border: 1px solid black;
+  margin: 0;
 }
 
 .landing-page {
   position: absolute;
   top: 0;
   left: 0;
-  height: 35%;
-  width: 40%;
+  height: 50%;
   overflow-y: scroll;
   overflow-x: hidden;
-  border: 2px solid black;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 20px;
-  z-index: 0;
-  background-color: rgb(173, 198, 216);
-
+  z-index: 10;
+  background-color: rgb(160, 196,210);
+  margin: 0;
+  line-height: 1.5;
   padding: 20px;
+  border: 1px solid black;
 }
 
-.landing-page label,
-.landing-page input,
-.landing-page option{
-  display: inline-block;
+
+
+input, select {
+  width: 150px;
+  font: 1em 'Arial', sans-serif;
+  padding: 3px 6px;
+  min-width: 50%;
+  margin-top: 0.4em;
+  border: 1px solid black;
 }
 
-.landing-page option {
-  display: inline-block;
+select:focus {
+  background: green:
 }
+
+button {
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid black;
+  line-height: 1.3em;
+  box-shadow: 0 0 3px #F1F1F2;
+  background-color: rgb(217, 217, 217);
+  margin: 5px;
+}
+
+.group {
+  width: 100%
+  display: inline-block;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 0.4em;
+}
+
+.app-header {
+  font-size: 1.3em;
+  padding-bottom: 10px;
+  color: green;
+}
+
+
+
+.user-info {
+  position: relative;
+  height: 50%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: auto;
+  text-align: center;
+}
+
 
 .main-container{
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 60%;
+  height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-  border: 2px solid black;
+  border: 1px solid black;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 20px;
   z-index: 10;
-  background-color: rgb(173, 198, 216);
-
-
+  background-color: rgb(160, 196,210);
 }
 
-.sec-cart,
-.registered-classes {
+.main-container input[type = "checkbox"] {
+  width: 10px;
+  padding-left: 0;
+}
+
+.mian-container{
+  margin: 0;
+  padding: 0;
+}
+
+.frm {
   position: relative;
   height: 25%;
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-top: 10px;
 }
 
+.frm li {
+  list-style: none;
+  border-bottom: 1px solid white;
+  padding: 5px;
+  font-size: 18px;
+  padding-left: 0;
+}
 
-.registered-classes-today {
+.cart-button {
   position: relative;
   bottom: 0;
-  height: 25%;
-
+  width: 100%;
+  text-align: center;
+  margin-top: 5px;
 }
+
+
+
+.frm li:hover, 
+.frm li:active,
+.frm li:focus {
+  background-color: azure;
+  cursor: pointer;
+}
+ 
+.frm li:focus {
+  background-color: lightgreen;
+}
+
+#grade-choice, option {
+  width: 10px;
+}
+
+button:focus {
+  background-color: green !important;
+  color: #fff !important;
+}
+
+
 .hidden {
   display: none;
 }

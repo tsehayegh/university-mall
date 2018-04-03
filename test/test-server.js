@@ -171,7 +171,7 @@ describe('Testing class registration app, university-mall', function(){
 	});
 	
 	describe('GET endpoint - sections', function(){
-		this.timeout(5000);
+		//this.timeout(5000);
 
 		it('should return all existing sections', function(){
 

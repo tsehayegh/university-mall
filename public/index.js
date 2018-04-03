@@ -1,7 +1,7 @@
 
 
 
-//Initialize google maps
+//Initialize google maps - University Mall
 function initMap() {
   	let currentLoc = {lat: 35.227085, lng: -80.843124};
   	publicState.map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -16,28 +16,69 @@ function initMap() {
 }
 
 //========================================================
+//Start the app - University Mall
+$(function startApp(){
+	$('.start-button').on('click', function(event){
+		event.preventDefault();
+		if($('#action-choice').val() === "Student") {
+			toggleHiddenClass(".user-role, .landing-page, .main-container");
+			publicState.userRole = $('#role-choice').val();
+		} else if($('#action-choice').val() === "Instructor"){
+			upateGradeAndCourseStatus();
+		}
+
+		$('.search-result-list').empty();
+		$('.sec-cart-list').empty();
+		$('.display-error').empty();
+		const studentid = $('#studentId').val();
+		const selectedSemester = $('#semester-choice').val();
+		let searchURL = `/students/?studentid=${studentid}&semester=${selectedSemester}`;
+	})
+});
+
 //Open search area
 function chooseAction(){
 	$('.submit-button').on("click", function(event){
 		event.preventDefault();
 		if($('#action-choice').val() === "Student") {
-			toggleHiddenClass(".course-selection");
 			$('.search-result-list').empty();
 			$('.sec-cart-list').empty();
 			$('.display-error').empty();
 		} else if($('#action-choice').val() === "Instructor"){
-			upateGradeAndCourseStatus();
+			updateGradeAndCourseStatus();
 			$('.search-result-list').html('');
 		}
+
 		const studentid = $('#studentId').val();
 		const selectedSemester = $('#semester-choice').val();
 		let searchURL = `/students/?studentid=${studentid}&semester=${selectedSemester}`;
-		pullRegisteredClasses(searchURL);
-		$('.sec-cart-list').empty();
-		pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
+
+		if(studentid.length >= 3 && selectedSemester.length >= 6){
+			pullRegisteredClasses(searchURL);
+			$('.sec-cart-list').empty();
+			pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
+			$('.btn').attr('disabled', false);
+		} else {
+			displayErrorMessage('Please enter correct student id and select a semester first');
+			$('.btn').attr('disabled', true);
+		}
+
 	});
 }
 $(chooseAction);
+
+/*
+$(function roleSelection(){
+	$('#action-choice').on('change', function(event){
+		event.preventDefault();
+		if($('#action-choice').val() === "Instructor") {
+			$('.grade-button').attr('disabled', false);
+		} else {
+			$('.grade-button').attr('disabled', true);	
+		}
+	})
+});
+*/
 
 function toggleHiddenClass(classToToggle){
 	$(classToToggle).toggleClass("hidden")
@@ -85,17 +126,17 @@ function appendDataToList(data, listClassName){
 	const endtime = data.endtime.toLowerCase().replace(/\s+/g, '');
 	const meetingdays = meetingDays.toLowerCase();
 	$(listClassName).append(
-		`<li id = "${sectionname}" 
+		`<li id = "${sectionname}" tabindex = "0"
 					data-starttime = ${starttime}
 					data-endtime = ${endtime}
 					data-meetingdays = ${meetingdays}
 					data-campus = ${data.campus}> 
 			<input type="checkbox" name="${sectionname}" value = "${sectionname}" 
 					id="${sectionname}" class = "chkbox">
-			${data.subject}-${data.coursenumber}: ${data.title} | 
+			<a href ="#" >${data.subject}-${data.coursenumber}</a>: ${data.title} | 
 			${data.section} | ${data.credithours} | 
 			${data.starttime} - ${data.endtime} | ${data.startdate}- 
-			${data.enddate} | ${data.campus} campus | (${data.campuslat},${data.campuslng}) | 
+			${data.enddate} | ${data.campus} campus |
 			${meetingDays} | ${data.instructor}
 		</li>`);
 	sortList(listClassName);	
@@ -123,6 +164,7 @@ function updateSectionCart(){
 						semester=${$('#semester-choice').val()}&
 						subject=${subject}&
 						coursenumber=${coursenumber}`;
+
 		const studentid = $('#studentId').val();
 		const selectedSemester = $('#semester-choice').val();
 
@@ -139,12 +181,8 @@ function updateSectionCart(){
 								$(`.sec-cart-list li[id=${currentListId}]`).remove(); 
 						} else {
 							if (courseAleardyInCart) {
-								displayErrorMessage('Course is already in cart list (buffer)!')
+								displayErrorMessage('Course is already in cart!')
 								$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false); 
-								//$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).attr('checked', false);
-								//$(`.sec-cart-list li[id=${currentListId}]`).remove();
-
-
 							} else {
 								$.ajax({
 									type: 'GET',
@@ -152,14 +190,13 @@ function updateSectionCart(){
 									data: ajaxData,
 									success: function(result){
 										if (result.carts.length > 0) {
-											displayErrorMessage('Course is already saved in cart');
+											displayErrorMessage('Course is already saved in cart!');
 										} else {
 											if(!(checkMultipleCampusRegistration(currentListId))) {
 												$('.sec-cart-list').empty();
 												appendCheckedListsToCart();
 												pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);	
 											}
-
 										}
 									},
 									failure: function(status){
@@ -204,6 +241,7 @@ function checkMultipleCampusRegistration(currentListId){
 	const endtimeSearchResult = convertToDateTime($(`.search-result-list li[id=${currentListId}]`).attr("data-endtime"));
 
 	checkedMeetingDaysArray.map(function(day) {
+
 		$('.sec-cart-list li').each(function(index){
 				const campusCart = $(this).attr("data-campus").toLowerCase();
 				const meetingDaysCartArray = $(this).attr("data-meetingdays").toLowerCase().split(',');
@@ -433,7 +471,7 @@ function pullRegisteredClasses(searchURL){
 					${student.subject}-${student.coursenumber}: ${student.title} | 
 					${student.section} | ${student.credithours} | ${student.grade} | 
 					${student.starttime} - ${student.endtime} | ${student.startdate}- 
-					${student.enddate} | ${student.campus} campus | (${student.campuslat},${student.campuslng}) | 
+					${student.enddate} | ${student.campus} campus |
 					${meetingDays} | ${student.instructor}
 				</li>`);
 			sortList($('.sec-registered-list'));
@@ -500,7 +538,6 @@ function checkDailyScheduleConflict(){
 function pullClassesFromCart(searchURL){
 	$.get(searchURL, function(data){
 		data.carts.map((cart) => {
-			console.log(cart);
 			let meetingDays = [];
 			for(let i = 0; i< publicState.days.length; i++) {
 				if(cart[publicState.days[i]] === "Y") {
@@ -523,8 +560,7 @@ function pullClassesFromCart(searchURL){
 					${cart.subject}-${cart.coursenumber}: ${cart.title} | 
 					${cart.section} | ${cart.credithours} | 
 					${cart.starttime} - ${cart.endtime} | ${cart.startdate} - 
-					${cart.enddate} | ${cart.campus} campus | 
-					(${cart.campuslat},${cart.campuslng}) | 
+					${cart.enddate} | ${cart.campus} campus |  
 					${meetingDays} | ${cart.instructor}
 				</li>`);
 			sortList('.sec-cart-list');
@@ -537,6 +573,7 @@ function TrimColon(text){
 }
 
 function convertToDateTime(time){
+	console.log(time);
 	if(time){
 		const _time = new Date();
 		const ampm = time.substr(-2);
@@ -544,7 +581,7 @@ function convertToDateTime(time){
 		hourMinute = TrimColon(hourMinute).split(":");
 		let hours = Number(hourMinute[0]);
 		const minutes = Number(hourMinute[1]);
-		if(ampm === "pm" && hours <12) hours = Math.floor(+hours + +12); 
+		if(ampm === "pm" && hours < 12) hours = Math.floor(+hours + +12); 
 		if(ampm === "am" && hours === 12) hours = Math.floor(+hours - +12);
 
 		//return Math.floor(Number((hours)*60) + +minutes);
@@ -682,14 +719,14 @@ function clearSelectedClassFromRegistration(){
 
 
 //PUT -- update grade and course status
-function upateGradeAndCourseStatus(){
+function updateGradeAndCourseStatus(){
 	$('.grade-button').on('click', function(event){
 		event.preventDefault();
 		enterGrades();
 		displayErrorMessage('');
 	})
 }
-$(upateGradeAndCourseStatus);
+$(updateGradeAndCourseStatus);
 
 function enterGrades(){
 	$('.sec-registered-list li input[type="checkbox"]:checked').each(function(index){
@@ -760,7 +797,7 @@ function appendRegisteredClassesToList(data, listClassName){
 			${data.subject}-${data.coursenumber}: ${data.title} | 
 			${data.section} | ${data.credithours} | ${data.grade} | 
 			${data.starttime} - ${data.endtime} | ${data.startdate}- 
-			${data.enddate} | ${data.campus} campus | (${data.campuslat},${data.campuslng}) | 
+			${data.enddate} | ${data.campus} campus |
 			${meetingDays} | ${data.instructor}
 		</li>`);
 	sortList(listClassName);	
