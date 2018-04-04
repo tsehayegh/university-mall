@@ -42,6 +42,7 @@ html, body {
 .main-container {
 	height: 100%;
   overflow: auto;
+
 }
 
 legend, h1, button {
@@ -62,6 +63,8 @@ legend {
   height: 100%;
   background-color: rgb(160, 196,210);
   z-index: 1000;
+  margin: 0;
+  padding: 0;
 }
 
 .user-role {
@@ -80,9 +83,9 @@ legend {
 
 
 #map-canvas {
-  height: 50%;
+  height: 45%;
   position: absolute;
-  top:50%;
+  top:55%;
   left: 0;
   z-index: 1;
   border: 1px solid black;
@@ -93,7 +96,7 @@ legend {
   position: absolute;
   top: 0;
   left: 0;
-  height: 50%;
+  height: 55%;
   overflow-y: scroll;
   overflow-x: hidden;
   font-family: 'Roboto Condensed', sans-serif;
@@ -221,6 +224,10 @@ button {
 
 #grade-choice, option {
   width: 10px;
+}
+
+.search-message {
+  color: blue;
 }
 
 button:focus {

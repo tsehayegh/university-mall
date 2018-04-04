@@ -24,11 +24,13 @@
 
 					<p>If you are ready, select your role from the dropdown menue below and click <em>Start</em> button!</p>
 
+					<div class = "group">
 					<label for = "role-choice">Select your role</label>
-					<select id = "role-choice" name = "myRole">
-						<option value = "Student">Student</option>
-						<option value = "Instructor">Instructor</option>
-					</select>
+						<select id = "role-choice" name = "myRole">
+							<option value = "Student">Student</option>
+							<option value = "Instructor">Instructor</option>
+						</select>
+					</div>
 					<button class = "start-button">Start</button>
 				</fieldset>
 			</form>
@@ -36,18 +38,19 @@
 		<form role = "main" class = "landing-page col-6 hidden" action = "/public" method = "submit">
 			<fieldset>
 				<legend class = "app-header">The Prestigious University</legend>
+
 					<section class = "user-info"> 
 						<div class = 'group'>
 							<label for = "studentId">Student ID:</label>
-							<input type="text" id = "studentId" required placeholder = "Enter your student id">
+							<input type="text" id = "studentId" required placeholder = "Enter student id">
 						</div>
 						<div class = "group">
 							<label for = "firstName">First Name:</label>
-							<input type="text" id = "firstName" required placeholder="Enter your first name">
+							<input type="text" id = "firstName" required placeholder="Enter student first name">
 						</div>
 						<div class = "group">
 							<label for = "lastName">Last Name</label>
-							<input type="text" id = "lastName" required placeholder="Enter your last name">
+							<input type="text" id = "lastName" required placeholder="Enter student last name">
 						</div>
 						<div class = "group">
 							<label for = "semester-choice">Semester</label>
@@ -58,53 +61,54 @@
 								<option value = "2017FA">Fall 2017</option>
 							</select>
 						</div>
+						<button class = "submit-button">Submit</button>
+					</section>
+
+					
+					<section class = "search-area">
+						<h1>Search for sections</h1>
+
+							<div class = "instructor-lastname group hidden">
+								<label for = "instructor-lastname">Instructor:</label>
+								<input type="text" id = "instructor-lastname" required placeholder="Instructor last name">
+							</div>
+
 						<div class = "group">
-							<label for = "action-choice">Your Role</label>
-							<select name = "actionSelection" id = "action-choice">
-								<option value = "Student">Student</option>
-								<option value = "Instructor">Instructor</option>
+							<label for = "campus-choice">Campus</label>
+							<select class = "campuses" id = "campus-choice">
+								<option value = "central">Central</option>
+								<option value = "city View">CityView</option>
+								<option value = "merancas">Merancas</option>
+								<option value = "levine">Levine</option>
+								<option value = "harper">Harper</option>
+								<option value = "harris">Harris</option>
+								<option value = "cato">Cato</option>
+								<option value = "online">Online</option>
 							</select>
 						</div>
-						<button class = "submit-button">Submit</button>
-					
-
-					<h1>Search for sections</h1>
-					<div class = "group">
-						<label for = "campus-choice">Campus</label>
-						<select class = "campuses" id = "campus-choice">
-							<option value = "any"></option>
-							<option value = "central">Central</option>
-							<option value = "city View">CityView</option>
-							<option value = "merancas">Merancas</option>
-							<option value = "levine">Levine</option>
-							<option value = "harper">Harper</option>
-							<option value = "harris">Harris</option>
-							<option value = "cato">Cato</option>
-							<option value = "online">Online</option>
-						</select>
-					</div>
-					<div class = "group">
-						<label for = "subject-choice">Subject</label>
-						<select class = "subject" id = "subject-choice">
-							<option></option>
-							<option>ENG</option>
-							<option>MAT</option>
-							<option>BIO</option>
-							<option>PHY</option>
-						</select>
-					</div>
-					<div class = "group">
-						<label for = "course-number-choice">Course Number</label>
-						<select class = "course-number" id = "course-number-choice">
-							<option></option>
-							<option>110</option>
-							<option>111</option>
-							<option>112</option>
-							<option>171</option>
-						</select>
-					</div>
-					<button class = "search-button btn" disabled>Search</button>
-				</section>
+						<div class = "group">
+							<label for = "subject-choice">Subject</label>
+							<select class = "subject" id = "subject-choice">
+								<option>ENG</option>
+								<option>MAT</option>
+								<option>BIO</option>
+								<option>PHY</option>
+							</select>
+						</div>
+						<div class = "group">
+							<label for = "course-number-choice">Course Number</label>
+							<select class = "course-number" id = "course-number-choice">
+								<option></option>
+								<option>110</option>
+								<option>111</option>
+								<option>112</option>
+								<option>171</option>
+							</select>
+						</div>
+						<button class = "search-button">Search</button>
+						<button class = "instructor-button">Search Student</button>
+						<label class = "search-message"></label>
+					</section>
 			</fieldset>
 
 		</form>
@@ -140,22 +144,23 @@
 				<fieldset class = "my-classes">
 					<ul class = "sec-registered-list">
 					</ul>
-					<button class  = "drop-class-button btn" disabled>Drop Selected</button>
-
-					<section class = "instructor-space">
+					<button class  = "drop-class-button" disabled>Drop Selected</button>
+					<section class = "instructor-space hidden">
 						<div class = "group">
-						<label for = "grade-choice">Grade</label>
-						<select name = "gradeSection" id = "grade-choice">
-							<option value = "Any"></option>
-							<option value = "A">A</option>
-							<option value = "B">B</option>
-							<option value = "C">C</option>
-							<option value = "D">D</option>
-							<option value = "F">F</option>
-							<option value = "I">I</option>
-							<option value = "W">W</option>
-							<option value = "u">Audit</option>
-						</select>
+							<label for = "grade-choice">Grade</label>
+							<select name = "gradeSection" id = "grade-choice">
+								<option value = ""></option>
+								<option value = "A">A</option>
+								<option value = "B">B</option>
+								<option value = "C">C</option>
+								<option value = "D">D</option>
+								<option value = "F">F</option>
+								<option value = "I">I</option>
+								<option value = "W">W</option>
+								<option value = "u">Audit</option>
+							</select>
+						</div>
+						<div class ="group">
 						<label for = "status-choice">Status</label>
 						<select name = "statusSection" id = "status-choice">
 							<option value = "cmpl">Completed</option>
