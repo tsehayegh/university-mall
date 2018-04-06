@@ -4,29 +4,27 @@
 	
 	<title>University Mall</title>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<link rel="stylesheet" type="text/css" href="responsive-design.css">
 
-
     <link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto|Roboto+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
-	<div class = "background-space"></div>
-	<div class = "container row">
-		<div id = "map-canvas" class = "map-canvas col-6"></div>
-			<form class = "user-role">
+	<div class = "background-space" role = "region"></div>
+	<div class = "container row" role = "main">
+		<div id = "map-canvas" class = "map-canvas col-6 hidden" arai-label ="google map" title = "map"></div>
+			<form class = "user-role" role = "note">
 				<fieldset>
 					<legend class = "app-header">The Prestigious University</legend>
 					<p>This app, University Mall, will help you to: (a)search for classes, (b)save classes in cart, (c)register for classes, or (d)enter grades (instructors only).</p> 
-
 					<p>If you are ready, select your role from the dropdown menue below and click <em>Start</em> button!</p>
-
 					<div class = "group">
 					<label for = "role-choice">Select your role</label>
-						<select id = "role-choice" name = "myRole">
+						<select id = "role-choice" name = "myRole" arai-label ="user role">
 							<option value = "Student">Student</option>
 							<option value = "Instructor">Instructor</option>
 						</select>
@@ -35,33 +33,32 @@
 				</fieldset>
 			</form>
 
-		<form role = "main" class = "landing-page col-6 hidden" action = "/public" method = "submit">
+		<form role = "region" class = "landing-page col-6 hidden" action = "/public" method = "submit">
 			<fieldset>
 				<legend class = "app-header">The Prestigious University</legend>
-
-					<section class = "user-info"> 
+					<section class = "user-info" id = "user-info"> 
 						<div class = 'group'>
-							<label for = "studentId">Student ID:</label>
-							<input type="text" id = "studentId" required placeholder = "Enter student id">
+							<label for = "studentId">Student ID</label>
+							<input type="text" id = "studentId" required placeholder = "Enter student id" arai-label ="student id">
 						</div>
 						<div class = "group">
-							<label for = "firstName">First Name:</label>
-							<input type="text" id = "firstName" required placeholder="Enter student first name">
+							<label for = "firstName">First Name</label>
+							<input type="text" id = "firstName" required placeholder="Enter student first name" arai-label ="first name">
 						</div>
 						<div class = "group">
 							<label for = "lastName">Last Name</label>
-							<input type="text" id = "lastName" required placeholder="Enter student last name">
+							<input type="text" id = "lastName" required placeholder="Enter student last name" arai-label ="last name">
 						</div>
 						<div class = "group">
 							<label for = "semester-choice">Semester</label>
-							<select name = "semesterSelection" id = "semester-choice">
+							<select name = "semesterSelection" id = "semester-choice" arai-label ="semester">
 								<option value = "2018FA">Fall 2018</option>
 								<option value = "2018SU">Summer 2018</option>
 								<option value = "2018SP">Spring 2018</option>
 								<option value = "2017FA">Fall 2017</option>
 							</select>
 						</div>
-						<button class = "submit-button">Submit</button>
+						<button class = "submit-button" arai-label ="submit button">Submit</button>
 					</section>
 
 					
@@ -70,12 +67,13 @@
 
 							<div class = "instructor-lastname group hidden">
 								<label for = "instructor-lastname">Instructor:</label>
-								<input type="text" id = "instructor-lastname" required placeholder="Instructor last name">
+								<input type="text" id = "instructor-lastname" required placeholder="Instructor last name" arai-label ="Instructor's last name">
 							</div>
 
 						<div class = "group">
 							<label for = "campus-choice">Campus</label>
-							<select class = "campuses" id = "campus-choice">
+							<select class = "campuses" id = "campus-choice" arai-label ="campus list">
+								<option value = ""></option>
 								<option value = "central">Central</option>
 								<option value = "city View">CityView</option>
 								<option value = "merancas">Merancas</option>
@@ -88,36 +86,42 @@
 						</div>
 						<div class = "group">
 							<label for = "subject-choice">Subject</label>
-							<select class = "subject" id = "subject-choice">
-								<option>ENG</option>
-								<option>MAT</option>
-								<option>BIO</option>
-								<option>PHY</option>
+							<select class = "subject" id = "subject-choice" arai-label ="subject list">
+								<option value =""></option>
+								<option value ="ENG">English</option>
+								<option value ="MAT">Mathemetics</option>
+								<option value ="BIO">Biology</option>
+								<option value ="PHY">Physics</option>
 							</select>
 						</div>
 						<div class = "group">
 							<label for = "course-number-choice">Course Number</label>
-							<select class = "course-number" id = "course-number-choice">
-								<option></option>
-								<option>110</option>
-								<option>111</option>
-								<option>112</option>
-								<option>171</option>
+							<select class = "coursenumber" id = "course-number-choice" arai-label ="course number list">
+								<option value=""></option>
+								<option value = "110">110</option>
+								<option value= "111">111</option>
+								<option value = "112">112</option>
+								<option value = "171">171</option>
 							</select>
 						</div>
-						<button class = "search-button">Search</button>
+
+						<button class = "search-button btn" disabled="">Search</button>
 						<button class = "instructor-button">Search Student</button>
-						<label class = "search-message"></label>
+
+						
 					</section>
 			</fieldset>
 
 		</form>
 
-		<main class = "main-container col-6 hidden">
+		<section class = "main-container col-6 hidden">
+			<label class = "display-error"></label>
 			<form class = "course-selection frm">
 				<fieldset>
 					<legend>Search Results</legend>
-					<label class = "display-error"></label>
+
+					
+
 					<div class = "sec-search-result">
 						<ul class = "search-result-list">
 						</ul>				
@@ -168,7 +172,7 @@
 							<option value = "aud">Audited</option>
 						</select>
 						</div>
-						<button class = "grade-button btn" disabled>Enter Grades</button>
+						<button class = "grade-button" disabled>Enter Grades</button>
 					</section>
 
 				</fieldset>
@@ -181,12 +185,13 @@
 					</ul>
 				</fieldset>
 			</form>
-		</main>
+		</section>
 
 	</div>
 
 	<!--jQuery Scripts -->
 	<script src = "https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script src = "/state.js"></script>
   	<script src = "/index.js"></script>
   	
