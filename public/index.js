@@ -63,7 +63,10 @@ function openUserForms(){
 		const studentid = $('#studentId').val();
 		const selectedSemester = $('#semester-choice').val();
 		$('.sec-cart-list').empty();
-		pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
+		if(studentid) {
+			pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
+		}
+		
 	});
 	
 }
@@ -87,7 +90,6 @@ function openStudentInstructorClass(){
 			$('.btn').prop('disabled', false);
 		} else {
 			displayErrorMessage('Please enter correct student information and select a semester first!');
-
 			$('.btn').prop('disabled', true);
 		}
 	} else if(publicState.userRole === "Instructor"){
