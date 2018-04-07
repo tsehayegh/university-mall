@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html lang="en">
 <head>
 	
 	<title>University Mall</title>
@@ -14,9 +14,9 @@
 
 </head>
 <body>
-	<div class = "background-space" role = "region"></div>
-	<div class = "container row" role = "main">
-		<div id = "map-canvas" class = "map-canvas col-6 hidden" arai-label ="google map" title = "map"></div>
+	<div class = "background-space" role = "region" title = "Test"></div>
+	<div class = "container row" role = "main" id = "container">
+		<div id = "map-canvas" class = "map-canvas col-6 hidden" aria-label ="container"></div>
 			<form class = "user-role" role = "note">
 				<fieldset>
 					<legend class = "app-header">The Prestigious University</legend>
@@ -119,11 +119,8 @@
 			<form class = "course-selection frm">
 				<fieldset>
 					<legend>Search Results</legend>
-
-					
-
 					<div class = "sec-search-result">
-						<ul class = "search-result-list">
+						<ul class = "search-result-list" id = "search-result-list">
 						</ul>				
 					</div>
 				</fieldset>
@@ -132,7 +129,7 @@
 			<form class = "sec-cart frm">
 				<legend> Sections in Cart</legend>
 				<fieldset>
-					<ul class = "sec-cart-list">
+					<ul class = "sec-cart-list" id = "sec-cart-list">
 					</ul>
 					<div class = "cart-button">
 						<button class = "register-button btn" disabled>Register</button>
@@ -146,9 +143,9 @@
 			<form class = "registered-classes frm">
 				<legend>Registered Classes</legend>
 				<fieldset class = "my-classes">
-					<ul class = "sec-registered-list">
+					<ul class = "sec-registered-list" id = "sec-registered-list">
 					</ul>
-					<button class  = "drop-class-button" disabled>Drop Selected</button>
+					<button class  = "drop-class-button">Drop Selected</button>
 					<section class = "instructor-space hidden">
 						<div class = "group">
 							<label for = "grade-choice">Grade</label>
@@ -181,7 +178,7 @@
 			<form class = "registered-classes-today frm">
 				<legend>Today's Schedule</legend>
 				<fieldset class = "my-classes-today">
-					<ul class = "sec-registered-today-list">
+					<ul class = "sec-registered-today-list" id = "sec-registered-today-list">
 					</ul>
 				</fieldset>
 			</form>
