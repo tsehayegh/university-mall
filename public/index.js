@@ -941,13 +941,15 @@ function dropClassFromRegistration(){
 		clearSelectedClassFromRegistration();
 		const studentid = $('#studentId').val(); 
 		const selectedSemester = $('#semester-choice').val();
-		pullRegisteredClasses(`/students/?studentid=${studentid}&semester=${selectedSemester}`);
-		refreshRegisteredClasses();
-		displayErrorMessage('');
+		if(studentid){
+			pullRegisteredClasses(`/students/?studentid=${studentid}&semester=${selectedSemester}`);
+			refreshRegisteredClasses();
+			displayErrorMessage('');
+		}
+
 	})
 }
 $(dropClassFromRegistration);
-
 
 
 function addMarkerOnCampusLocation(campus, lat, lng){
