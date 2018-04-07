@@ -1,4 +1,3 @@
-
 University Mall
 
 https://blooming-inlet-86301.herokuapp.com/
@@ -14,3 +13,6 @@ d)delete classes saved in cart, or drop registered classes (for the future, this
 3)if the user is an instructor, then the user will be able to:
 a)search for a student by entering student and class information.
 b)able to enter grade and status of the class
+
+For the future, more functionality can be added to the app. For example, login feature can be included. Nowadays, most colleges use apps that help users to use the same login credential for any services offered. 
+Technologies used HTML, CSS, JAVASCRIPT, JQUERY, AJAX, API, node.js, heroku, mLab, express, chai, http-chai
