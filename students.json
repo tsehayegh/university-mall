@@ -1,0 +1,30 @@
+
+{
+	"studentid": "002",
+	"firstname": "Zaki",
+	"lastname": "Hab",
+	"semester": "2018FA",
+	"subject": "eng",
+	"coursenumber":"110",
+	"title": "English Composition I",
+	"section": "01",
+	"credithours": 3.5,
+	"grade":null,
+	"status": "reg",
+	"sartdate":"08/15/2018",
+	"enddate": "12/11/2018",
+	"starttime": "8am",
+	"endtime": "8:55am",
+	"sun":null,
+	"mon": "y",
+	"tue": null,
+	"wed": "y",
+	"thu": null,
+	"fri": "y",
+	"sat": null,
+	"campus":"central",
+	"campuslat": 35.215595,
+	"campuslng":-80.830944,
+	"instructor":"A"
+}
+

@@ -185,7 +185,6 @@ function appendDataToList(data, listClassName){
 }
 
 function removeListFromSearchResult(){
-
 	$('.sec-cart-list li').each(function(){
 		const currentListId = $(this).attr('id');
 		$(`.search-result-list li[id=${currentListId}]`).remove();
@@ -468,7 +467,7 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 						const selectedSemester = $('#semester-choice').val();
 						$('.sec-cart-list').empty();
 						refreshSearchResult();
-						console.log('saved in cart');
+
 						pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
 						displayErrorMessage('Course saved in cart successfully!');
 					};
@@ -553,11 +552,8 @@ function saveClassesToCart(){
 						registerOrSaveSectionsInCart(searchURL, '/students/cart','cart');
 					}
 			});
-		});
 
-		//$(`.sec-cart-list`).empty();
-		//refreshSearchResult();
-		pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
+		});
 		displayErrorMessage('');
 		
 	});
@@ -660,6 +656,7 @@ function checkDailyScheduleConflict(){
 
 
 function pullClassesFromCart(searchURL){
+	//$('.sec-cart-list').empty();
 	$.get(searchURL, function(data){
 		data.carts.map((cart) => {
 			let meetingDays = [];
@@ -815,15 +812,6 @@ function clearAllCoursesFromCart(){
 $(clearAllCoursesFromCart());
 
 
-function enableCearButtonOnSelection(){
-	$('.sec-registered-list').on('change', 'li input[type="checkbox"]', function(event){
-		event.preventDefault();
-		$('drop-class-button').attr('disabled', false);
-	})
-}
-$(enableCearButtonOnSelection);
-
-
 function clearSelectedClassFromRegistration(){
 	$('.sec-registered-list li input[type="checkbox"]:checked').each(function(index){
 		const sectionName = $(this).attr('value').split("-");
@@ -911,6 +899,7 @@ function refreshRegisteredClasses(){
 	});
 }
 
+
 function appendRegisteredClassesToList(data, listClassName){
 	let meetingDays = [];
 	for(let i = 0; i< publicState.days.length; i++) {
@@ -953,9 +942,6 @@ function dropClassFromRegistration(){
 		pullRegisteredClasses(`/students/?studentid=${studentid}&semester=${selectedSemester}`);
 		refreshRegisteredClasses();
 		displayErrorMessage('');
-		if(!($('.sec-registered-list').has('li').length)){
-			$('.drop-class-button').attr('disabled', true);
-		}
 	})
 }
 $(dropClassFromRegistration);
