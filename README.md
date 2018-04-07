@@ -2,6 +2,8 @@ University Mall
 
 https://blooming-inlet-86301.herokuapp.com/
 
+<img width="889" alt="university mall - landingpage" src="https://user-images.githubusercontent.com/34139675/38458457-94ecfb10-3a6c-11e8-942e-9b9263f5b70a.png">
+
 Higher education institutions use different applications to manage their course offerings. Most of the large higher education institutions (universities or community colleges) build satellite campuses to offer convenient locations throughout the region they server. In a multi campus institutions, students may want to take classes offered at multiple campuses. The existing applications may help them if there is any schedule conflict in terms of time but they do not control if there is not enough time between classes located at different campuses. My app, University Mall, will help them not only to check for any time conflicts within the same campus but also at multiple campuses. The app will also display the routes for the day on google maps. For the purpose of demonstration, I have selected one of the largest community colleges in North Carolina which has multiple campuses.
 In this app:
 1)users will choose their role- student or instructor
