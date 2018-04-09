@@ -173,7 +173,6 @@ select:focus {
   background-color:  rgb(176, 224, 230);
 }
 
-
 .frm {
   position: relative;
   height: 25%;
@@ -182,6 +181,12 @@ select:focus {
   padding-top: 10px;
 
 }
+
+.landing-page frm {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
 
 
 .frm li {
