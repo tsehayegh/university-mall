@@ -20,38 +20,32 @@ In this app:
 # 1) ## 
 users will choose their role- student or instructor
 # 2) ## 
-if the user is a student, then the user will be able to:
-# (a) ## 
-enter their student id, first name, last name, the current semester
-# (b) ## 
-see their sections saved in cart, registered sections for the semester, registered sections for the day. The daily class schedules will be listed and displayed on google maps. The classes will be marked as A, B, .. on the map based on their sequence for the day.
-# (c) ##
-search new classes, save the classes in cart, or register directly.
-# (d) ##
-delete classes saved in cart, or drop registered classes (for the future, this can be enabled or disabled based on the start date of the class)
+	if the user is a student, then the user will be able to:
+	# (a) ## enter their student id, first name, last name, the current semester
+	# (b) ## see their sections saved in cart, registered sections for the semester, registered sections for the day. The daily class schedules will be listed and displayed on google maps. The classes will be marked as A, B, .. on the map based on their sequence for the day.
+	# (c) ## search new classes, save the classes in cart, or register directly.
+	# (d) ## delete classes saved in cart, or drop registered classes (for the future, this can be enabled or disabled based on the start date of the class)
 # 3) ##
 if the user is an instructor, then the user will be able to:
-#(a) ##
-search for a student by entering student and class information.
-# (b) ## 
-able to enter grade and status of the class
+	#(a) ## search for a student by entering student and class information.
+	# (b) ## able to enter grade and status of the class
 
 # How to use the app ##
 # Student role ##
-	* Enter student id, first and last name, and select current semester
-	* If student record with the entered criteria was found, the information will be displayed (listed) on the right hand side of the form
-	* If student record was not found, then the user can search for classes by selecting subject, course number, campus and search results will be listed on the right side of the page
-	* The user can check (or uncheck) a selected section and that section will be populated in the cart's place
-	* The user can either save sections in cart or register for the sections directly.
-	* The user can clear selected sections from cart or clear all sections saved cart.
-	* The user can also drop already registered classes
+	Enter student id, first and last name, and select current semester
+	If student record with the entered criteria was found, the information will be displayed (listed) on the right hand side of the form
+	If student record was not found, then the user can search for classes by selecting subject, course number, campus and search results will be listed on the right side of the page
+	The user can check (or uncheck) a selected section and that section will be populated in the cart's place
+	The user can either save sections in cart or register for the sections directly.
+	The user can clear selected sections from cart or clear all sections saved cart.
+	The user can also drop already registered classes
 # Instructor role ##
-	* The user can enter student id, student first and last name, instructor last name, subject, course number, and semester.
-	* A class registered will be displayed in the right hand side of the page
-	* The instructor can enter a grade and status of the section (class)
+	The user can enter student id, student first and last name, instructor last name, subject, course number, and semester.
+	A class registered will be displayed in the right hand side of the page
+	The instructor can enter a grade and status of the section (class)
 
 
-# For the  ##
+# Future work  ##
 More functionality can be added to the app. For example, a login feature can be included. Nowadays, most colleges use apps that help users to use the same login credential for any services offered. Moreover, the instructor can enter student ID and the app can be customized to pull student profile instead of the instructor typing in first and last name. 
 
 # Technologies used HTML:
