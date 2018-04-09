@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
 	<title>University Mall</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<link rel="stylesheet" type="text/css" href="responsive-design.css">
-
     <link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto|Roboto+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 <body>
 	<div class = "background-space" role = "region" title = "Test"></div>
@@ -19,9 +15,9 @@
 		<div id = "map-canvas" class = "map-canvas col-6 hidden" aria-label ="container"></div>
 			<form class = "user-role" role = "note">
 				<fieldset>
-					<legend class = "app-header">The Prestigious University</legend>
+					<legend class = "app-header">University Mall</legend>
 					<p>This app, University Mall, will help you to: (a)search for classes, (b)save classes in cart, (c)register for classes, or (d)enter grades (instructors only).</p> 
-					<p>If you are ready, select your role from the dropdown menue below and click <em>Start</em> button!</p>
+					<p>If you are ready, select your role from the dropdown menue below and click the <em>Start</em> button to use the app!</p>
 					<div class = "group">
 					<label for = "role-choice">Select your role</label>
 						<select id = "role-choice" name = "myRole" arai-label ="user role">
@@ -32,10 +28,9 @@
 					<button class = "start-button">Start</button>
 				</fieldset>
 			</form>
-
-		<form role = "region" class = "landing-page col-6 hidden" action = "/public" method = "submit">
+		<form class = "landing-page col-6 hidden" action = "#" method = "get" role = "region">
 			<fieldset>
-				<legend class = "app-header">The Prestigious University</legend>
+				<legend class = "app-header">University Mall</legend>
 					<section class = "user-info" id = "user-info"> 
 						<div class = 'group'>
 							<label for = "studentId">Student ID</label>
@@ -60,16 +55,12 @@
 						</div>
 						<button class = "submit-button" arai-label ="submit button">Submit</button>
 					</section>
-
-					
 					<section class = "search-area">
 						<h1>Search for sections</h1>
-
 							<div class = "instructor-lastname group hidden">
 								<label for = "instructor-lastname">Instructor:</label>
 								<input type="text" id = "instructor-lastname" required placeholder="Instructor last name" arai-label ="Instructor's last name">
 							</div>
-
 						<div class = "group">
 							<label for = "campus-choice">Campus</label>
 							<select class = "campuses" id = "campus-choice" arai-label ="campus list">
@@ -104,19 +95,14 @@
 								<option value = "171">171</option>
 							</select>
 						</div>
-
 						<button class = "search-button btn" disabled="">Search</button>
 						<button class = "instructor-button">Search Student</button>
-
-						
 					</section>
 			</fieldset>
-
 		</form>
-
 		<section class = "main-container col-6 hidden">
 			<label class = "display-error"></label>
-			<form class = "course-selection frm">
+			<form class = "course-selection frm" action = "#" method = "post">
 				<fieldset>
 					<legend>Search Results</legend>
 					<div class = "sec-search-result">
@@ -125,7 +111,6 @@
 					</div>
 				</fieldset>
 			</form>
-
 			<form class = "sec-cart frm">
 				<legend> Sections in Cart</legend>
 				<fieldset>
@@ -139,8 +124,7 @@
 					</div>
 				</fieldset>
 			</form> 
-
-			<form class = "registered-classes frm">
+			<form class = "registered-classes frm" action ="#" method = "get">
 				<legend>Registered Classes</legend>
 				<fieldset class = "my-classes">
 					<ul class = "sec-registered-list" id = "sec-registered-list">
@@ -171,11 +155,9 @@
 						</div>
 						<button class = "grade-button">Enter Grades</button>
 					</section>
-
 				</fieldset>
 			</form>
-
-			<form class = "registered-classes-today frm">
+			<form class = "registered-classes-today frm" action = "#" method = "get">
 				<legend>Today's Schedule</legend>
 				<fieldset class = "my-classes-today">
 					<ul class = "sec-registered-today-list" id = "sec-registered-today-list">
@@ -183,15 +165,11 @@
 				</fieldset>
 			</form>
 		</section>
-
 	</div>
-
 	<!--jQuery Scripts -->
 	<script src = "https://code.jquery.com/jquery-3.3.1.js"></script>
-	<!-- <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script> -->
     <script src = "/state.js"></script>
   	<script src = "/index.js"></script>
-  	
    <script async defer
   		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_QwlMKtRUYkhg4QXxm-EHdukRYJ1RnPs&libraries=geometry,places&callback=initMap">
   	</script>
