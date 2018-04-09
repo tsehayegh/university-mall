@@ -1,6 +1,6 @@
 # University Mall
 
-# https://blooming-inlet-86301.herokuapp.com/
+# https://university-mall.herokuapp.com/
 
 # landingpage
 <img width="889" alt="university mall - landingpage" src="https://user-images.githubusercontent.com/34139675/38458457-94ecfb10-3a6c-11e8-942e-9b9263f5b70a.png">
@@ -44,9 +44,12 @@ if the user is an instructor, then the user will be able to:
 	A class registered will be displayed in the right hand side of the page
 	The instructor can enter a grade and status of the section (class)
 
+# Technologies used:
+HTML, CSS, Responsive Design, JAVASCRIPT, jQuery, AJAX, Goodle Maps API, node.js, Implement REST API, heroku, mLab, express, testing, modulirzation, router, chai, http-chai, and Travis CI.
 
 # Future work  ##
 More functionality can be added to the app. For example, a login feature can be included. Nowadays, most colleges use apps that help users to use the same login credential for any services offered. Moreover, the instructor can enter student ID and the app can be customized to pull student profile instead of the instructor typing in first and last name. 
 
-# Technologies used:
-HTML, CSS, Responsive Design, JAVASCRIPT, jQuery, AJAX, Goodle Maps API, node.js, heroku, mLab, express, testing, modulirzation, router, chai, http-chai
+
+# Note
+The app may not work in Internet Explorer 11 because of some jQuery techniques ($).
