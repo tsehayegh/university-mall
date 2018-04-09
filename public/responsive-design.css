@@ -60,7 +60,7 @@ and (orientation: portrait){
 	  overflow-wrap: break-word;
 	}
 	.landing-page label {
-		text-align: center;
+		text-align: left;
 	}
 
 	.landing-page input[type=text] {

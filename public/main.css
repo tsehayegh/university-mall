@@ -56,6 +56,10 @@ legend {
   border-bottom: 1px solid black;
 }
 
+.app-header {
+  font-size: 1.3em;
+  padding-bottom: 10px;
+}
 
 .user-role {
   position: fixed;
@@ -106,30 +110,19 @@ input[type=checkbox] {
   line-height: 1.5;
   padding: 20px;
   border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
-
-input[type=text], select {
-  width: 150px;
-  font: 1em 'Arial', sans-serif;
-  padding: 3px 6px;
-  min-width: 50%;
-  margin-top: 0.4em;
-  border: 1px solid black;
-  text-align: left;
+.user-info, 
+.search-area {
+  position: relative;
+  text-align: center;
+  height: 50%;
+  margin: 0 auto;
+  border-bottom: 1px solid black;
 }
-
-.landing-page label {
-  
-  width: 150px;
-  
-  vertical-align: middle;
-  font: 1em 'Arial', sans-serif;
-  padding: 3px 6px;
-  min-width: 50%;
-  margin-top: 0.4em;
-}
-
 
 .group {
   width: 100%
@@ -139,25 +132,29 @@ input[type=text], select {
   margin-top: 0.4em;
 }
 
+input[type=text], select {
+  max-width: 50%;
+  font: 1em 'Arial', sans-serif;
+  padding: 3px 6px;
+  min-width: 50%;
+  margin-top: 0.4em;
+  border: 1px solid black;
+}
+
+.user-info label,
+.search-aread label {
+  max-width: 50%;
+  vertical-align: middle;
+  font: 1em 'Arial', sans-serif;
+  padding: 3px 6px;
+  min-width: 50%;
+  margin-top: 0.4em;
+
+}
+
+
 select:focus {
   background: green:
-}
-
-
-.app-header {
-  font-size: 1.3em;
-  padding-bottom: 10px;
-}
-
-
-
-.user-info{
-  position: relative;
-  height: 50%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  margin: auto;
-  text-align: center;
 }
 
 
@@ -224,10 +221,6 @@ li input[type="checkbox"]{
   width: 10px;
 }
 
-.search-message {
-  color: blue;
-}
-
 
 button {
   position: relative;
@@ -264,13 +257,11 @@ button:focus {
   color: purple;
 }
 
-.search-area {;
-  position: relative;
-  margin: auto;
-  text-align: center;
-}
-
 .hidden {
   display: none;
 }
+
+
+
+
 

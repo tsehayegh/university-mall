@@ -117,6 +117,7 @@ function searchForSections(){
 		searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
 		searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
 		renderSections(searchURL);
+		displayErrorMessage('');
 	});
 }
 $(searchForSections);
@@ -173,7 +174,7 @@ function appendSectionsSearchResultToList(data, listClassName){
 	sortList(listClassName);
 }
 
-//Remove 
+//Remove list
 function removeListFromSearchResult(){
 	$('.sec-cart-list li').each(function(){
 		const currentListId = $(this).attr('id');
@@ -184,8 +185,6 @@ function removeListFromSearchResult(){
 		$(`.search-result-list li[id=${currentListId}]`).remove();
 	})		
 }
-
-
 
 function appendRegisteredDataToList(data, listClassName){
 	let meetingDays = [];
@@ -301,7 +300,7 @@ function updateSectionCart(){
 }
 $(updateSectionCart);
 
-//Checkes schedule conflicts within or multiple campuses cases
+//Checkes schedule conflicts within or multiple campuses
 function checkConflict(currentListId, listParent){
 	let conflict = false;
 	const checkedMeetingDaysArray = $(`.search-result-list li[id=${currentListId}]`).attr("data-meetingdays").toLowerCase().split(',');
@@ -374,13 +373,17 @@ function displayErrorMessage(errorMessage){
 //Clear error messages on input changes
 function clearErrorMessage(){
 	$('.group input').keyup(function(){
-		let empty = false;
 		$('.group input').each(function(){
 			if($(this).val().length > 0){
 				displayErrorMessage('');
 			}
 		})
 
+	})
+
+	$('.group select').on('change', function(event){
+		event.preventDefault();
+		displayErrorMessage('');
 	})
 }
 $(clearErrorMessage);
@@ -431,7 +434,6 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 						const selectedSemester = $('#semester-choice').val();
 						$('.sec-cart-list').empty();
 						refreshSearchResult();
-
 						pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
 						displayErrorMessage('Course saved in cart successfully!');
 					};
@@ -447,7 +449,7 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 //Pull registered classes to display in registered sections list
 function registrationSuccessful(data){
 	appendRegisteredClassesToList(data, '.sec-registered-list');
-	checkDailyScheduleConflict();
+	listAndMapDailySchedule();
 	sortList('.sec-registered-list');
 	const sectionname = `${data.subject}-${data.coursenumber}-${data.section}`;
 	$(`.sec-registered-list li[id=${sectionname}]`).addClass( "new-sec-registered-list", 1000, callback(sectionname) );
@@ -481,7 +483,7 @@ function registerForClasses(){
 		displayErrorMessage('');
 		clearAllRecordsFromCart();
 		refreshSearchResult();
-		checkDailyScheduleConflict();
+		listAndMapDailySchedule();
 	});
 }
 $(registerForClasses);
@@ -523,40 +525,46 @@ function pullRegisteredClasses(searchURL){
 		$('.sec-registered-list').empty();
 		$('.sec-registered-today-list').empty();
 		sortJsonObject(data.studentrecords);
-		data.studentrecords.map((student) => {
-			let meetingDays = [];
-			for(let i = 0; i< publicState.days.length; i++) {
-				if(student[publicState.days[i]] === "Y") {
-					meetingDays.push(publicState.days[i].toUpperCase());
+		if(data.studentrecords.length > 0) {
+			data.studentrecords.map((student) => {
+				let meetingDays = [];
+				for(let i = 0; i< publicState.days.length; i++) {
+					if(student[publicState.days[i]] === "Y") {
+						meetingDays.push(publicState.days[i].toUpperCase());
+					}
 				}
-			}
-			meetingDays = meetingDays.join(',');
-			const sectionname = `${student.subject}-${student.coursenumber}-${student.section}`;
-			const starttime = student.starttime.toLowerCase().replace(/\s+/g, '');
-			const endtime = student.endtime.toLowerCase().replace(/\s+/g, '');
-			const meetingdays = meetingDays.toLowerCase();
-			$('.sec-registered-list').append(
-				`<li id = "${sectionname}"  
-							aria-label ="sec-registered-list"
-							data-starttime = ${starttime}
-							data-endtime = ${endtime}
-							data-meetingdays = ${meetingdays}
-							data-campus = ${student.campus}>
-					<input type="checkbox" value = "${sectionname}" 
-					class = "chkbox" aria-label ="sec-registered-list">
-					${student.subject}-${student.coursenumber}: ${student.title} | 
-					${student.section} | ${student.credithours} | ${student.grade} | 
-					${student.starttime} - ${student.endtime} | ${student.startdate}- 
-					${student.enddate} | ${student.campus} campus |
-					${meetingDays} | ${student.instructor}
-				</li>`);
-			sortList($('.sec-registered-list'));
-			checkDailyScheduleConflict();
-		}); 
+				meetingDays = meetingDays.join(',');
+				const sectionname = `${student.subject}-${student.coursenumber}-${student.section}`;
+				const starttime = student.starttime.toLowerCase().replace(/\s+/g, '');
+				const endtime = student.endtime.toLowerCase().replace(/\s+/g, '');
+				const meetingdays = meetingDays.toLowerCase();
+
+				$('.sec-registered-list').append(
+					`<li id = "${sectionname}"  
+								aria-label ="sec-registered-list"
+								data-starttime = ${starttime}
+								data-endtime = ${endtime}
+								data-meetingdays = ${meetingdays}
+								data-campus = ${student.campus}>
+						<input type="checkbox" value = "${sectionname}" 
+						class = "chkbox" aria-label ="sec-registered-list">
+						${student.subject}-${student.coursenumber}: ${student.title} | 
+						${student.section} | ${student.credithours} | ${student.grade} | 
+						${student.starttime} - ${student.endtime} | ${student.startdate}- 
+						${student.enddate} | ${student.campus} campus |
+						${meetingDays} | ${student.instructor}
+					</li>`);
+				sortList($('.sec-registered-list'));
+				listAndMapDailySchedule();
+			}); 
+		} else {
+			displayErrorMessage(`You do not have registered or saved classes. You can search for classes`)
+		}
 	})
 }
 
-function checkDailyScheduleConflict(){
+//Display and map schedule for the day
+function listAndMapDailySchedule(){
 	const today = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][(new Date()).getDay()];
 	studentid = $('#studentId').val();
 	semester = $('#semester-choice').val();
@@ -611,7 +619,7 @@ function checkDailyScheduleConflict(){
 		});
 }
 
-
+//Pull classes saved in cart
 function pullClassesFromCart(searchURL){
 	//$('.sec-cart-list').empty();
 	$.get(searchURL, function(data){
@@ -647,10 +655,10 @@ function pullClassesFromCart(searchURL){
 	});
 }
 
+//Convert string time to date time to sort lists based on the returned date-time
 function TrimColon(text){
     return text.toString().replace(/^(.*?):*$/, '$1');
 }
-
 function convertToDateTime(time){
 	if(time){
 		const _time = new Date();
@@ -661,11 +669,18 @@ function convertToDateTime(time){
 		const minutes = Number(hourMinute[1]);
 		if(ampm === "pm" && hours < 12) hours = Math.floor(+hours + +12); 
 		if(ampm === "am" && hours === 12) hours = Math.floor(+hours - +12);
-
-		//return Math.floor(Number((hours)*60) + +minutes);
 		return Math.floor(_time.setHours(hours, minutes)/60000);
 	}
 }
+
+//sort registered classes
+function sortList(listElemToSort) {
+  $(listElemToSort).html(
+    $(listElemToSort).children('li').sort(function (a,b){
+    	return convertToDateTime($(a).data('starttime')) - convertToDateTime($(b).data('starttime'));
+    })
+  );
+};
 
 //Sortin JSON object
 function sortJsonObject(data){
@@ -688,17 +703,7 @@ function sortJsonObject(data){
 }
 
 
-//sort registered classes
-function sortList(listElemToSort) {
-  $(listElemToSort).html(
-    $(listElemToSort).children('li').sort(function (a,b){
-    	return convertToDateTime($(a).data('starttime')) - convertToDateTime($(b).data('starttime'));
-      	//return new Date('1970/01/01 ' + $(a).data('starttime')) - new Date('1970/01/01 ' + $(b).data('starttime'));
-    })
-  );
-};
-
-//DELETE - delete selected record(s)
+//DELETE - delete selected student record(s)
 function clearSelectedRecordFromCart(){
 	$('.sec-cart-list li input[type="checkbox"]').each(function(index){
 		const sectionName = $(this).attr('value').split("-");
@@ -725,6 +730,7 @@ function clearSelectedRecordFromCart(){
 	});
 }
 
+//Clear classes saved in cart
 function clearAllRecordsFromCart(){
 	$('.sec-cart-list li').each(function(index){
 		const sectionName = $(this).attr('id').split("-");
@@ -750,16 +756,6 @@ function clearAllRecordsFromCart(){
 	$('.sec-cart-list').empty();
 }
 
-
-function clearStudentRecordFromCart(){
-	$('.clear-cart-button').on('click', function(event){
-		event.preventDefault();
-		clearSelectedRecordFromCart();
-		displayErrorMessage('');
-	})
-}
-$(clearStudentRecordFromCart);
-
 function clearAllCoursesFromCart(){
 	$('.clear-all-cart-button').on('click', function(event){
 		event.preventDefault();
@@ -769,6 +765,17 @@ function clearAllCoursesFromCart(){
 $(clearAllCoursesFromCart());
 
 
+//Clear selected student record from cart
+function clearStudentRecordFromCart(){
+	$('.clear-cart-button').on('click', function(event){
+		event.preventDefault();
+		clearSelectedRecordFromCart();
+		displayErrorMessage('');
+	})
+}
+$(clearStudentRecordFromCart);
+
+//Clear selected student record from cart
 function clearSelectedClassFromRegistration(){
 	$('.sec-registered-list li input[type="checkbox"]:checked').each(function(index){
 		const sectionName = $(this).attr('value').split("-");
@@ -797,7 +804,7 @@ function clearSelectedClassFromRegistration(){
 }
 
 
-//Update grade and course status
+//Update grade and course status (by instructor)
 function updateGradeAndCourseStatus(){
 	$('.grade-button').on('click', function(event){
 		event.preventDefault();
@@ -806,6 +813,7 @@ function updateGradeAndCourseStatus(){
 	})
 }
 $(updateGradeAndCourseStatus);
+
 
 function enterGrades(){
 	$('.sec-registered-list li input[type="checkbox"]:checked').each(function(index){
@@ -856,7 +864,7 @@ function refreshRegisteredClasses(){
 	});
 }
 
-
+//Append registered classes to registered classes space
 function appendRegisteredClassesToList(data, listClassName){
 	let meetingDays = [];
 	for(let i = 0; i< publicState.days.length; i++) {
@@ -906,7 +914,8 @@ function dropClassFromRegistration(){
 }
 $(dropClassFromRegistration);
 
-
+//Google Maps
+//To add marks on campus locations
 function addMarkerOnCampusLocation(campus, lat, lng){
   let marker = new google.maps.Marker();
   const currentCoord  = {"lat": lat, "lng": lng}
@@ -925,6 +934,7 @@ function addMarkerOnCampusLocation(campus, lat, lng){
   addEventListner(marker, contentString);
 }
 
+//Add event listner to infoWindow on markers
 function addEventListner(marker, markerString){
   google.maps.event.addListener(marker, 'click', function(){
   	publicState.infoWindow.close();
@@ -933,6 +943,7 @@ function addEventListner(marker, markerString){
   }); 
 }
 
+//Add driving route using way points method - classes sequences for the day
 function calcAndDisplayRoute(orig, waypts, dest) {
 	const request = {
 		origin: orig,

@@ -15,7 +15,6 @@ router.use(bodyParser.json());
 router.use(express.static(__dirname + '/public'));
 
 //==========================================================
-//return all courses
 
 router.get('/sections', (req, res) => {
 	const queryOptions = ["subject", "coursenumber", "title","section","credithours","semester","startdate",
@@ -42,7 +41,7 @@ router.get('/sections', (req, res) => {
 		});
 });
 
-//search course based on query params
+//search a course based id
 router.get('/sections/:id', (req, res) => {
 	Section
 		.findById(req.params.id)

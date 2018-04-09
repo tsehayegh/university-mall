@@ -48,5 +48,5 @@ if the user is an instructor, then the user will be able to:
 # Future work  ##
 More functionality can be added to the app. For example, a login feature can be included. Nowadays, most colleges use apps that help users to use the same login credential for any services offered. Moreover, the instructor can enter student ID and the app can be customized to pull student profile instead of the instructor typing in first and last name. 
 
-# Technologies used HTML:
-CSS, JAVASCRIPT, JQUERY, AJAX, API, node.js, heroku, mLab, express, chai, http-chai
+# Technologies used:
+HTML, CSS, Responsive Design, JAVASCRIPT, jQuery, AJAX, Goodle Maps API, node.js, heroku, mLab, express, testing, modulirzation, router, chai, http-chai
