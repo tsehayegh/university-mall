@@ -123,9 +123,21 @@ function seedStudentsData(){
 	return Student.insertMany(seedData);
 }
 //=======
+function seedCartData(){
+	const seedData = [];
+	for(let i = 1; i <= 10; i++){
+		seedData.push(generateStudentsData());
+	}
+	return Cart.insertMany(seedData);
+}
+
+
+
+//=======
 function seedData(){
 	seedSectionsData();
 	seedStudentsData();
+	seedCartData();
 }
 
 //=======
@@ -148,10 +160,23 @@ function deleteStudentsDB(){
 		.catch((err) => reject(err));
 	});
 }
+
+//=======
+function deleteCartDB(){
+	return new Promise((resolve, reject) => {
+		Cart.remove({}, function(err){
+		})
+		.then((result) => resolve(resolve))
+		.catch((err) => reject(err));
+	});
+}
+
+
 //=======
 function deleteDB(){
 	deleteSectionsDB();
 	deleteStudentsDB();
+	deleteCartDB();
 }
 
 
@@ -235,6 +260,7 @@ describe('Testing class registration app, university-mall', function(){
 					expect(resSection.instructor).to.equal(section.instructor);
 				});
 		});
+
 	});
 
 	describe('POST endpoint - sections', function(){
@@ -317,7 +343,6 @@ describe('Testing class registration app, university-mall', function(){
 				});
 		});
 
-		
 		it('should return students with right fields', function(){
 			let resStudent;
 			return chai.request(app)
@@ -367,12 +392,10 @@ describe('Testing class registration app, university-mall', function(){
 					expect(resStudent.instructor).to.equal(student.instructor);
 				});
 		});
-		
 	});
 
 
-		describe('POST endpoint - students', function(){
-
+	describe('POST endpoint - students', function(){
 		it('should add new student record', function(){
 			const newStudent = generateStudentsData();
 			let fullname;
@@ -473,52 +496,7 @@ describe('Testing class registration app, university-mall', function(){
 	});
 
 
-		describe('DELETE endpoint - students', function(){
-		it('delete selected student record', function(){
-			let student;
-			return Student
-				.findOne()
-				.then(function(_student){
-					student = _student;
-					return chai.request(app).delete(`/students/${student.id}`);
-				})
-				.then(function(res) {
-					expect(res).to.have.status(204);
-					return Student.findById(student.id);
-				})
-				.then(function(_student) {
-					expect(_student).to.be.null;
-				});
-		});
-	});
-
-	describe('PUT endpoint - students', function(){
-		it('should update fields you send over', function(){
-			const updateData ={
-					grade: 'B',
-					status: 'cmpl'
-				};
-			return Student
-				.findOne()
-				.then(function(student){
-					updateData.id = student.id;
-					return chai.request(app)
-						.put(`/students/${student.id}`)
-						.send(updateData) 
-				})
-				.then(function(res){
-					expect(res).to.have.status(204);
-					return Student.findById(updateData.id);
-				})
-				.then(function(student){
-					expect(student.grade).to.equal(updateData.grade);
-					expect(student.status).to.equal(updateData.status);
-				});	
-		});
-	});
-
-
-		describe('DELETE endpoint - students', function(){
+	describe('DELETE endpoint - students', function(){
 		it('delete selected student record', function(){
 			let student;
 			return Student

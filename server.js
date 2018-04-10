@@ -21,7 +21,6 @@ app.use('*', function(req, res) {
 	res.status(404).json({message: 'Not Found'});
 });
 
-/*
 
 //open sever connection
 function openSeverConnection(){
@@ -32,16 +31,11 @@ function openSeverConnection(){
 function closeSeverConnection(){
 	return closeServer();
 }
-*/
+
 
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
-/*
-if (require.main === module) {
-  runServer(TEST_DATABASE_URL).catch(err => console.error(err));
-}
-*/
 
 module.exports = {app, runServer, closeServer};

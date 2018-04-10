@@ -15,12 +15,31 @@ function initMap() {
  publicState.directionsDisplay = new google.maps.DirectionsRenderer;
 }
 
+//MediaQuery
+function screenTest(e) {
+	let smallScreen = false;
+  if (e.matches) {
+    	//small screen
+    console.log(e.matches);
+    smallScreen = true;
+  }
+  return smallScreen;
+};
+
+publicState.mediaQueryList.maxWidthMedium.addListener(screenTest);
+
+console.log(screenTest(publicState.mediaQueryList.maxWidthMedium));
+
 //========================================================
 //Start the app - University Mall
 //Open/close forms based on the user's role
 $(function startApp(){
 	$('.start-button').on('click', function(event){
 		event.preventDefault();
+
+		console.log(publicState.mediaQueryList);
+
+
 		publicState.userRole = $('#role-choice').val();
 		if($('#role-choice').val() === "Student") {
 			toggleHiddenClass(".user-role, .landing-page, .main-container");
@@ -133,12 +152,25 @@ function renderSections(searchURL){
 	});
 }
 
+
 //Refresh (uncheck) lists in the sections search result
 function refreshSearchResult(){
 	$(`.search-result-list li input[type=checkbox]`).each(function(){
 		$(this).prop('checked', false); 
 	})
 }
+
+function onMediaQueryChange(){
+	let mql = publicState.mediaQueryList.maxWidthMedium;
+	 mql.onchange = function() {
+		let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
+		searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
+		searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
+		renderSections(searchURL);
+		displayErrorMessage('');  	
+  	};
+}
+$(onMediaQueryChange);
 
 //Append sections search result to list
 function appendSectionsSearchResultToList(data, listClassName){
@@ -156,20 +188,29 @@ function appendSectionsSearchResultToList(data, listClassName){
 	const endtime = data.endtime.toLowerCase().replace(/\s+/g, '');
 	const meetingdays = meetingDays.toLowerCase();
 	const parentId = listClassName.substr(1);
-	$(listClassName).append(
-		`<li id = "${sectionname}" aria-label ="${parentId}"
+
+	let htmlString = `<li id = "${sectionname}" aria-label ="${parentId}"
 					data-starttime = ${starttime}
 					data-endtime = ${endtime}
 					data-meetingdays = ${meetingdays}
 					data-campus = ${data.campus}> 
-			<input type="checkbox" value = "${sectionname}" 
-				class = "chkbox" aria-label ="${parentId}">
-			<a href ="#"  aria-label ="${parentId}">${data.subject}-${data.coursenumber}</a>: ${data.title} | 
-			${data.section} | ${data.credithours} | 
-			${data.starttime} - ${data.endtime} | ${data.startdate}- 
-			${data.enddate} | ${data.campus} campus |
-			${meetingDays} | ${data.instructor}
-		</li>`);
+					<input type="checkbox" value = "${sectionname}" 
+					class = "chkbox" aria-label ="${parentId}">`
+
+	if (screenTest(publicState.mediaQueryList.maxWidthMedium)){
+		htmlString = htmlString + `<a href ="#"  aria-label ="${parentId}">${data.subject}-${data.coursenumber}-${data.section}</a> | 
+									${data.starttime} - ${data.endtime} | ${data.campus} campus | ${meetingDays}
+								</li>`;
+	} else {
+		htmlString = htmlString + `<a href ="#"  aria-label ="${parentId}">${data.subject}-${data.coursenumber}</a>: 
+								${data.title} | ${data.section} | ${data.credithours} | 
+								${data.starttime} - ${data.endtime} | ${data.startdate}- 
+								${data.enddate} | ${data.campus} | ${meetingDays} | ${data.instructor}
+								</li>`;	
+	}
+
+
+	$(listClassName).append(htmlString);
 	removeListFromSearchResult();
 	sortList(listClassName);
 }
@@ -715,7 +756,7 @@ function clearSelectedRecordFromCart(){
 		if(this.checked) {
 			$.get(searchURL, function(data){
 				data.carts.map((cart) => {
-					const ajaxURL = `/delete/cart/${cart.id}`;
+					const ajaxURL = `/search/cart/${cart.id}`;
 					$.ajax({
 						url: ajaxURL,
 						type: 'DELETE',
@@ -743,7 +784,7 @@ function clearAllRecordsFromCart(){
 		$.get(searchURL, function(data){
 			data.carts.map((cart) => {
 				$.ajax({
-					url: `/delete/cart/${cart.id}`,
+					url: `/search/cart/${cart.id}`,
 					type: 'DELETE',
 					success: function(result){
 						refreshSearchResult();

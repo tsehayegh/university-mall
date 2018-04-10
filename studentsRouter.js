@@ -17,7 +17,7 @@ studentsRouter.use(express.static(__dirname + '/public'));
 //==========================================================
 //GET - Display student records 
 
-//GET - based on query filters to check duplicate of registration
+//GET - based on query filters
 studentsRouter.get('/students', (req, res) => {
 	const queryOptions = ['studentid', 'subject', 'coursenumber', 'semester', 
 						 'startdate', 'enddate', 'starttime', 'endtime',
@@ -44,6 +44,7 @@ studentsRouter.get('/students', (req, res) => {
 		});
 });
 
+//GET - based on id
 studentsRouter.get('/students/:id', (req, res) => {
 	Student
 		.findById(req.params.id)
@@ -107,8 +108,37 @@ studentsRouter.post('/students',(req, res) =>{
 		});
 });
 
+//PUT - use PUT method to update grades based on automatic mongodb id
+studentsRouter.put('/students/:id', (req, res) => {
+	const reqFields =  ['studentid', 'subject', 'coursenumber', 'semester'];
+	if(!(req.params.id && req.body.id&& req.params.id === req.body.id)) {
+		const errorMessage = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
+		console.log(errorMessage);
+		res.status(400).json({message: errorMessage});
+	};
+	const toUpdate = {};
+	const updateableFields  = ['grade', 'status'];
+	updateableFields.forEach(field => {
+		if (field in req.body) {
+			toUpdate[field] = req.body[field];
+		}
+	});
+	Student
+		.findByIdAndUpdate(req.params.id, { $set: toUpdate})
+		.then(student => res.status(204).send())
+		.catch(err => res.status(500).json({message: 'Internal server error'}))
+})
 
 
+studentsRouter.delete('/students/:id', (req, res) => {
+  Student
+    .findByIdAndRemove(req.params.id)
+    .then(cart => res.status(204).end())
+    .catch(err => res.status(500).json({ message: 'Internal server error' }));
+});
+
+//==========================================
+//Cart
 //GET - pull sections/classes saved on Cart
 studentsRouter.get('/search/cart', (req, res, next) => {
 	const queryOptions = ['studentid', 'firstname', 'lastname', 'semester',
@@ -136,6 +166,18 @@ studentsRouter.get('/search/cart', (req, res, next) => {
 			res.status(500).json({message: 'Internal server error'});
 		});
 });
+
+//GET - based on id
+studentsRouter.get('/search/cart/:id', (req, res) => {
+	Cart
+		.findById(req.params.id)
+		.then(cart => res.json(cart))
+		.catch(err => {
+			console.log(err);
+			res.status(500).json({message: 'Internal server error'});
+		});
+});
+
 
 //Save cart
 studentsRouter.post('/students/cart',(req, res) =>{
@@ -187,45 +229,15 @@ studentsRouter.post('/students/cart',(req, res) =>{
 		})
 });
 
-//======================
-
-//PUT - use PUT method to update grades based on automatic mongodb id
-studentsRouter.put('/students/:id', (req, res) => {
-	const reqFields =  ['studentid', 'subject', 'coursenumber', 'semester'];
-	if(!(req.params.id && req.body.id&& req.params.id === req.body.id)) {
-		const errorMessage = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
-		console.log(errorMessage);
-		res.status(400).json({message: errorMessage});
-	};
-	const toUpdate = {};
-	const updateableFields  = ['grade', 'status'];
-	updateableFields.forEach(field => {
-		if (field in req.body) {
-			toUpdate[field] = req.body[field];
-		}
-	});
-	Student
-		.findByIdAndUpdate(req.params.id, { $set: toUpdate})
-		.then(student => res.status(204).send())
-		.catch(err => res.status(500).json({message: 'Internal server error'}))
-})
-
-
 //DELETE - use DELETE method to delete class based on student id and coursename
-studentsRouter.delete('/delete/cart/:id', (req, res) => {
+studentsRouter.delete('/search/cart/:id', (req, res) => {
   Cart
     .findByIdAndRemove(req.params.id)
     .then(cart => res.status(204).end())
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
-studentsRouter.delete('/students/:id', (req, res) => {
-  Student
-    .findByIdAndRemove(req.params.id)
-    .then(cart => res.status(204).end())
-    .catch(err => res.status(500).json({ message: 'Internal server error' }));
-});
-
+//==================================================
 
 //Export module
 module.exports = studentsRouter;

@@ -16,7 +16,7 @@
 			<form class = "user-role" role = "note">
 				<fieldset>
 					<legend class = "app-header">University Mall</legend>
-					<p>This app, University Mall, will help you to: (a)search for classes, (b)save classes in cart, (c)register for classes, or (d)enter grades (instructors only).</p> 
+					<p>This app, University Mall, will help you to: (a)search for classes, (b)save classes in cart, (c)register for classes, or (d)enter grades (instructors only). You will see be able to see registered and saved classes in cart and daily schedule on google maps</p> 
 					<p>If you are ready, select your role from the dropdown menue below and click the <em>Start</em> button to use the app!</p>
 					<div class = "group">
 					<label for = "role-choice">Select your role</label>
@@ -31,6 +31,7 @@
 		<form class = "landing-page col-6 hidden" action = "#" method = "get" role = "region">
 			<fieldset>
 				<legend class = "app-header">University Mall</legend>
+
 					<section class = "user-info" id = "user-info"> 
 						<div class = 'group'>
 							<label for = "studentId">Student ID</label>
@@ -45,7 +46,7 @@
 							<input type="text" id = "lastName" required placeholder="Student's last name" arai-label ="last name">
 						</div>
 						<div class = "group">
-							<label for = "semester-choice">Semester</label>
+							<label for = "semester-choice">Semester  </label>
 							<select name = "semesterSelection" id = "semester-choice" arai-label ="semester">
 								<option value = "2018FA">Fall 2018</option>
 								<option value = "2018SU">Summer 2018</option>
@@ -55,6 +56,7 @@
 						</div>
 						<button class = "submit-button" arai-label ="submit button">Submit</button>
 					</section>
+
 					<section class = "search-area">
 						<h1>Search for sections</h1>
 							<div class = "instructor-lastname group hidden">
@@ -98,6 +100,7 @@
 						<button class = "search-button btn" disabled="">Search</button>
 						<button class = "instructor-button">Search Student</button>
 					</section>
+
 			</fieldset>
 		</form>
 		<section class = "main-container col-6 hidden">
