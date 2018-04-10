@@ -173,6 +173,9 @@ and (orientation: portrait){
   	transform: translate(-50%, -50%);
   	font-size: 1.5em;
   }
+  .app-header {
+  	font-size: 24px;
+  }
 
 }
 
@@ -193,6 +196,9 @@ and (orientation: landscape){
   .landing-page group {
   	text-align: center;
   }
+  .app-header {
+  	font-size: 24px;
+  }
 }
 
 
@@ -207,6 +213,10 @@ and (orientation: landscape){
   }
    .landing-page group {
   	text-align: center;
+  }
+
+  .app-header {
+  	font-size: 40px;
   }
 
 }

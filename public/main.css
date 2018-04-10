@@ -130,15 +130,13 @@ input[type=checkbox] {
   display: inline-block;
 }
 
-
 .group {
   width: 100%
-  display: table-cell;
+  display: inline-block;
   margin: 0 auto;
   text-align: center;
   vertical-align: middle;
 }
-
 
 input[type=text], select {
   width: 55%;
@@ -146,17 +144,17 @@ input[type=text], select {
   max-width: 60%;
   font: 1em 'Arial', sans-serif;
   padding: 3px 6px;
-  margin-top: 5px;
+  margin-top: 0.4em;
   border: 1px solid black;
 }
 
+
 .user-info label,
-.search-aread label {
-  max-width: 45%;
+.search-area label {
   vertical-align: middle;
   font-size: 1em;
-  padding: 3px 6px;
-  min-width: 50%;
+  padding: 3px 5px;
+  min-width: 45%;
   margin-top: 0.4em;
 }
 
@@ -260,6 +258,9 @@ button {
 button:focus {
   background-color: green !important;
   color: #fff !important;
+}
+.user-role button {
+  font-size: 24px;
 }
 
 .display-error {
