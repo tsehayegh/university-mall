@@ -444,7 +444,7 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 						refreshClassesInCart();
 						refreshSearchResult();
 						console.log('save in cart');
-						displayErrorMessage('Course saved in cart successfully!', blue);
+						displayErrorMessage('Course saved in cart successfully!', 'blue');
 					};
 				},
 				error: function(jqXhr, textStatus, errorThrown){
