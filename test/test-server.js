@@ -514,6 +514,169 @@ describe('Testing class registration app, university-mall', function(){
 				});
 		});
 	});
+
+	describe('GET endpoint - cart', function(){
+		it('should return all cart records', function(){
+			let res;
+			return chai.request(app)
+				.get('/search/cart')
+				.then((_res) => {
+					res = _res;
+					expect(res).to.have.status(200);
+					expect(res.body.carts).to.be.a('array');
+					expect(res.body.carts).to.have.lengthOf.at.least(1);
+					return Student.count();
+				})
+				.then((count) => {
+					expect(res.body.carts).to.have.lengthOf(count);
+				});
+		});
+
+		it('should return carts with right fields', function(){
+			let resStudent;
+			return chai.request(app)
+				.get('/search/cart')
+				.then(function(res) {
+					expect(res).to.have.status(200);
+					expect(res.body.carts).to.be.a('array');
+					expect(res.body.carts).to.have.lengthOf.at.least(1);
+					res.body.carts.forEach(function(student) {
+						expect(student).to.be.a('object');
+						expect(student).to.include.keys(
+							'id', 'studentid', 'fullname', 'subject', 'title', 
+							'coursenumber', 'section', 'credithours', 'grade', 'status', 
+							'semester', 'startdate', 'enddate','starttime', 'endtime', 
+							'sun','mon', 'tue', 'wed','thu', 'fri', 'sat', 'campus', 
+							'campuslat', 'campuslng','instructor'
+							);
+					});
+					resStudent = res.body.carts[0];
+					return Cart.findById(resStudent.id);
+				})
+				.then(function(student) {
+					expect(resStudent.id).to.equal(student.id);
+					expect(resStudent.fullname).to.equal(student.fullname);
+					expect(resStudent.subject).to.equal(student.subject);
+					expect(resStudent.title).to.equal(student.title);
+					expect(resStudent.coursenumber).to.equal(student.coursenumber);
+					expect(resStudent.section).to.equal(student.section);
+					expect(resStudent.credithours).to.equal(student.credithours);
+					expect(resStudent.grade).to.equal(student.grade);
+					expect(resStudent.status).to.equal(student.status);
+					expect(resStudent.semester).to.equal(student.semester);
+					expect(resStudent.startdate).to.equal(student.startdate);
+					expect(resStudent.enddate).to.equal(student.enddate);
+					expect(resStudent.starttime).to.equal(student.starttime);
+					expect(resStudent.endtime).to.equal(student.endtime);
+					expect(resStudent.sun).to.equal(student.sun);
+					expect(resStudent.mon).to.equal(student.mon);
+					expect(resStudent.tue).to.equal(student.tue);
+					expect(resStudent.wed).to.equal(student.wed);
+					expect(resStudent.thu).to.equal(student.thu);
+					expect(resStudent.fri).to.equal(student.fri);
+					expect(resStudent.sat).to.equal(student.sat);
+					expect(resStudent.campus).to.equal(student.campus);
+					expect(resStudent.campuslat).to.equal(student.campuslat);
+					expect(resStudent.campuslng).to.equal(student.campuslng);
+					expect(resStudent.instructor).to.equal(student.instructor);
+				});
+		});
+	});
+
+	describe('POST endpoint - cart', function(){
+		it('should add new student record to cart', function(){
+			const newStudent = generateStudentsData();
+			let fullname;
+			return chai.request(app)
+				.post('/students/cart')
+				.send(newStudent)
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.json;
+					expect(res.body).to.be.a('object');
+					expect(res.body).to.include.keys(
+							'id', 'studentid', 'fullname', 'subject', 'title', 
+							'coursenumber', 'section', 'credithours', 'grade', 'status', 
+							'semester', 'startdate', 'enddate','starttime', 'endtime', 
+							'sun','mon', 'tue', 'wed','thu', 'fri', 'sat', 'campus', 
+							'campuslat', 'campuslng','instructor');
+					fullname = newStudent.firstname + " " + newStudent.lastname;
+					expect(res.body.id).to.not.be.null;
+					expect(res.body.fullname).to.equal(fullname);
+					expect(res.body.subject).to.equal(newStudent.subject);
+					expect(res.body.title).to.equal(newStudent.title);
+					expect(res.body.coursenumber).to.equal(newStudent.coursenumber);
+					expect(res.body.section).to.equal(newStudent.section);
+					expect(res.body.credithours).to.equal(newStudent.credithours);
+					expect(res.body.grade).to.equal(newStudent.grade);
+					expect(res.body.status).to.equal(newStudent.status);
+					expect(res.body.semester).to.equal(newStudent.semester);
+					expect(res.body.startdate).to.equal(newStudent.startdate);
+					expect(res.body.enddate).to.equal(newStudent.enddate);
+					expect(res.body.starttime).to.equal(newStudent.starttime);
+					expect(res.body.endtime).to.equal(newStudent.endtime);
+					expect(res.body.sun).to.equal(newStudent.sun);
+					expect(res.body.mon).to.equal(newStudent.mon);
+					expect(res.body.tue).to.equal(newStudent.tue);
+					expect(res.body.wed).to.equal(newStudent.wed);
+					expect(res.body.thu).to.equal(newStudent.thu);
+					expect(res.body.fri).to.equal(newStudent.fri);
+					expect(res.body.sat).to.equal(newStudent.sat);
+					expect(res.body.campus).to.equal(newStudent.campus);
+					expect(res.body.campuslat).to.equal(newStudent.campuslat);
+					expect(res.body.campuslng).to.equal(newStudent.campuslng);
+					expect(res.body.instructor).to.equal(newStudent.instructor);
+
+					return Cart.findById(res.body.id);
+				})
+				.then(function(studen){
+					expect(studen.fullname).to.equal(fullname);
+					expect(studen.subject).to.equal(newStudent.subject);
+					expect(studen.title).to.equal(newStudent.title);
+					expect(studen.coursenumber).to.equal(newStudent.coursenumber);
+					expect(studen.section).to.equal(newStudent.section);
+					expect(studen.credithours).to.equal(newStudent.credithours);
+					expect(studen.grade).to.equal(newStudent.grade);
+					expect(studen.status).to.equal(newStudent.status);
+					expect(studen.semester).to.equal(newStudent.semester);
+					expect(studen.startdate).to.equal(newStudent.startdate);
+					expect(studen.enddate).to.equal(newStudent.enddate);
+					expect(studen.starttime).to.equal(newStudent.starttime);
+					expect(studen.endtime).to.equal(newStudent.endtime);
+					expect(studen.sun).to.equal(newStudent.sun);
+					expect(studen.mon).to.equal(newStudent.mon);
+					expect(studen.tue).to.equal(newStudent.tue);
+					expect(studen.wed).to.equal(newStudent.wed);
+					expect(studen.thu).to.equal(newStudent.thu);
+					expect(studen.fri).to.equal(newStudent.fri);
+					expect(studen.sat).to.equal(newStudent.sat);
+					expect(studen.campus).to.equal(newStudent.campus);
+					expect(studen.campuslat).to.equal(newStudent.campuslat);
+					expect(studen.campuslng).to.equal(newStudent.campuslng);
+					expect(studen.instructor).to.equal(newStudent.instructor);
+				});
+		});
+	});
+
+	describe('DELETE endpoint - cart', function(){
+		it('delete selected cart record', function(){
+			let cart;
+			return Cart
+				.findOne()
+				.then(function(_cart){
+					cart = _cart;
+					return chai.request(app).delete(`/search/cart/${cart.id}`);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(204);
+					return Cart.findById(cart.id);
+				})
+				.then(function(_cart) {
+					expect(_cart).to.be.null;
+				});
+		});
+	});
+
 });
 
 
