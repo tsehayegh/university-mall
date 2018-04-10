@@ -30,6 +30,8 @@ if the user is an instructor, then the user will be able to:
 	(a) search for a student by entering student and class information.
 	(b) able to enter grade and status of the class
 
+The app tests for screen size using MediaQueryList techniques. Some class information will be omitted from displaying in the lists if the screen size is smaller than 767 pixels (iPads and phones).
+
 # How to use the app ##
 # Student role ##
 	Enter student id, first and last name, and select current semester
