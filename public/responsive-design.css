@@ -230,4 +230,8 @@ and (orientation: landscape){
   	font-size: 40px;
   }
 
+  .group {
+  	max-width: 80%;
+  }
+
 }
