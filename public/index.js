@@ -1,5 +1,5 @@
 
-
+//University Mall
 
 //Initialize google maps - University Mall
 function initMap() {
@@ -15,31 +15,8 @@ function initMap() {
  publicState.directionsDisplay = new google.maps.DirectionsRenderer;
 }
 
-//MediaQuery
-function screenTest(e) {
-let mediumScreen = false;
-  if (e.matches) {
-    mediumScreen = true;
-  }
-  return mediumScreen;
-};
-//add event listner to MediaQueryList
-//publicState.mediaQueryList.maxWidthMedium.addListener(screenTest);
-
-function onMediaQueryChange(){
-	let mql = publicState.mediaQueryList.maxWidthMedium;
-	mql.addListener(screenTest);
-	 mql.onchange = function() {
-		let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
-		searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
-		searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
-		renderSections(searchURL);
-		displayErrorMessage('');  	
-  	};
-}
-
 //========================================================
-//Start the app - University Mall
+//Start the app
 //Open/close forms based on the user's role
 $(function startApp(){
 	$('.start-button').on('click', function(event){
@@ -134,7 +111,6 @@ function openInstructorSpace(){
 }
 $(openInstructorSpace);
 
-
 //GET -- function to invoke searching sections on button click
 function searchForSections(){
 	$('.search-button').on('click',function(event){
@@ -161,6 +137,26 @@ function renderSections(searchURL){
 	});
 }
 
+//MediaQueryList - response to screen change
+function screenTest(e) {
+let mediumScreen = false;
+  if (e.matches) {
+    mediumScreen = true;
+  }
+  return mediumScreen;
+};
+
+function onMediaQueryChange(){
+	let mql = publicState.mediaQueryList.maxWidthMedium;
+	mql.addListener(screenTest);
+	 mql.onchange = function() {
+		let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
+		searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
+		searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
+		renderSections(searchURL);
+		displayErrorMessage('');  	
+  	};
+}
 
 //Refresh (uncheck) lists in the sections search result
 function refreshSearchResult(){
@@ -168,9 +164,6 @@ function refreshSearchResult(){
 		$(this).prop('checked', false); 
 	})
 }
-
-
-
 
 
 //Remove list
@@ -347,12 +340,10 @@ function checkConflict(currentListId, listParent){
 //Append checked search result list to cart
 function appendCheckedListsToCart(){
 	$('.search-result-list li input[type=checkbox]:checked').each(function(){
-
 		const currentListId = $(this).attr("value");
 		$(`.sec-cart-list li[id=${currentListId}]`).slideUp('fast',function(){
         	$(this).remove();
     	});
-
 		const checkedList = $(`.search-result-list li[id=${currentListId}]`).html();
 		checkedData = $(`.search-result-list li[id=${currentListId}]`).data();
     	const starttime = checkedData.starttime.toLowerCase().replace(/\s+/g, '');
@@ -386,16 +377,13 @@ function clearErrorMessage(){
 				displayErrorMessage('');
 			}
 		})
-
 	})
-
 	$('.group select').on('change', function(event){
 		event.preventDefault();
 		displayErrorMessage('');
 	})
 }
 $(clearErrorMessage);
-
 
 //POST method - save classes to cart or register for 
 function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
@@ -443,7 +431,6 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 						$('.sec-cart-list').empty();
 						refreshClassesInCart();
 						refreshSearchResult();
-						console.log('save in cart');
 						displayErrorMessage('Course saved in cart successfully!', 'blue');
 					};
 				},
@@ -518,16 +505,15 @@ function saveClassesToCart(){
 			cartURL = cartURL+`&coursenumber=`+sectionName[1];
 			$.get(cartURL, function(data){
 					if((data.carts.length === 0)){
-						console.log('sections updated to cart');
 						registerOrSaveSectionsInCart(searchURL, '/students/cart','cart');
 					}
 			});
-
 		});
 		displayErrorMessage('');
 	});
 }
 $(saveClassesToCart);
+
 
 //Display registered classes
 function pullRegisteredClasses(searchURL){
@@ -541,8 +527,6 @@ function pullRegisteredClasses(searchURL){
 				sortList($('.sec-registered-list'));
 				listAndMapDailySchedule();
 			});
-
-
 		} else {
 			displayErrorMessage(`You do not have registered classes. You can search for classes`, 'blue')
 		}
@@ -584,7 +568,6 @@ function listAndMapDailySchedule(){
 						const sectionname = `${data.studentrecords[i].subject}-${data.studentrecords[i].coursenumber}-${data.studentrecords[i].section}`;
 						const starttime = data.studentrecords[i].starttime.toLowerCase();
 						const endtime = data.studentrecords[i].endtime.toLowerCase().replace(/\s+/g, '');
-
 						$('.sec-registered-today-list').append(
 							`<li id = "${sectionname} today"   
 									aria-label = "sec-registered-today-list"
@@ -608,7 +591,6 @@ function listAndMapDailySchedule(){
 
 //Pull classes saved in cart
 function pullClassesFromCart(searchURL){
-	//$('.sec-cart-list').empty();
 	$.get(searchURL, function(data){
 		data.carts.map((cart) => {
 			appendDataToList(cart, '.sec-cart-list');
@@ -682,8 +664,12 @@ function clearSelectedRecordFromCart(){
 						url: ajaxURL,
 						type: 'DELETE',
 						success: function(result){
-							$(`.sec-cart-list li[id=${currentListId}]`).empty();
+							$(`.sec-cart-list li[id=${currentListId}]`).remove();
 							pullClassesFromCart(`/search/cart/?studentid=${studentid}&semester=${selectedSemester}`);
+							let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
+							searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
+							searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
+							renderSections(searchURL);
 						}
 					});
 				}); 
@@ -722,6 +708,11 @@ function clearAllCoursesFromCart(){
 	$('.clear-all-cart-button').on('click', function(event){
 		event.preventDefault();
 		clearAllRecordsFromCart();
+		let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
+		searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
+		searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
+		renderSections(searchURL);
+		displayErrorMessage('');
 	})
 }
 $(clearAllCoursesFromCart());
@@ -732,6 +723,10 @@ function clearStudentRecordFromCart(){
 	$('.clear-cart-button').on('click', function(event){
 		event.preventDefault();
 		clearSelectedRecordFromCart();
+		let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
+		searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
+		searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
+		renderSections(searchURL);
 		displayErrorMessage('');
 	})
 }
@@ -757,6 +752,10 @@ function clearSelectedClassFromRegistration(){
 						success: function(result){
 							console.log('Delete successful');
 							$(`.sec-registered-list li[id=${currentListId}]`).remove();
+							let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
+							searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
+							searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
+							renderSections(searchURL);
 						}
 					});
 				}); 
@@ -852,6 +851,10 @@ function dropClassFromRegistration(){
 		if(studentid){
 			pullRegisteredClasses(`/students/?studentid=${studentid}&semester=${selectedSemester}`);
 			refreshRegisteredClasses();
+			let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
+			searchURL = searchURL+`&subject=${$('.subject option:selected').val().toLowerCase()}`;
+			searchURL = searchURL+`&coursenumber=${$('.coursenumber option:selected').text()}`;
+			renderSections(searchURL);
 			displayErrorMessage('');
 		}
 
@@ -910,7 +913,7 @@ function calcAndDisplayRoute(orig, waypts, dest) {
 	})
 }
 
-//clear route information
+//clear routes
 function clearRoute(){
     if (publicState.directionsDisplay != null) {
       publicState.directionsDisplay.setMap(null);

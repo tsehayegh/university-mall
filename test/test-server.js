@@ -336,6 +336,7 @@ describe('Testing class registration app, university-mall', function(){
 					expect(res).to.have.status(200);
 					expect(res.body.studentrecords).to.be.a('array');
 					expect(res.body.studentrecords).to.have.lengthOf.at.least(1);
+					
 					return Student.count();
 				})
 				.then((count) => {

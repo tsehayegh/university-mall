@@ -30,7 +30,7 @@ if the user is an instructor, then the user will be able to:
 	(a) search for a student by entering student and class information.
 	(b) able to enter grade and status of the class
 
-The app tests for screen size using MediaQueryList techniques. Some class information will be omitted from displaying in the lists if the screen size is smaller than 767 pixels (iPads and phones).
+The app tests for screen size using MediaQueryList techniques. Some class information will be omitted from displaying in the lists if the screen size is smaller than 768 pixels.
 
 # How to use the app ##
 # Student role ##
@@ -47,10 +47,10 @@ The app tests for screen size using MediaQueryList techniques. Some class inform
 	The instructor can enter a grade and status of the section (class)
 
 # Technologies used:
-HTML, CSS, Responsive Design, JAVASCRIPT, jQuery, AJAX, Goodle Maps API, node.js, Implement REST API, heroku, mLab, express, testing, modulirzation, router, chai, http-chai, and Travis CI.
+HTML, CSS, Responsive Design, JAVASCRIPT, jQuery, AJAX, Goodle Maps API, node.js, Implement REST API, mocha, heroku, mLab, express, testing, modulirzation, router, chai, http-chai, and Travis CI.
 
 # Future work  ##
-More functionality can be added to the app. For example, a login feature can be included. Nowadays, most colleges use apps that help users to use the same login credential for any services offered. Moreover, the instructor can enter student ID and the app can be customized to pull student profile instead of the instructor typing in first and last name. 
+More functionality can be added to the app. For example, a login feature can be included. Nowadays, most colleges use apps that help users to use the same login credential for any services offered. Moreover, the instructor can enter student ID and the app can be customized to pull student profile instead of the instructor typing in first and last name. The drop down fields could also be populated programmatically.
 
 
 # Note

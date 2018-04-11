@@ -44,12 +44,12 @@
 }
 
 
-
 /*Mobiles in portrait mode*/
 @media only screen
 and (min-device-width: 320px)
 and (max-device-width: 480px)
 and (orientation: portrait){
+
 	.user-role {
 		font-size: 1.1em;
 		height: 100%;
@@ -60,14 +60,17 @@ and (orientation: portrait){
 	  width: 150px;
 	  overflow-wrap: break-word;
 	}
+
 	.landing-page label {
 		text-align: left;
 		font-size: 0.9em;
+		padding-bottom: 0;
 	}
 
 	.landing-page input[type=text],
 	.landing-page select {
 		font-size: 0.75em;
+		line-height: 1.5em;
 		padding-right: 5px;
 	}
 
@@ -81,6 +84,7 @@ and (orientation: portrait){
 and (min-device-width: 320px)
 and (max-device-width: 480px)
 and (orientation: landscape){
+
 	.user-role {
 		font-size: 0.9em;
 		height: 100%;
@@ -111,6 +115,7 @@ and (orientation: landscape){
 and (min-device-width: 481px)
 and (max-device-width: 767px)
 and (orientation: portrait){
+
 	.user-role {
 		font-size: 0.9em;
 		height: 100%;
@@ -138,12 +143,12 @@ and (orientation: portrait){
 and (min-device-width: 481px)
 and (max-device-width: 767px)
 and (orientation: landscape){
+
 	.user-role {
-		font-size: 0.9em;
+		font-size: 1.3em;
 		height: 100%;
 		width: 100%;
 	}
-
 
 	.user-info {
 		font-size: 0.9em;
@@ -154,8 +159,9 @@ and (orientation: landscape){
 	  width: 310px;
 	  overflow-wrap: break-word;
 	}
+
 	.landing-page input[type=text] {
-		font-size: 0.75em;
+		font-size: 1.1em;
 	}
 }
 
@@ -166,6 +172,7 @@ and (orientation: landscape){
 and (min-device-width: 768px)
 and (max-device-width: 1024px)
 and (orientation: portrait){
+
   .user-role {
   	position: fixed;
   	top: 50%;
@@ -173,6 +180,7 @@ and (orientation: portrait){
   	transform: translate(-50%, -50%);
   	font-size: 1.5em;
   }
+
   .app-header {
   	font-size: 24px;
   }
@@ -185,6 +193,7 @@ and (orientation: portrait){
 and (min-device-width: 768px)
 and (max-device-width: 1024px)
 and (orientation: landscape){
+
   .user-role {
   	position: fixed;
   	top: 50%;
@@ -204,6 +213,7 @@ and (orientation: landscape){
 
 /* Desktops and laptops ----------- */
 @media only screen  and (min-width : 1025px) {
+
   .user-role {
   	position: fixed;
   	top: 50%;
@@ -211,6 +221,7 @@ and (orientation: landscape){
   	transform: translate(-50%, -50%);
   	font-size: 1.5em;
   }
+
    .landing-page group {
   	text-align: center;
   }
