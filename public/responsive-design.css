@@ -61,17 +61,14 @@ and (orientation: portrait){
 	  overflow-wrap: break-word;
 	}
 
-	.landing-page label {
-		text-align: left;
-		font-size: 0.9em;
-		padding-bottom: 0;
+	.landing-page input[type=text], 
+	.landing-page select{
+	  width:150;
 	}
 
-	.landing-page input[type=text],
-	.landing-page select {
-		font-size: 0.75em;
-		line-height: 1.5em;
-		padding-right: 5px;
+	.landing-page label{
+	  width:150px;
+	  text-align: center;
 	}
 
 	.app-header {
@@ -96,18 +93,16 @@ and (orientation: landscape){
 	  overflow-wrap: break-word;
 	}
 
-	.landing-page input[type=text],
-	.landing-page select {
-		font-size: 0.75em;
+	.landing-page input[type=text], 
+	.landing-page select{
+	  width:100%;
 	}
 
-	.landing-page label {
-		font-size: 0.9em;
+	.landing-page label{
+	  width:100%;
+	  text-align: center;
 	}
 
-	.app-header {
-		font-size: 1.3em;
-	}
 }
 
 /*mobiles (larger) in portrait mode*/
@@ -126,16 +121,16 @@ and (orientation: portrait){
 	  width: 170px;
 	  overflow-wrap: break-word;
 	}
-	.landing-page input[type=text],
-	.landing-page select {
-		font-size: 0.9em;
+
+	.landing-page input[type=text], 
+	.landing-page select{
+	  width:160px;
 	}
 
-	.landing-page label {
-		font-size: 0.9em;
+	.landing-page label{
+	  width: 160px;
+	  text-align: center;
 	}
-
-
 }
 
 /*mobiles (larger) in landscape mode*/
@@ -160,8 +155,14 @@ and (orientation: landscape){
 	  overflow-wrap: break-word;
 	}
 
-	.landing-page input[type=text] {
-		font-size: 1.1em;
+	.landing-page input[type=text], 
+	.landing-page select{
+	  width:160px;
+	}
+
+	.landing-page label{
+	  width: 160px;
+	  text-align: center;
 	}
 }
 
@@ -185,6 +186,16 @@ and (orientation: portrait){
   	font-size: 24px;
   }
 
+	.landing-page input[type=text], 
+	.landing-page select{
+	  width:160px;
+	}
+
+	.landing-page label{
+	  width: 150px;
+	  text-align: center;
+	}
+
 }
 
 /*tablets in landscape mode*/
@@ -202,9 +213,16 @@ and (orientation: landscape){
   	font-size: 1.5em;
   }
 
-  .landing-page group {
-  	text-align: center;
-  }
+	.landing-page input[type=text], 
+	.landing-page select{
+	  width:160px;
+	}
+
+	.landing-page label{
+	  width: 150px;
+	  text-align: center;
+	}
+
   .app-header {
   	font-size: 24px;
   }
@@ -222,16 +240,18 @@ and (orientation: landscape){
   	font-size: 1.5em;
   }
 
-   .landing-page group {
-  	text-align: center;
-  }
+	.landing-page input[type=text], 
+	.landing-page select{
+	  width:200px;
+	}
+
+	.landing-page label{
+	  width: 150px;
+	  text-align: center;
+	}
 
   .app-header {
   	font-size: 40px;
-  }
-
-  .group {
-  	max-width: 80%;
   }
 
 }

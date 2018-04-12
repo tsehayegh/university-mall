@@ -323,11 +323,11 @@ function checkConflict(currentListId, listParent){
 					if(day === meetingDaysCartArray[i]){
 						if(checkedCampus !== campusCart && timeDiffInMinutes < 55){
 							conflict = true;
-							displayErrorMessage('Registering for multiple campuses! No enough driving time to get to your next class', 'red');
+							displayErrorMessage('Registering for multiple campuses! Not enough driving time to get to your next class', 'red');
 							$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false); 
 						} else if(checkedCampus === campusCart && timeDiffInMinutes < 5) {
 							conflict = true;
-							displayErrorMessage('No enough time between classes', 'red');
+							displayErrorMessage('Not enough time between classes', 'red');
 							$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false); 
 						}
 					}
