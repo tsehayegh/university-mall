@@ -5,18 +5,15 @@ const express = require('express');
 const studentsRouter = express.Router();
 
 const mongoose = require('mongoose');
-
 const bodyParser = require('body-parser');
 
 const {Student, Cart} = require('./models');
 
 studentsRouter.use(bodyParser.json());
-
 studentsRouter.use(express.static(__dirname + '/public'));
 
 //==========================================================
 //GET - Display student records 
-
 //GET - based on query filters
 studentsRouter.get('/students', (req, res) => {
 	const queryOptions = ['studentid', 'subject', 'coursenumber', 'semester', 
@@ -108,7 +105,7 @@ studentsRouter.post('/students',(req, res) =>{
 		});
 });
 
-//PUT - use PUT method to update grades based on automatic mongodb id
+//PUT - use PUT method to update grades based on id
 studentsRouter.put('/students/:id', (req, res) => {
 	const reqFields =  ['studentid', 'subject', 'coursenumber', 'semester'];
 	if(!(req.params.id && req.body.id&& req.params.id === req.body.id)) {
@@ -129,7 +126,7 @@ studentsRouter.put('/students/:id', (req, res) => {
 		.catch(err => res.status(500).json({message: 'Internal server error'}))
 })
 
-
+//DELETE - delete student records based on id
 studentsRouter.delete('/students/:id', (req, res) => {
   Student
     .findByIdAndRemove(req.params.id)
@@ -178,7 +175,7 @@ studentsRouter.get('/search/cart/:id', (req, res) => {
 		});
 });
 
-
+//POST- save student records in cart
 //Save cart
 studentsRouter.post('/students/cart',(req, res) =>{
 	const requiredFields = ['studentid', 'firstname', 'lastname', 'semester',
@@ -229,7 +226,7 @@ studentsRouter.post('/students/cart',(req, res) =>{
 		})
 });
 
-//DELETE - use DELETE method to delete class based on student id and coursename
+//DELETE - use DELETE method to delete class from cart based on student id
 studentsRouter.delete('/search/cart/:id', (req, res) => {
   Cart
     .findByIdAndRemove(req.params.id)

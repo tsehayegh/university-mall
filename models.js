@@ -28,10 +28,6 @@ const sectionsSchema = mongoose.Schema({
 });
 
 
-
-
-//a virtual for instructor's full name can be created in here
-
 sectionsSchema.methods.serialize = function() {
 	return {
 		"id": this._id,
@@ -62,8 +58,9 @@ sectionsSchema.methods.serialize = function() {
 
 const Section = mongoose.model("Section", sectionsSchema);
 
-//students model
-//schema to represent sections
+//=====================================================
+//student records and carts
+//schema
 const studentsSchema = mongoose.Schema({
 	"studentid": {type: String, required: true},
 	"firstname": {type: String, required: true},

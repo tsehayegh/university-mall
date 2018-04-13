@@ -43,7 +43,6 @@
 	}
 }
 
-
 /*Mobiles in portrait mode*/
 @media only screen
 and (min-device-width: 320px)
@@ -57,22 +56,36 @@ and (orientation: portrait){
 	}
 
 	.frm li {
-	  width: 150px;
+	  width: 100%;
 	  overflow-wrap: break-word;
 	}
 
 	.landing-page input[type=text], 
-	.landing-page select{
-	  width:150;
+	.landing-page select,
+	.instructor-space select{
+	  width:150px;
+	  padding-bottom: 0;
+	  line-height: 1em;
+	  margin: 0;
+
 	}
 
-	.landing-page label{
+	.landing-page label,
+	.instructor-space label{
 	  width:150px;
 	  text-align: center;
+	  padding-bottom: 0;
+	  margin-bottom: 0;
+	  line-height: 1em;
 	}
 
 	.app-header {
 		font-size: 1.2em;
+	}
+
+	.landing-page .group {
+		padding: 0;
+		margin: 0;
 	}
 }
 
@@ -89,16 +102,18 @@ and (orientation: landscape){
 	}
 
 	.frm li {
-	  width: 220px;
+	  width: 100%;
 	  overflow-wrap: break-word;
 	}
 
 	.landing-page input[type=text], 
-	.landing-page select{
+	.landing-page select,
+	.instructor-space select{
 	  width:100%;
 	}
 
-	.landing-page label{
+	.landing-page label,
+	.instructor-space label{
 	  width:100%;
 	  text-align: center;
 	}
@@ -118,16 +133,18 @@ and (orientation: portrait){
 	}
 
 	.frm li {
-	  width: 170px;
+	  width: 100%;
 	  overflow-wrap: break-word;
 	}
 
 	.landing-page input[type=text], 
-	.landing-page select{
+	.landing-page select,
+	.instructor-space select{
 	  width:160px;
 	}
 
-	.landing-page label{
+	.landing-page label,
+	.instructor-space label{
 	  width: 160px;
 	  text-align: center;
 	}
@@ -156,19 +173,20 @@ and (orientation: landscape){
 	}
 
 	.landing-page input[type=text], 
-	.landing-page select{
+	.landing-page select,
+	.instructor-space select{
 	  width:160px;
 	}
 
-	.landing-page label{
+	.landing-page label,
+	.instructor-space label{
 	  width: 160px;
 	  text-align: center;
 	}
 }
 
 
-/*tablets in portrait mode*/
-
+/*Tablets in portrait mode*/
 @media only screen
 and (min-device-width: 768px)
 and (max-device-width: 1024px)
@@ -187,19 +205,20 @@ and (orientation: portrait){
   }
 
 	.landing-page input[type=text], 
-	.landing-page select{
+	.landing-page select,
+	.instructor-space select{
 	  width:160px;
 	}
 
-	.landing-page label{
+	.landing-page label,
+	.instructor-space label{
 	  width: 150px;
 	  text-align: center;
 	}
 
 }
 
-/*tablets in landscape mode*/
-
+/*Tablets in landscape mode*/
 @media only screen
 and (min-device-width: 768px)
 and (max-device-width: 1024px)
@@ -214,11 +233,13 @@ and (orientation: landscape){
   }
 
 	.landing-page input[type=text], 
-	.landing-page select{
+	.landing-page select,
+	.instructor-space select{
 	  width:160px;
 	}
 
-	.landing-page label{
+	.landing-page label,
+	.instructor-space label{
 	  width: 150px;
 	  text-align: center;
 	}
@@ -241,11 +262,13 @@ and (orientation: landscape){
   }
 
 	.landing-page input[type=text], 
-	.landing-page select{
+	.landing-page select,
+	.instructor-space select{
 	  width:200px;
 	}
 
-	.landing-page label{
+	.landing-page label,
+	.instructor label{
 	  width: 150px;
 	  text-align: center;
 	}

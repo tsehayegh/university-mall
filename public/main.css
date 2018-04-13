@@ -18,7 +18,6 @@ body {
   font-size: 20px;
 }
 
-
 ol, ul {
   list-style: none;
 }
@@ -27,7 +26,6 @@ ol, ul {
   font-family: 'Roboto', serif;
   box-sizing: border-box;
 }
-
 
 html, body {
   height: 100%;
@@ -76,7 +74,6 @@ legend {
   text-align: left;
 }
 
-
 input[type=checkbox] {
   transform: scale(1.5);
   border: 1px solid black;
@@ -98,7 +95,7 @@ input[type=checkbox] {
 }
 
 .landing-page,
-.main-container {
+.main-container{
   margin: 0 auto;
   border: 1px solid black;
 }
@@ -130,6 +127,14 @@ input[type=checkbox] {
   display: inline-block;
 }
 
+.instructor-space{
+  position: relative;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid black;
+  display: inline-block;
+}
+
 .group {
   width: 100%
   display: inline-block;
@@ -137,7 +142,6 @@ input[type=checkbox] {
   text-align: center;
   vertical-align: middle;
 }
-
 
 input[type=text], 
 select {
@@ -151,18 +155,16 @@ select {
   background-color: white;
 }
 
-
 .user-info label,
-.search-area label {
+.search-area label,
+.instructor-space label {
   vertical-align: middle;
   font-size: 1em;
 }
 
-
 select:focus {
   background: green:
 }
-
 
 .main-container{
   position: absolute;
@@ -192,7 +194,6 @@ select:focus {
   overflow-x: hidden;
 }
 
-
 .frm li {
   border-bottom: 1px solid white;
   padding: 5px;
@@ -208,7 +209,6 @@ select:focus {
   text-align: center;
   margin: 0 auto;
 }
-
 
 li input[type="checkbox"]{
     border-style:1px solid black;
@@ -229,10 +229,6 @@ li a {
 .frm li:focus {
   background-color: lightgreen;
 
-}
-
-#grade-choice, option {
-  width: 10px;
 }
 
 button {
@@ -264,27 +260,8 @@ button {
   height: 100%;
 }
 
-.instructor-space div{
-  display: inline-block;
-  width: 100%;
-  margin: 0 auto ;
-  text-align: left;
-  vertical-align: middle;
-}
-
-.instructor-space div select{
-  width: 140px;
-  padding-left: 10px;
-  line-height: 1.5em;
-}
-.instructor-space div label{
-  float: left;
-  text-align: right;
-  padding-right: 10px;
-  line-height: 1.5em;
-}
-
-button:focus {
+button:focus,
+input[type=checkbox]:focus {
   background-color: green !important;
   color: #fff !important;
 }
@@ -301,20 +278,20 @@ button:focus {
   color: purple;
 }
 
+.landing-page input[type=text], 
+.landing-page select,
+.instructor-space select{
+  border-radius:4px;
+  font-size:18px;
+  padding: 3px;
+}
 
-  .landing-page input[type=text], 
-  .landing-page select{
-    border-radius:4px;
-    font-size:18px;
-    padding: 3px;
-  }
-
-  .landing-page label{
-    font-weight:bold;
-    display:inline-block;
-    font-size:18px;
-  }
-
+.landing-page label,
+.instructor-space label{
+  font-weight:bold;
+  display:inline-block;
+  font-size:18px;
+}
 
 .hidden {
   display: none;

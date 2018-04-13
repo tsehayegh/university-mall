@@ -1,6 +1,5 @@
 'use strict';
 
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
@@ -122,6 +121,7 @@ function seedStudentsData(){
 	}
 	return Student.insertMany(seedData);
 }
+
 //=======
 function seedCartData(){
 	const seedData = [];
@@ -130,8 +130,6 @@ function seedCartData(){
 	}
 	return Cart.insertMany(seedData);
 }
-
-
 
 //=======
 function seedData(){
@@ -171,7 +169,6 @@ function deleteCartDB(){
 	});
 }
 
-
 //=======
 function deleteDB(){
 	deleteSectionsDB();
@@ -179,18 +176,21 @@ function deleteDB(){
 	deleteCartDB();
 }
 
-
-//===================================================
+//======================================================================
 describe('Testing class registration app, university-mall', function(){
+
 	before(function(){
 		return runServer(TEST_DATABASE_URL);
 	});
+
 	beforeEach(function(){
 		return seedData();
 	});
+
 	afterEach(function(){
 		return deleteDB();
 	});
+
 	after(function(){
 		return closeServer();
 	});
@@ -199,7 +199,6 @@ describe('Testing class registration app, university-mall', function(){
 		this.timeout(15000);
 
 		it('should return all existing sections', function(){
-
 			let res;
 			return chai.request(app)
 				.get('/sections')
@@ -214,7 +213,6 @@ describe('Testing class registration app, university-mall', function(){
 		});
 		
 		it('should return sections with right fields', function(){
-
 			let resSection;
 			return chai.request(app)
 				.get('/sections')
@@ -395,8 +393,8 @@ describe('Testing class registration app, university-mall', function(){
 		});
 	});
 
-
 	describe('POST endpoint - students', function(){
+
 		it('should add new student record', function(){
 			const newStudent = generateStudentsData();
 			let fullname;
@@ -495,7 +493,6 @@ describe('Testing class registration app, university-mall', function(){
 				})	
 		});
 	});
-
 
 	describe('DELETE endpoint - students', function(){
 		it('delete selected student record', function(){

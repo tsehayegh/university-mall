@@ -9,14 +9,18 @@ const {Section, Student, Cart} = require('./models');
 const router = require('./sectionsRouter');
 const studentsRouter = require('./studentsRouter');
 
+//Sections router
 app.use('/', router);
+
+//Students router
 app.use('/', studentsRouter);
 
-//Catch requests made to non-existent endpoint
+//Requests made to non-existent endpoint
 app.use('*', function(req, res) {
 	res.status(404).json({message: 'Not Found'});
 });
 
+//run server
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 }

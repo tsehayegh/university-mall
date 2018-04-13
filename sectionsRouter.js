@@ -5,17 +5,14 @@ const express = require('express');
 const router = express.Router();
 
 const mongoose = require('mongoose');
-
 const bodyParser = require('body-parser');
 
 const {Section} = require('./models');
 
 router.use(bodyParser.json());
-
 router.use(express.static(__dirname + '/public'));
 
 //==========================================================
-
 router.get('/sections', (req, res) => {
 	const queryOptions = ["subject", "coursenumber", "title","section","credithours","semester","startdate",
 		 "enddate","starttime","endtime","sun","mon","tue","wed",
@@ -41,7 +38,7 @@ router.get('/sections', (req, res) => {
 		});
 });
 
-//search a course based id
+//search a course based on id
 router.get('/sections/:id', (req, res) => {
 	Section
 		.findById(req.params.id)
@@ -58,7 +55,6 @@ router.post('/sections', (req, res) =>{
 							'credithours', 'startdate', 'enddate',
 							'starttime', 'endtime', 'sun', 'mon', 'tue', 'wed', 'thu',
 							'fri', 'sat', 'campus', 'campuslat', 'campuslng', 'instructor'];
-
 	for(let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if(!(field in req.body)){
@@ -104,7 +100,6 @@ router.delete('/sections/:id', (req, res) => {
     .then(section => res.status(204).end())
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
-
 
 //=============================================================
 
