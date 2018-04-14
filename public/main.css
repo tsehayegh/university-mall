@@ -16,6 +16,7 @@ body {
   border: 1px solid black;
   box-sizing: border-box;
   font-size: 20px;
+  background: rgba(176, 224, 230, 0.3);
 }
 
 ol, ul {
@@ -33,14 +34,9 @@ html, body {
   padding: 0;
 }
 
-.main-container {
-  height: 100%;  
-}
-
 legend, h1, button {
   font-weight: bold;
   font-size: large;
-
 }
 
 legend {
@@ -50,35 +46,143 @@ legend {
   border-bottom: 1px solid black;
 }
 
+
 .app-header {
   font-size: 1.3em;
-  padding-bottom: 10px;
+  background: #298eea;
+  position: relative;
+  top: 0;
+  left: 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: 26px;
+  padding: 5px 0;
+  display: block;
+  margin-left:  0;
+  color: white;
+  width: 100%;
 }
 
+.left-icon {
+  float: left;
+  left: 0;
+  top: 0;
+  margin-left:  20px;
+  margin-top: 5px;
+  vertical-align: bottom;
+}
+
+.right-icon {
+  float: right;
+  margin-right:   20px;
+  margin-top: 5px;
+  vertical-align: bottom;
+}
+
+.top-navigation {
+  background-color: rgb(176, 224, 230);
+  overflow: hidden;
+  color: white;
+}
+
+.top-navigation a {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Change the color of links on hover */
+.top-navigation a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.top-navigation a:active,
+.top-navigation a:focus {
+  background-color: #4CAF50;
+  color: white;
+}
+
+a:active,
+a:focus {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.user-demo {
+  text-align: right;
+}
+.user-demo span {
+  text-align: right;
+}
+
+
 .user-role {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   z-index: 9999;
   vertical-align: middle;
-  background-color: rgb(176, 224, 230);
+  background-color: rgba(176, 224, 230,0.5);
   border: 1px solid black;
   font-size: 18px;
   line-height: 1.2em;
-  padding: 5px;
-  text-align: center;
-}
-
-.user-role p {
   text-align: left;
 }
+
+
+.user-info {
+  font-family: 'Roboto Condensed', sans-serif;
+  background-color: rgb(176, 224, 230);
+  border: 1px solid black;
+  justify-content: center;
+}
+
+.group {
+  width: 100%
+  display: inline-block;
+  margin: 0 auto;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+
+button:focus,
+input[type=checkbox]:focus {
+  background-color: green;
+  color: #fff;
+}
+
 
 input[type=checkbox] {
   transform: scale(1.5);
   border: 1px solid black;
 }
 
+input[type=text], 
+select {
+  width: 55%;
+  min-width: 140px;
+  max-width: 60%;
+  font: 1em 'Arial', sans-serif;
+  padding: 0 6px;
+  margin-top: 0.4em;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.user-info label,
+.search-area label,
+.instructor-space label {
+  vertical-align: middle;
+  font-size: 1em;
+}
+
+/*
 #map-canvas {
   height: 45%;
   position: absolute;
@@ -92,13 +196,10 @@ input[type=checkbox] {
 .container {
   display: inline-block;
   text-align: center;
+  background-color: #298eea;
 }
 
-.landing-page,
-.main-container{
-  margin: 0 auto;
-  border: 1px solid black;
-}
+
 
 .landing-page {
   position: absolute;
@@ -267,7 +368,7 @@ input[type=checkbox]:focus {
 }
 
 .user-role button {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .display-error {
@@ -292,7 +393,7 @@ input[type=checkbox]:focus {
   display:inline-block;
   font-size:18px;
 }
-
+*/
 .hidden {
   display: none;
 }

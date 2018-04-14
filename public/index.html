@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
 <head>
 	<title>University Mall</title>
 	<meta charset="UTF-8">
@@ -8,112 +8,135 @@
 	<link rel="stylesheet" type="text/css" href="responsive-design.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto|Roboto+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 </head>
 <body>
-	<div class = "background-space" role = "region" title = "Test"></div>
+	
+	<header class = "app-logo row">
+		<label class = "app-header">
+			<i class="fas fa-university left-icon"></i> University Mall <i class="fas fa-university right-icon"></i>
+		</label>
+	</header>
+
+	<nav class = "top-navigation row hidden" role = "navigation" id="myTopnav">
+		<a href="#" class = "home">Home</a>
+		<a href="#" class = "search-register">Search and Register</a>
+		<a href="#" class = "registered">Registered Classes</a>
+		<a href="#" class = "today-classes">Today's Classes</a>
+		<a href="#" class = "classes-in-cart">Cart</a>
+		<a href="#" class = "icon" onclick="myFunction()">&#9776;</a>
+	</nav>
+
+	<div class = "user-demo hidden row">
+		<label class = "col-12"><span class="student-id col-4"></span> <span class = "full-name col-4"></span>Demo</label>
+	</div>
+
 	<div class = "container row" role = "main" id = "container">
 		<div id = "map-canvas" class = "map-canvas col-6 hidden" aria-label ="container"></div>
-			<form class = "user-role" role = "note">
-				<fieldset>
-					<legend class = "app-header">University Mall</legend>
-					<p>This app, University Mall, will help you to: (a)search for classes, (b)save classes in cart, (c)register for classes, or (d)enter grades (instructors only). You will see be able to see registered and saved classes in cart and daily schedule on google maps</p> 
-					<p>If you are ready, select your role from the dropdown menue below and click the <em>Start</em> button to use the app!</p>
-					<div class = "group">
+		<form class = "user-role col-12" role = "note">
+			<fieldset>
+				<p>The app will help you to: 
+					<ol class = "features">
+						<li>1)search for classes,</li>
+						<li>2)save classes in cart,</li>
+						<li>3)register for classes, or</li>
+						<li>4)see daily classes on a map</li>
+					</ol>
+				</p> 
+				<p>If you are ready, select your role from the dropdown menue below and click the <em>Start</em> button to use the app!</p>
+				<div class = "group">
 					<label for = "role-choice">Select your role</label>
-						<select id = "role-choice" name = "myRole" arai-label ="user role">
-							<option value = "Student">Student</option>
-							<option value = "Instructor">Instructor</option>
+					<select id = "role-choice" name = "myRole" arai-label ="user role">
+						<option value = "Student">Student</option>
+						<option value = "Instructor" disabled>Instructor</option>
+					</select>
+				</div>
+				<button class = "start-button">Start</button>
+			</fieldset>
+		</form>
+		<form class = "user-info row hidden" action = "#" method = "get" role = "region" id ="user-info">
+			<fieldset>
+				<div class = 'group'>
+						<label for = "studentId">Student ID</label>
+						<input type="text" id = "studentId" required placeholder = "Ex. 001" arai-label ="student id">
+					</div>
+					<div class = "group">
+						<label for = "firstName">First Name</label>
+						<input type="text" id = "firstName" required placeholder="Ex. John" arai-label ="first name">
+					</div>
+					<div class = "group">
+						<label for = "lastName">Last Name</label>
+						<input type="text" id = "lastName" required placeholder="Ex. David" arai-label ="last name">
+					</div>
+					<div class = "group">
+						<label for = "semester-choice">Semester  </label>
+						<select name = "semesterSelection" id = "semester-choice" arai-label ="semester">
+							<option value = "2018FA">Fall 2018</option>
+							<option value = "2018SU">Summer 2018</option>
+							<option value = "2018SP">Spring 2018</option>
+							<option value = "2017FA">Fall 2017</option>
 						</select>
 					</div>
-					<button class = "start-button">Start</button>
-				</fieldset>
-			</form>
-		<form class = "landing-page col-6 hidden" action = "#" method = "get" role = "region">
-			<fieldset>
-				<legend class = "app-header">University Mall</legend>
-					<section class = "user-info" id = "user-info"> 
-						<div class = 'group'>
-							<label for = "studentId">Student ID</label>
-							<input type="text" id = "studentId" required placeholder = "Ex. 001" arai-label ="student id">
-						</div>
-						<div class = "group">
-							<label for = "firstName">First Name</label>
-							<input type="text" id = "firstName" required placeholder="Ex. John" arai-label ="first name">
-						</div>
-						<div class = "group">
-							<label for = "lastName">Last Name</label>
-							<input type="text" id = "lastName" required placeholder="Ex. David" arai-label ="last name">
-						</div>
-						<div class = "group">
-							<label for = "semester-choice">Semester  </label>
-							<select name = "semesterSelection" id = "semester-choice" arai-label ="semester">
-								<option value = "2018FA">Fall 2018</option>
-								<option value = "2018SU">Summer 2018</option>
-								<option value = "2018SP">Spring 2018</option>
-								<option value = "2017FA">Fall 2017</option>
-							</select>
-						</div>
-						<button class = "submit-button" arai-label ="submit button">Submit</button>
-					</section>
-					<section class = "search-area">
-						<h1>Search for sections</h1>
-							<div class = "instructor-lastname group hidden">
-								<label for = "instructor-lastname">Instructor</label>
-								<input type="text" id = "instructor-lastname" required placeholder="Instructor last name" arai-label ="Instructor's last name">
-							</div>
-						<div class = "group">
-							<label for = "campus-choice">Campus</label>
-							<select class = "campuses" id = "campus-choice" arai-label ="campus list">
-								<option value = ""></option>
-								<option value = "central">Central</option>
-								<option value = "city View">CityView</option>
-								<option value = "merancas">Merancas</option>
-								<option value = "levine">Levine</option>
-								<option value = "harper">Harper</option>
-								<option value = "harris">Harris</option>
-								<option value = "cato">Cato</option>
-								<option value = "online">Online</option>
-							</select>
-						</div>
-						<div class = "group">
-							<label for = "subject-choice">Subject</label>
-							<select class = "subject" id = "subject-choice" arai-label ="subject list">
-								<option value =""></option>
-								<option value ="ENG">English</option>
-								<option value ="MAT">Mathemetics</option>
-								<option value ="BIO">Biology</option>
-								<option value ="PHY">Physics</option>
-							</select>
-						</div>
-						<div class = "group">
-							<label for = "course-number-choice">Course Number</label>
-							<select class = "coursenumber" id = "course-number-choice" arai-label ="course number list">
-								<option value=""></option>
-								<option value = "110">110</option>
-								<option value= "111">111</option>
-								<option value = "112">112</option>
-								<option value = "171">171</option>
-							</select>
-						</div>
-						<button class = "search-button btn" disabled="">Search</button>
-						<button class = "instructor-button">Search Student</button>
-					</section>
+					<button class = "submit-button" arai-label ="submit button">Submit</button>
+			</fieldset>
+		</form>
 
+		<form class = "search-sections col-12 hidden" action = "#" method = "get" role = "region">
+			<fieldset class = "search-area">
+				<legend>Search for Classes</legend>
+				<div class = "group">
+					<label for = "campus-choice">Campus</label>
+					<select class = "campuses" id = "campus-choice" arai-label ="campus list">
+						<option value = ""></option>
+						<option value = "central">Central</option>
+						<option value = "city View">CityView</option>
+						<option value = "merancas">Merancas</option>
+						<option value = "levine">Levine</option>
+						<option value = "harper">Harper</option>
+						<option value = "harris">Harris</option>
+						<option value = "cato">Cato</option>
+						<option value = "online">Online</option>
+					</select>
+				</div>
+				<div class = "group">
+					<label for = "subject-choice">Subject</label>
+					<select class = "subject" id = "subject-choice" arai-label ="subject list">
+						<option value =""></option>
+						<option value ="ENG">English</option>
+						<option value ="MAT">Mathemetics</option>
+						<option value ="BIO">Biology</option>
+						<option value ="PHY">Physics</option>
+					</select>
+				</div>
+				<div class = "group">
+					<label for = "course-number-choice">Course Number</label>
+					<select class = "coursenumber" id = "course-number-choice" arai-label ="course number list">
+						<option value=""></option>
+						<option value = "110">110</option>
+						<option value= "111">111</option>
+						<option value = "112">112</option>
+						<option value = "171">171</option>
+					</select>
+				</div>
+				<button class = "search-button btn" disabled="">Search</button>
+				<button class = "instructor-button">Search Student</button>
 			</fieldset>
 		</form>
 		
-		<section class = "main-container col-6 hidden">
+		<section class = "main-container col-12">
 			<label class = "display-error" role = "alert" aria-live = "polite"></label>
-			<form class = "course-selection frm" action = "#" method = "post">
+			<form class = "course-selection frm hidden" action = "#" method = "post">
 				<fieldset>
 					<legend>Search Results</legend>
 					<div class = "sec-search-result">
 						<ul class = "search-result-list" id = "search-result-list">
-						</ul>				
+						</ul>
+						<input type ="submit" class = "register-button btn" disabled value = "Register">
+						<input type="submit" class = "save-cart-button btn" disabled value="Save in Cart">			
 					</div>
 				</fieldset>
 			</form>
-			<form class = "sec-cart frm">
+			<form class = "sec-cart frm hidden">
 				<legend> Sections in Cart</legend>
 				<fieldset>
 					<ul class = "sec-cart-list" id = "sec-cart-list">
@@ -127,7 +150,7 @@
 					</div>
 				</fieldset>
 			</form> 
-			<form class = "registered-classes frm" action ="#" method = "get">
+			<form class = "registered-classes frm hidden" action ="#" method = "get">
 				<legend>Registered Classes</legend>
 				<fieldset class = "my-classes">
 					<ul class = "sec-registered-list" id = "sec-registered-list">
@@ -160,7 +183,7 @@
 					</section>
 				</fieldset>
 			</form>
-			<form class = "registered-classes-today frm" action = "#" method = "get">
+			<form class = "registered-classes-today frm hidden" action = "#" method = "get">
 				<legend>Today's Schedule</legend>
 				<fieldset class = "my-classes-today">
 					<ul class = "sec-registered-today-list" id = "sec-registered-today-list">
