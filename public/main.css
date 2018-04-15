@@ -85,6 +85,7 @@ legend {
   color: white;
 }
 
+
 .top-navigation a {
     float: left;
     display: block;
@@ -150,7 +151,6 @@ a:focus {
 }
 
 
-
 button:focus,
 input[type=checkbox]:focus {
   background-color: green;
@@ -182,7 +182,6 @@ select {
   font-size: 1em;
 }
 
-/*
 #map-canvas {
   height: 45%;
   position: absolute;
@@ -193,6 +192,7 @@ select {
   margin: 0;
 }
 
+/*
 .container {
   display: inline-block;
   text-align: center;

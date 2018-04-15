@@ -37,13 +37,14 @@ $(function startApp(){
 		if($('#role-choice').val() === "Student") {
 			toggleHiddenClass(".user-role, .user-info");
 			$('.top-navigation').toggleClass(' responsive');
-
+			$('.top-navigation a.icon').focus();
 			//toggleHiddenClass(`.instructor-button`);
 			//toggleHiddenClass('#map-canvas');
 			$($('iframe')[0]).attr('title', "iFrame Title");
 			$($('iframe')[0]).attr('id', "iframe");
 			let iFrameDOM = $("iframe").contents();
 			iFrameDOM.find("html").attr('lang', 'en');
+
 		} else if($('#role-choice').val() === "Instructor"){
 			//toggleHiddenClass(`.user-role, .landing-page, .main-container, 
 			//					.sec-cart, .sec-registered-today-list,
@@ -84,24 +85,113 @@ $(refreshPage);
 function enableButtonIfCheckboxChecked(){
 	const checkboxes = $("input[type='checkbox']");
 	const submitButt = $("input[type='submit']");
+	const buttonButton = $("button");
+
 	checkboxes.click(function() {
 	    submitButt.attr("disabled", !checkboxes.is(":checked"));
 	});
-
+	
 }
 $(enableButtonIfCheckboxChecked);
 
-
-//Search and Register
+//Search and Register for Classes
 function searchForClassesAndRegister(){
 	$('.search-register').click(function(event){
 		event.preventDefault();
+		displayErrorMessage('');
 		toggleHiddenClass($('.search-sections'));
+		//$('.search-sections').removeClass('hidden');
+		console.log('toggle search');
 		myFunction();
 		$('.search-button').attr('disabled', false);
+		$('.course-sections').addClass('hidden');
+		$('.registered-classes').addClass('hidden');
+		$('.registered-classes-today').addClass('hidden');
+		$('.sec-cart').addClass('hidden')
 	})
 }
 $(searchForClassesAndRegister);
+
+//Display all registered classes for the semester
+function displayRegisteredClasses(){
+	$('.registered').click(function(event){
+		event.preventDefault();
+		displayErrorMessage('');
+		toggleHiddenClass($('.registered-classes'));
+		$('.search-sections').addClass('hidden');
+		$('.course-sections').addClass('hidden');
+		$('.registered-classes-today').addClass('hidden');
+		$('.sec-cart').addClass('hidden')
+		let searchURL = `/students/?studentid=${publicState.studentId}&semester=${publicState.semester}`;
+		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
+		$.get(searchURL, function(data){
+			$('.sec-registered-list').empty();
+			sortJsonObject(data.studentrecords);
+			if(data.studentrecords.length > 0) {
+				const todayDate = new Date();
+				data.studentrecords.map((student) => {
+					appendDataToList(student, '.sec-registered-list');
+					sortList($('.sec-registered-list'));
+				});
+			} else {
+				displayErrorMessage(`You do not have registered classes for the semester. You can search and register for classes`, 'blue')
+			}
+		});
+		}
+		myFunction();
+
+		$('.drop-class-button').attr('disabled', false);
+		enableButtonIfCheckboxChecked();
+	})
+}
+$(displayRegisteredClasses);
+
+//Display registered classes for the day
+function displayClassesForTheDay(){
+	$('.today-classes').click(function(event){
+		event.preventDefault();
+		displayErrorMessage('');
+		toggleHiddenClass($('.registered-classes-today, #map-canvas'));
+		$('.search-sections').addClass('hidden');
+		$('.course-sections').addClass('hidden');
+		$('.registered-classes').addClass('hidden');
+		$('.sec-cart').addClass('hidden')
+		listAndMapDailySchedule()
+		myFunction();
+		enableButtonIfCheckboxChecked();
+	})
+}
+$(displayClassesForTheDay);
+
+//Pull classes saved in cart for the semester
+function displayAndMapTodaysClasses(){
+	$('.classes-cart').click(function(event){
+		event.preventDefault();
+		displayErrorMessage('');
+		toggleHiddenClass('.sec-cart');
+		$('.search-sections').addClass('hidden');
+		$('.course-sections').addClass('hidden');
+		$('.registered-classes').addClass('hidden');
+		$('.registered-classes-today').addClass('hidden');
+		myFunction();
+		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
+			$('.sec-cart-list').empty();
+			pullClassesFromCart();
+		}
+	})
+}
+$(displayAndMapTodaysClasses);
+
+function pullClassesFromCart(){
+	const searchURL =`/search/cart/?studentid=${publicState.studentId}&semester=${publicState.semester}`;
+	$.get(searchURL, function(data){
+		$('.sec-cart-list').empty();
+		data.carts.map((cart) => {
+			appendDataToList(cart, '.sec-cart-list');
+			sortList('.sec-cart-list');
+		}); 
+	});
+}
 
 //A function that will toggle (hide/show tags)
 function toggleHiddenClass(classToToggle){
@@ -154,7 +244,7 @@ function openStudentInstructorClass(){
 	let searchURL = `/students/?studentid=${publicState.studentId}&semester=${publicState.semester}`;
 	if(publicState.userRole === "Student"){
 		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
-			pullRegisteredClasses(searchURL);
+			pullRegisteredClasses();
 			pullClassesFromCart();
 			refreshClassesInCart();
 			$('.btn').prop('disabled', false);
@@ -175,7 +265,7 @@ function openStudentInstructorClass(){
 		const coursenumber= $('#course-number-choice').val();
 		if(instructor.length > 0 && subject.length === 3 && coursenumber.length >= 3) {
 			searchURL = searchURL + `&subject=${subject}&coursenumber=${coursenumber}&instructor=${instructor}`;
-			pullRegisteredClasses(searchURL);
+			pullRegisteredClasses();
 			$('.btn').prop('disabled', false);
 		} else {
 			displayErrorMessage('Please enter correct 3 digit student id and select a semester first!', 'red');
@@ -207,7 +297,8 @@ function resizeInstructorPages(){
 function searchForSections(){
 	$('.search-button').on('click',function(event){
 		event.preventDefault();
-		toggleHiddenClass(".search-area, .course-selection");
+		$('.course-sections').removeClass('hidden');
+		toggleHiddenClass('.search-sections');
 		renderSections();
 		displayErrorMessage('');	
 	});
@@ -247,7 +338,7 @@ function onMediaQueryChange(){
 			renderSections();
 		}
 		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
-			pullRegisteredClasses(`/students/?studentid=${publicState.studentId}&semester=${publicState.semester}`);
+			pullRegisteredClasses();
 			pullClassesFromCart();
 		}
 		displayErrorMessage('');  	
@@ -326,10 +417,10 @@ function alreadyRegisteredForCourse(currentListId, ajaxData){
 		data: ajaxData,
 		success: function(data){
 			if(data.studentrecords.length > 0){
-				console.log(data.studentrecords)
 				alreadyRegisteredFor = true;
 				displayErrorMessage('You have already registered for the course!', 'red');
-				$(`.search-result-list li[id=${currentListId}] input[type='checkbox']`).prop('checked', false);
+				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
+				enableButtonIfCheckboxChecked();
 			}
 		},
 		failure: function(status){
@@ -349,7 +440,6 @@ function classAlreadySavedInCart(currentListId, ajaxData){
 		success: function(result){
 			if (result.carts.length > 0) {
 				courseAleardyInCart = true;
-				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
 			} 
 		},
 		failure: function(status){
@@ -365,13 +455,19 @@ function courseAlreadySelected(currentListId){
 	let alreadySelected = false;
 	const referenceId = currentListId;
 
-	$(`.search-result-list li`).each(function(){
-		const selectedBox = this.id;
-		const course = this.id.substr(0,7);
-		if((!(this.id === currentListId) && (currentCourse === course))) {
+	$('.search-result-list li input[type=checkbox]:checked').each(function(){
+
+		const selectedBox = $(this).attr('value');
+
+		const course = selectedBox.substr(0,7);
+		
+
+		if(((selectedBox !== currentListId) && (currentCourse === course))) {
 
 			alreadySelected = true;
-			console.log(currentListId, alreadySelected, this.id);
+			console.log(alreadySelected);
+			console.log(currentListId, selectedBox);
+
 		};
 		
 	})
@@ -384,7 +480,7 @@ function courseAlreadySelected(currentListId){
 function updateSectionCart(){
 	$('.search-result-list').on('change', 'li input[type=checkbox]', function(){
 		displayErrorMessage('');
-		
+
 		const currentListId = $(this).attr('value');
 		const sectionName = currentListId.split("-");
 		const courseName = sectionName[0] + '-' + sectionName[1];
@@ -402,14 +498,15 @@ function updateSectionCart(){
 		enableButtonIfCheckboxChecked();
 		if(this.checked) {	
 			if(alreadyRegisteredForCourse(currentListId, ajaxData)){
-				console.log('I am here');
 				displayErrorMessage('You have already registered for the course!', 'red');
 				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
-
-			} else {
-				if(classAlreadySavedInCart(currentListId, ajaxData)){
-					displayErrorMessage('Course is already saved in cart!', 'red');
-				}
+			} else if(classAlreadySavedInCart(currentListId, ajaxData)){
+				displayErrorMessage('Course is already saved in cart!', 'red');
+				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
+			} else if (courseAlreadySelected(currentListId)) {
+				console.log(currentListId);
+				displayErrorMessage('Course is already selected!', 'red');
+				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);	
 			}
 
 			/*
@@ -572,8 +669,8 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 				contentType: 'application/json',
 				data: JSON.stringify({
 					studentid: publicState.studentId,
-					firstname: $('#firstName').val(),
-					lastname: $('#lastName').val(),
+					firstname: publicState.firstName,
+					lastname: publicState.lastName,
 					semester: sec.semester,
 					subject: sec.subject,
 				    coursenumber: sec.coursenumber,
@@ -601,6 +698,7 @@ function registerOrSaveSectionsInCart(searchURL, ajaxURL, registrationStatus){
 				success: function(data){
 					if (registrationStatus === 'reg'){
 						registrationSuccessful(data, status);
+						displayErrorMessage('Registered for course successfully!', 'blue');
 					} else if (registrationStatus === 'cart') {
 						const studentid = publicState.studentId;
 						const selectedSemester = publicState.semester;
@@ -646,7 +744,6 @@ function callback(currentList) {
 function registerForClasses(){
 	$('.register-button').on('click', function(event){
 		event.preventDefault();
-
 		$('.search-result-list li input[type=checkbox]:checked').each(function(){
 			const sectionName = $(this).attr('value').split("-");
 			let searchURL = `/sections/?subject=`+sectionName[0];
@@ -657,9 +754,8 @@ function registerForClasses(){
 			regURL = regURL+`&semester=`+publicState.semester;
 			regURL = regURL+`&subject=`+sectionName[0];
 			regURL = regURL+`&coursenumber=`+sectionName[1];
-
-			$.get(cartURL, function(data){
-					if((data.carts.length === 0)){
+			$.get(regURL, function(data){
+					if((data.studentrecords.length === 0)){
 						registerOrSaveSectionsInCart(searchURL, '/students', 'reg');
 					}
 			});
@@ -709,22 +805,24 @@ $(saveClassesToCart);
 
 
 //Display registered classes
-function pullRegisteredClasses(searchURL){
+function pullRegisteredClasses(){
+	let searchURL = `/students/?studentid=${publicState.studentId}&semester=${publicState.semester}`;
+	if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
 	$.get(searchURL, function(data){
 		$('.sec-registered-list').empty();
-		$('.sec-registered-today-list').empty();
 		sortJsonObject(data.studentrecords);
 		if(data.studentrecords.length > 0) {
 			data.studentrecords.map((student) => {
 				appendDataToList(student, '.sec-registered-list');
 				sortList($('.sec-registered-list'));
-				listAndMapDailySchedule();
 			});
 		} else {
-			displayErrorMessage(`You do not have registered classes. You can search for classes`, 'blue')
+			displayErrorMessage(`You do not have registered classes for the semester. You can search and register for classes`, 'blue')
 		}
-	})
+	});
+	}
 }
+
 
 //Display and map schedule for the day
 function listAndMapDailySchedule(){
@@ -782,18 +880,7 @@ function listAndMapDailySchedule(){
 		});
 }
 
-//Pull classes saved in cart
-function pullClassesFromCart(){
-	const studentid = publicState.studentId; 
-	const selectedSemester = publicState.semester;
-	const searchURL =`/search/cart/?studentid=${publicState.studentId}&semester=${publicState.semester}`;
-	$.get(searchURL, function(data){
-		data.carts.map((cart) => {
-			appendDataToList(cart, '.sec-cart-list');
-			sortList('.sec-cart-list');
-		}); 
-	});
-}
+
 
 //Convert string time to date time to sort lists based on the returned date-time
 function TrimColon(text){
@@ -1038,7 +1125,7 @@ function dropClassFromRegistration(){
 		const studentid = publicState.studentId; 
 		const selectedSemester = publicState.semester;
 		if(publicState.studentId){
-			pullRegisteredClasses(`/students/?studentid=${publicState.studentId}&semester=${publicState.semester}`);
+			pullRegisteredClasses();
 			refreshRegisteredClasses();
 			if ($('.search-result-list li').length !== 0) {
 				renderSections();

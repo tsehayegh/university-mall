@@ -23,16 +23,16 @@
 		<a href="#" class = "search-register">Search and Register</a>
 		<a href="#" class = "registered">Registered Classes</a>
 		<a href="#" class = "today-classes">Today's Classes</a>
-		<a href="#" class = "classes-in-cart">Cart</a>
+		<a href="#" class = "classes-cart">Cart</a>
 		<a href="#" class = "icon" onclick="myFunction()">&#9776;</a>
 	</nav>
 
 	<div class = "user-demo hidden row">
 		<label class = "col-12"><span class="student-id col-4"></span> <span class = "full-name col-4"></span>Demo</label>
 	</div>
-
+	<label class = "display-error" role = "alert" aria-live = "polite"></label>
 	<div class = "container row" role = "main" id = "container">
-		<div id = "map-canvas" class = "map-canvas col-6 hidden" aria-label ="container"></div>
+		
 		<form class = "user-role col-12" role = "note">
 			<fieldset>
 				<p>The app will help you to: 
@@ -122,27 +122,29 @@
 				<button class = "instructor-button">Search Student</button>
 			</fieldset>
 		</form>
-		
+
+		<form class = "course-sections col-12 hidden" action = "#" method = "post">
+			<legend>Search Results</legend>
+			<fieldset>
+				<div class = "sec-search-result">
+					<ul class = "search-result-list" id = "search-result-list">
+					</ul>
+					<input type ="submit" class = "register-button btn" disabled value = "Register">
+					<input type="submit" class = "save-cart-button btn" disabled value="Save in Cart">			
+				</div>
+			</fieldset>
+		</form>	
 		<section class = "main-container col-12">
-			<label class = "display-error" role = "alert" aria-live = "polite"></label>
-			<form class = "course-selection frm hidden" action = "#" method = "post">
-				<fieldset>
-					<legend>Search Results</legend>
-					<div class = "sec-search-result">
-						<ul class = "search-result-list" id = "search-result-list">
-						</ul>
-						<input type ="submit" class = "register-button btn" disabled value = "Register">
-						<input type="submit" class = "save-cart-button btn" disabled value="Save in Cart">			
-					</div>
-				</fieldset>
-			</form>
+			
+
+
 			<form class = "sec-cart frm hidden">
 				<legend> Sections in Cart</legend>
 				<fieldset>
 					<ul class = "sec-cart-list" id = "sec-cart-list">
 					</ul>
 					<div class = "cart-group">
-						<button class = "register-button btn" disabled>Register</button>
+						<button class = "register-from-cart-button btn" disabled>Register</button>
 						<button class = "save-cart-button btn" disabled>Save to Cart</button>
 						<button class = "clear-cart-button btn" disabled>Delete Selected</button>
 						<button class = "clear-all-cart-button btn" disabled>Delete All</button>
@@ -150,6 +152,8 @@
 					</div>
 				</fieldset>
 			</form> 
+
+
 			<form class = "registered-classes frm hidden" action ="#" method = "get">
 				<legend>Registered Classes</legend>
 				<fieldset class = "my-classes">
@@ -188,6 +192,8 @@
 				<fieldset class = "my-classes-today">
 					<ul class = "sec-registered-today-list" id = "sec-registered-today-list">
 					</ul>
+					<label class = "mapMyDay">Today's classes on a map</label>
+					<div id = "map-canvas" class = "map-canvas col-12 hidden" aria-label ="container"></div>
 				</fieldset>
 			</form>
 		</section>
