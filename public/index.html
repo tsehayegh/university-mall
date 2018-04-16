@@ -21,9 +21,9 @@
 	<nav class = "top-navigation row hidden" role = "navigation" id="myTopnav">
 		<a href="#" class = "home">Home</a>
 		<a href="#" class = "search-register">Search and Register</a>
-		<a href="#" class = "registered">Registered Classes</a>
-		<a href="#" class = "today-classes">Today's Classes</a>
-		<a href="#" class = "classes-cart">Cart</a>
+		<a href="#" class = "registered">Registered Classes <span class = "registered-count"></span></a>
+		<a href="#" class = "today-classes">Today's Classes <span class = "registered-today-count"></span></a>
+		<a href="#" class = "classes-cart">Cart <span class = "cart-count"></span></a>
 		<a href="#" class = "icon" onclick="myFunction()">&#9776;</a>
 	</nav>
 
@@ -136,19 +136,14 @@
 		</form>	
 		<section class = "main-container col-12">
 			
-
-
 			<form class = "sec-cart frm hidden">
 				<legend> Sections in Cart</legend>
 				<fieldset>
 					<ul class = "sec-cart-list" id = "sec-cart-list">
 					</ul>
 					<div class = "cart-group">
-						<button class = "register-from-cart-button btn" disabled>Register</button>
-						<button class = "save-cart-button btn" disabled>Save to Cart</button>
-						<button class = "clear-cart-button btn" disabled>Delete Selected</button>
-						<button class = "clear-all-cart-button btn" disabled>Delete All</button>
-
+						<input type="submit" class="register-from-cart-button" disabled value = "Register From Cart">
+						<input type="submit" class="clear-cart-button" disabled value = "Delete Selected">
 					</div>
 				</fieldset>
 			</form> 
@@ -159,7 +154,9 @@
 				<fieldset class = "my-classes">
 					<ul class = "sec-registered-list" id = "sec-registered-list">
 					</ul>
-					<button class  = "drop-class-button btn" disabled>Drop Selected</button>
+
+					<input type = "submit" class  = "drop-class-button btn" disabled value = "Drop Selected">
+
 					<section class = "instructor-space hidden">
 						<div class = "group">
 							<label for = "grade-choice">Grade</label>
@@ -192,7 +189,7 @@
 				<fieldset class = "my-classes-today">
 					<ul class = "sec-registered-today-list" id = "sec-registered-today-list">
 					</ul>
-					<label class = "mapMyDay">Today's classes on a map</label>
+					<label class = "mapMyDay">Your classes for today on a map with driving route!</label>
 					<div id = "map-canvas" class = "map-canvas col-12 hidden" aria-label ="container"></div>
 				</fieldset>
 			</form>

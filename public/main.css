@@ -192,14 +192,27 @@ select {
   margin: 0;
 }
 
+.cart-count {
+  background-color: yellow;
+}
+
+.registered-count,
+.registered-today-count {
+  background-color: #4CAF50;
+}
+
+.mapMyDay {
+  color: blue;
+  position: relative;
+  bottom: 0;
+}
+
 /*
 .container {
   display: inline-block;
   text-align: center;
   background-color: #298eea;
 }
-
-
 
 .landing-page {
   position: absolute;
