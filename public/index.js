@@ -32,39 +32,15 @@ function myFunction() {
 //Start the app
 //Open/close forms based on the user's role
 $(function startApp(){
-	$('.start-button').on('click', function(event){
+	$('.start-button').on('click', function(event) {
 		event.preventDefault();
-		publicState.userRole = $('#role-choice').val();
-		if($('#role-choice').val() === "Student") {
-			toggleHiddenClass(".user-role, .user-info");
-			$('.top-navigation').toggleClass(' responsive');
-			$('.top-navigation a.icon').focus();
-			//toggleHiddenClass(`.instructor-button`);
-			//toggleHiddenClass('#map-canvas');
-			$($('iframe')[0]).attr('title', "iFrame Title");
-			$($('iframe')[0]).attr('id', "iframe");
-			let iFrameDOM = $("iframe").contents();
-			iFrameDOM.find("html").attr('lang', 'en');
-
-		} else if($('#role-choice').val() === "Instructor"){
-			//toggleHiddenClass(`.user-role, .landing-page, .main-container, 
-			//					.sec-cart, .sec-registered-today-list,
-			//					.registered-classes-today, .course-selection`);
-			//toggleHiddenClass(`.instructor-space, .instructor-lastname`);
-			//toggleHiddenClass(`.submit-button, .search-button`);
-
-			resizeInstructorPages();
-			//$('.main-container').height('100%');
-			//$('.registered-classes').height('100%');
-			//$('.sec-registered-classes').height('50%');
-			//$('.landing-page').height('100%');	
-			//$('.user-info').height('50%');
-			//$('.search-area').height('50%');
-			
-
-			$('.drop-class-button').prop('disabled', true);
-			//toggleHiddenClass(`.drop-class-button`);
-		}
+		toggleHiddenClass(".user-role, .user-info");
+		$('.top-navigation').toggleClass(' responsive');
+		$('.top-navigation a.icon').focus();
+		$($('iframe')[0]).attr('title', "iFrame Title");
+		$($('iframe')[0]).attr('id', "iframe");
+		let iFrameDOM = $("iframe").contents();
+		iFrameDOM.find("html").attr('lang', 'en');
 		$('.search-result-list').empty();
 		$('.sec-cart-list').empty();
 		$('.sec-registered-list').empty();
@@ -76,28 +52,39 @@ $(function startApp(){
 //Home button
 function refreshPage(){
 	$('.home').click(function(event){
-		event.preventDefault();
+		//event.preventDefault();
 		window.location.reload();
 	})
 }
 $(refreshPage);
 
 
+function clickAnyCheckbox(checkboxes, submitButt) {
+	console.log(checkboxes);
+	checkboxes.click(function() {
+    submitButt.prop("disabled", !checkboxes.is(":checked"));
+});
+}
+$(clickAnyCheckbox);
+
 function enableButtonIfCheckboxChecked(){
 	const checkboxes = $("input[type='checkbox']");
 	const submitButt = $("input[type='submit']");
-
-	checkboxes.click(function() {
-		console.log($("input[type='checkbox']:checked").length);
-	    submitButt.prop("disabled", !checkboxes.is(":checked"));
-	});
+	clickAnyCheckbox(checkboxes, submitButt);
 }
-$(enableButtonIfCheckboxChecked);
+
 
 $(function() {
-	$('.search-result-list').on('click', 'li input[type=checkbox]', function(){
+	$('.search-result-list').on('change', 'li input[type=checkbox]', function(){
 		enableButtonIfCheckboxChecked();
+		const val = $(this).val();
+		if($(this).is(":checked")) {
+			$(":checkbox[value='"+val+"']").attr("checked", true);
+		} else {
+			$(":checkbox[value='"+val+"']").attr("checked", false);
+		}
 	});
+
 	$('.sec-registered-list').on('click', 'li input[type=checkbox]', function(){
 		enableButtonIfCheckboxChecked();
 	});
@@ -106,10 +93,24 @@ $(function() {
 	});
 });
 
+/*
+$(function() {
+	$("ul").on('click', 'li', function (e) {
+        var cb = $(this).find(":checkbox")[0];
+        console.log(cb);
+        if (e.target != cb) cb.checked = !cb.checked;
+        $(this).toggleClass("selected", cb.checked);
+    });	
+});
+*/
+
+
+
 //Search and Register for Classes
 function searchForClassesAndRegister(){
 	$('.search-register').click(function(event){
-		event.preventDefault();
+		//event.preventDefault();
+		enableButtonIfCheckboxChecked();
 		displayErrorMessage('');
 		toggleHiddenClass($('.search-sections'));
 		//$('.search-sections').removeClass('hidden');
@@ -118,7 +119,7 @@ function searchForClassesAndRegister(){
 		$('.search-button').attr('disabled', false);
 		$('.course-sections').addClass('hidden');
 		$('.registered-classes').addClass('hidden');
-		$('.registered-classes-today').addClass('hidden');
+		$('.registered-classes-today, #map-canvas').addClass('hidden');
 		$('.sec-cart').addClass('hidden')
 	})
 }
@@ -130,9 +131,12 @@ function displayRegisteredClasses(){
 		event.preventDefault();
 		displayErrorMessage('');
 		toggleHiddenClass($('.registered-classes'));
+		if($('.registered-count').val() === "(0)") {
+			$('.drop-class-button').attr('disabled', true);
+		}
 		$('.search-sections').addClass('hidden');
 		$('.course-sections').addClass('hidden');
-		$('.registered-classes-today').addClass('hidden');
+		$('.registered-classes-today, #map-canvas').addClass('hidden');
 		$('.sec-cart').addClass('hidden')
 		let searchURL = `/students/?studentid=${publicState.studentId}&semester=${publicState.semester}`;
 		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
@@ -181,10 +185,16 @@ function displayAndMapTodaysClasses(){
 		event.preventDefault();
 		displayErrorMessage('');
 		toggleHiddenClass('.sec-cart');
+		if($('.cart-count').val() === "(0)"){
+			$('.register-from-cart-button').attr('disabled', true);
+			$('.clear-cart-button').attr('disabled', true);
+
+		}
 		$('.search-sections').addClass('hidden');
 		$('.course-sections').addClass('hidden');
 		$('.registered-classes').addClass('hidden');
-		$('.registered-classes-today').addClass('hidden');
+		$('.registered-classes-today, #map-canvas').addClass('hidden');
+
 
 		myFunction();
 		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
@@ -211,7 +221,7 @@ function toggleHiddenClass(classToToggle){
 	$(classToToggle).toggleClass("hidden")
 }
 
-//Open instructor/student form on submit button
+//Open student form on submit button
 function openUserForms(){
 	$('.submit-button').on("click", function(event){
 		event.preventDefault();
@@ -221,12 +231,14 @@ function openUserForms(){
 			$('#semester-choice').val().length === 6) {
 				$('.sec-registered-list').empty();
 				keepUserDemo();
-				toggleHiddenClass(".user-info, .top-navigation, .user-demo");
+				toggleHiddenClass(".user-info, .top-navigation");
 				$('.top-navigation').toggleClass(' responsive');
 				countRecords();
 				onMediaQueryChange();
-				//openStudentInstructorClass();
 				clearRoute();
+				const btn = $(this);
+
+				btn.css("backgroundColor", "#d9d9d9")
 		} else {
 			$('#studentId').focus();
 			displayErrorMessage('Enter student information and select current semester first!', 'red');
@@ -248,57 +260,6 @@ function keepUserDemo(){
 							</label>`);
 }
 
-//Open instructor/student form
-function openStudentInstructorClass(){
-	const studentid = publicState.studentId;
-	const selectedSemester = publicState.semester;
-	let searchURL = `/students/?studentid=${publicState.studentId}&semester=${publicState.semester}`;
-	if(publicState.userRole === "Student"){
-		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
-			pullRegisteredClasses();
-			pullClassesFromCart();
-			refreshClassesInCart();
-			$('.btn').prop('disabled', false);
-		} else {
-			displayErrorMessage('Please enter correct 3 digit student id and select a semester first!', 'red');
-			$('.btn').prop('disabled', true);
-		}
-	} else if(publicState.userRole === "Instructor"){
-		resizeInstructorPages();
-		$('.main-container').height('100%');
-		$('.sec-registered-classes').height('100%');
-		const instructor = $('#instructor-lastname').val().trim();
-		const subject = $('#subject-choice').val().toLowerCase();
-		const coursenumber= $('#course-number-choice').val();
-		if(instructor.length > 0 && subject.length === 3 && coursenumber.length >= 3) {
-			searchURL = searchURL + `&subject=${subject}&coursenumber=${coursenumber}&instructor=${instructor}`;
-			pullRegisteredClasses();
-			$('.btn').prop('disabled', false);
-		} else {
-			displayErrorMessage('Please enter correct 3 digit student id and select a semester first!', 'red');
-			$('.btn').prop('disabled', true);
-		}
-	}	
-}
-
-//Open instructor's page
-function openInstructorSpace(){
-	$('.instructor-button').on('click', function(event){
-		event.preventDefault();
-		openStudentInstructorClass();
-	})
-}
-$(openInstructorSpace);
-
-function resizeInstructorPages(){
-	$(window).resize(function(){
-		$('.main-container').height('100%');
-		$('.sec-registered-classes').height('100%');
-		//$('.landing-page').height('100%');	
-		//$('.user-info').height('50%');
-		//$('.search-area').height('50%');
-	})
-}
 
 //GET -- function to invoke searching sections on button click
 function searchForSections(){
@@ -432,7 +393,7 @@ function alreadyRegisteredForCourse(currentListId, ajaxData){
 			if(data.studentrecords.length > 0){
 				alreadyRegisteredFor = true;
 				displayErrorMessage('You have already registered for the course!', 'red');
-				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
+				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).attr('checked', false);
 				//enableButtonIfCheckboxChecked();
 			}
 		},
@@ -678,6 +639,7 @@ function countRecords(){
 		}
 	});
 
+	//daily registered count
 	const today = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][(new Date()).getDay()];
 	const ajaxTodayData = `studentid=${publicState.studentId}&semester=${publicState.semester}&${today}=Y`;
 		$.ajax({
@@ -691,10 +653,7 @@ function countRecords(){
 			failure: function(status){
 				console.log('Failure', status);
 			}
-
 		});
-
-
 
 	//Count cart
 	const ajaxDataCart =`studentid=${publicState.studentId}&
@@ -704,7 +663,6 @@ function countRecords(){
 		url: '/search/cart',
 		data: ajaxDataCart,
 		success: function(data){
-
 			$('.cart-count').html(`(${data.carts.length})`);
 		},
 		failure: function(status){
@@ -713,6 +671,7 @@ function countRecords(){
 	});
 }
 
+//Register from cart
 function registerFromCart(){
 	$('.register-from-cart-button').click(function(event) {
 		event.preventDefault();
@@ -721,20 +680,16 @@ function registerFromCart(){
 			let searchURL = `/sections/?subject=`+sectionName[0];
 			searchURL = searchURL+`&coursenumber=`+sectionName[1];
 			searchURL = searchURL+`&section=`+sectionName[2];
-
 			let regURL = `/students/?studentid=`+publicState.studentId;
 			regURL = regURL+`&semester=`+publicState.semester;
 			regURL = regURL+`&subject=`+sectionName[0];
 			regURL = regURL+`&coursenumber=`+sectionName[1];
-
 			$.get(regURL, function(data){
 					if((data.studentrecords.length === 0)){
 						registerOrSaveSectionsInCart(searchURL, '/students', 'reg');
 					};
 			});
 		});
-
-
 	})
 }
 $(registerFromCart);
@@ -755,7 +710,6 @@ function appendCheckedListsToCart(){
     	const meetingdays = checkedData.meetingdays.toLowerCase();
     	const campus = checkedData.campus.toLowerCase();
     	const parentId = $(`.sec-cart-list li[id=${currentListId}]`).parent().attr("id");
-
 		$('.sec-cart-list').append(`<li id = "${currentListId}" 
 								aria-label ="${parentId}"
 								data-starttime = ${starttime}
@@ -1170,52 +1124,6 @@ function clearSelectedClassFromRegistration(){
 						}
 					});
 				}); 
-			});
-		}
-	});
-}
-
-
-//Update grade and course status (by instructor)
-function updateGradeAndCourseStatus(){
-	$('.grade-button').on('click', function(event){
-		event.preventDefault();
-		enterGrades();
-		displayErrorMessage('');
-	})
-}
-$(updateGradeAndCourseStatus);
-
-
-function enterGrades(){
-	$('.sec-registered-list li input[type="checkbox"]:checked').each(function(index){
-		const sectionName = $(this).attr('value').split("-");
-		const currentListId = $(this).attr('value');
-		const studentid = publicState.studentId; 
-		const selectedSemester = publicState.semester;
-		const searchURL = `/students/?studentid=${publicState.studentId}&subject=${sectionName[0]}&
-							coursenumber=${sectionName[1]}&semester=${publicState.semester}`;
-		const checked = $(`.sec-registered-list li[id=${currentListId}]`).html();
-		if(this.checked) {
-			$.get(searchURL, function(data){
-				data.studentrecords.map((studentrecord) => {
-				const newData = JSON.stringify({
-						id: studentrecord.id,
-						grade: $('#grade-choice').val(),
-						status: $('#status-choice').val()
-						});
-				$.ajax({
-					url: `/students/${studentrecord.id}`,
-					type: 'PUT',
-					contentType: "application/json",
-					dataType: 'json',
-					data: newData,
-					success: function(result){
-						displayErrorMessage('Data updated successfully', 'blue');
-						openStudentInstructorClass();
-					}
-				});
-				});
 			});
 		}
 	});

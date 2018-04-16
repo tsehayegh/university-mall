@@ -17,6 +17,7 @@ body {
   box-sizing: border-box;
   font-size: 20px;
   background: rgba(176, 224, 230, 0.3);
+  position: relative;
 }
 
 ol, ul {
@@ -47,16 +48,15 @@ legend {
 }
 
 
-.app-header {
+.app-logo {
   font-size: 1.3em;
-  background: #298eea;
-  position: relative;
+  background-color:  rgb(41, 142, 234);
+  position: sticky;
   top: 0;
   left: 0;
   text-align: center;
   font-weight: bold;
   font-size: 26px;
-  padding: 5px 0;
   display: block;
   margin-left:  0;
   color: white;
@@ -65,18 +65,16 @@ legend {
 
 .left-icon {
   float: left;
-  left: 0;
-  top: 0;
   margin-left:  20px;
   margin-top: 5px;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 
 .right-icon {
   float: right;
   margin-right:   20px;
   margin-top: 5px;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 
 .top-navigation {
@@ -84,7 +82,6 @@ legend {
   overflow: hidden;
   color: white;
 }
-
 
 .top-navigation a {
     float: left;
@@ -98,26 +95,26 @@ legend {
 }
 
 /* Change the color of links on hover */
-.top-navigation a:hover {
-    background-color: #ddd;
-    color: black;
+.top-navigation a:hover,
+.top-navigation span:hover {
+    background-color: #005f5f;
+    color: white;
+    border: 1px solid white;
 }
 
-.top-navigation a:active,
-.top-navigation a:focus {
+.active{
   background-color: #4CAF50;
-  color: white;
+  color: black;
 }
 
-a:active,
-a:focus {
-  background-color: #4CAF50;
-  color: white;
+.top-navigation .icon {
+  display: none;
 }
 
 .user-demo {
-  text-align: right;
+  text-align: center;
 }
+
 .user-demo span {
   text-align: right;
 }
@@ -176,37 +173,107 @@ select {
 }
 
 .user-info label,
-.search-area label,
-.instructor-space label {
+.search-area label{
   vertical-align: middle;
   font-size: 1em;
 }
 
-#map-canvas {
-  height: 45%;
-  position: absolute;
-  top:55%;
-  left: 0;
-  z-index: 1;
-  border: 1px solid black;
-  margin: 0;
+.registered-classes-today {
+  position: relative;
+  margin: 0 auto;
+
 }
 
 .cart-count {
-  background-color: yellow;
+  color: yellow;
 }
 
 .registered-count,
 .registered-today-count {
-  background-color: #4CAF50;
+  color: #4CAF50;
 }
 
 .mapMyDay {
   color: blue;
-  position: relative;
-  bottom: 0;
 }
 
+input[type='button'], 
+input[type='submit'],
+button {
+  border: 1px solid white;
+  text-decoration: none;
+  border-radius: 2px;
+  height: 36px;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 
+              0px 2px 2px 0px rgba(0, 0, 0, 0.14), 
+              0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  line-height: 1.3em;
+  background-color: rgb(217, 217, 217);
+  margin: 5px;
+}
+
+input[type='button']:focus, 
+input[type='submit']:focus,
+button:focus {
+  background-color: green;
+  color: #fff;
+}
+
+input[type='button']:active, 
+input[type='submit']:active,
+button:active {
+  background-color: skyblue;
+  color: #fff;
+}
+
+li:nth-child(even) {
+  background:#ccc;
+}
+
+.sec-registered-today-list {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 10%;
+}
+
+.frm {
+  display: block;
+  position: relative;
+  top: auto;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
+}
+#map-canvas {
+  position: absolute;
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  left: 0;
+  z-index: 1;
+  border: 1px solid black;
+  max-width: 1000px;
+}
+.lst {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: auto;
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+legend {
+  position: sticky;
+}
 /*
 .container {
   display: inline-block;
@@ -366,6 +433,7 @@ button {
   background-color: rgb(217, 217, 217);
   margin: 5px;
 }
+
 .instructor-space {
   display: inline-block;
   margin: 0 auto;

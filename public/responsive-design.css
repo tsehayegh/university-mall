@@ -4,7 +4,7 @@
 
 .row {
 	max-width: 1000px;
-	padding: 0, 20px;
+	padding: 0 20px;
 	margin: 0 auto;
 }
 
@@ -47,30 +47,82 @@
 }
 
 
-@media screen and (max-width: 600px) {
-  .top-navigation a:not(:first-child) {display: none;}
+@media screen and (max-width: 810px) {
+
+  .top-navigation a:not(:first-child) {
+  	display: none;
+  }
+
   .top-navigation a.icon {
     float: right;
     display: block;
   }
+
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 810px) {
+
   .top-navigation.responsive {
   	position: relative;
   }
+
   .top-navigation.responsive a.icon {
     position: absolute;
     right: 0;
     top: 0;
   }
+
   .top-navigation.responsive a {
     float: none;
     display: block;
     text-align: left;
   }
+  
 }
 
+@media only screen
+and (min-device-height: 320px)
+and (max-device-height: 480px)
+and (orientation: portrait){
+	.frm {
+		font-size: 0.8em;
+		max-height: 480px;
+	}
+
+	.lst {
+		height: 100%;
+	}
+}
+
+@media only screen
+and (min-device-height: 320px)
+and (max-device-height: 480px)
+and (orientation: landscape){
+	.frm {
+		max-height: 320px;
+		height: 100%;
+		font-size: 0.8em;
+	}
+}
+@media only screen
+and (min-device-width: 481px)
+and (max-device-width: 767px)
+and (orientation: portrait){
+	.frm {
+		max-height: 767;
+		font-size: 0.9em;
+	}
+}
+
+@media only screen
+and (min-device-width: 481px)
+and (max-device-width: 767px)
+and (orientation: landscape){
+	.frm {
+		max-height: 481;
+		font-size: 0.9em;
+	}
+}
 
 /*Mobiles in portrait mode*/
 /*
