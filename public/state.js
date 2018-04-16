@@ -8,6 +8,10 @@ let publicState = (function() {
       currentLocation: {},
       days: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
       userRole: null,
+      studentId: null,
+      firstName: null,
+      lastName: null,
+      semester: null,
       mediaQueryList: {
       	orientationPortrait: window.matchMedia("(orientation: portrait)"),
       	orientationLandscape: window.matchMedia("(orientation: landscape)"),
