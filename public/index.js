@@ -58,20 +58,14 @@ function refreshPage(){
 }
 $(refreshPage);
 
-
-function clickAnyCheckbox(checkboxes, submitButt) {
-	console.log(checkboxes);
+function enableButtonIfCheckboxChecked(){
+	const checkboxes = $("input[type='checkbox']");
+	const submitButt = $("input[type='submit']");
 	checkboxes.click(function() {
     submitButt.prop("disabled", !checkboxes.is(":checked"));
 });
 }
-$(clickAnyCheckbox);
-
-function enableButtonIfCheckboxChecked(){
-	const checkboxes = $("input[type='checkbox']");
-	const submitButt = $("input[type='submit']");
-	clickAnyCheckbox(checkboxes, submitButt);
-}
+$(enableButtonIfCheckboxChecked);
 
 
 $(function() {
@@ -109,19 +103,19 @@ $(function() {
 //Search and Register for Classes
 function searchForClassesAndRegister(){
 	$('.search-register').click(function(event){
-		//event.preventDefault();
+		event.preventDefault();
+		myFunction();
 		enableButtonIfCheckboxChecked();
 		displayErrorMessage('');
 		toggleHiddenClass($('.search-sections'));
-		//$('.search-sections').removeClass('hidden');
-		console.log('toggle search');
-		myFunction();
 		$('.search-button').attr('disabled', false);
+
 		$('.course-sections').addClass('hidden');
 		$('.registered-classes').addClass('hidden');
-		$('.registered-classes-today, #map-canvas').addClass('hidden');
+		$('.registered-classes-today').addClass('hidden');
 		$('.sec-cart').addClass('hidden')
-	})
+
+	});
 }
 $(searchForClassesAndRegister);
 
@@ -129,15 +123,21 @@ $(searchForClassesAndRegister);
 function displayRegisteredClasses(){
 	$('.registered').click(function(event){
 		event.preventDefault();
+		myFunction();
 		displayErrorMessage('');
-		toggleHiddenClass($('.registered-classes'));
-		if($('.registered-count').val() === "(0)") {
-			$('.drop-class-button').attr('disabled', true);
+
+		if(($('.registered-count').text()==="(0)")) {
+			console.log($('.registered-count').text());
+			$('.registered-classes').addClass('hidden');
+			displayErrorMessage(`You do not have registered classes for the semester. You can search and register for classes`, 'blue')
+		} else {
+			$('.registered-classes').removeClass('hidden');
 		}
-		$('.search-sections').addClass('hidden');
-		$('.course-sections').addClass('hidden');
-		$('.registered-classes-today, #map-canvas').addClass('hidden');
-		$('.sec-cart').addClass('hidden')
+			$('.search-sections').addClass('hidden');
+			$('.course-sections').addClass('hidden');
+			$('.registered-classes-today').addClass('hidden');
+			$('.sec-cart').addClass('hidden')
+
 		let searchURL = `/students/?studentid=${publicState.studentId}&semester=${publicState.semester}`;
 		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
 		$.get(searchURL, function(data){
@@ -154,10 +154,11 @@ function displayRegisteredClasses(){
 			}
 		});
 		}
-		myFunction();
 
-		$('.drop-class-button').attr('disabled', false);
-		//enableButtonIfCheckboxChecked();
+		//$('.drop-class-button').attr('disabled', false);
+		enableButtonIfCheckboxChecked();
+
+
 	})
 }
 $(displayRegisteredClasses);
@@ -166,14 +167,24 @@ $(displayRegisteredClasses);
 function displayClassesForTheDay(){
 	$('.today-classes').click(function(event){
 		event.preventDefault();
+		myFunction();
 		displayErrorMessage('');
-		toggleHiddenClass($('.registered-classes-today, #map-canvas'));
+
+		if(($('.registered-today-count').text() === "(0)")) {
+			$('.registered-classes-today').addClass('hdden');
+			displayErrorMessage('You do not have registered classes for today!', "blue");
+		} else {
+			toggleHiddenClass($('.registered-classes-today'));
+			console.log($('.registered-today-count').text());
+			listAndMapDailySchedule()	
+		}
+
 		$('.search-sections').addClass('hidden');
 		$('.course-sections').addClass('hidden');
 		$('.registered-classes').addClass('hidden');
 		$('.sec-cart').addClass('hidden')
-		listAndMapDailySchedule()
-		myFunction();
+		
+		
 		//enableButtonIfCheckboxChecked();
 	})
 }
@@ -183,24 +194,28 @@ $(displayClassesForTheDay);
 function displayAndMapTodaysClasses(){
 	$('.classes-cart').click(function(event){
 		event.preventDefault();
+		myFunction();
 		displayErrorMessage('');
-		toggleHiddenClass('.sec-cart');
-		if($('.cart-count').val() === "(0)"){
+		if(($('.cart-count').text() === "(0)")){
 			$('.register-from-cart-button').attr('disabled', true);
 			$('.clear-cart-button').attr('disabled', true);
-
+			displayErrorMessage(`Cart is empty. You can open the 'search and register' form from the menu!`, 'blue');
+		} else {
+			//toggleHiddenClass('.sec-cart');
+			$('.sec-cart').removeClass('hidden');
+			if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
+				$('.sec-cart-list').empty();
+				pullClassesFromCart();
+			}
 		}
-		$('.search-sections').addClass('hidden');
-		$('.course-sections').addClass('hidden');
-		$('.registered-classes').addClass('hidden');
-		$('.registered-classes-today, #map-canvas').addClass('hidden');
+			$('.search-sections').addClass('hidden');
+			$('.course-sections').addClass('hidden');
+			$('.registered-classes').addClass('hidden');
+			$('.registered-classes-today').addClass('hidden');
 
 
-		myFunction();
-		if(publicState.studentId.length >= 3 && publicState.semester.length >= 6){
-			$('.sec-cart-list').empty();
-			pullClassesFromCart();
-		}
+		
+		
 	})
 }
 $(displayAndMapTodaysClasses);
@@ -529,7 +544,7 @@ function checkConflict(currentListId, listParent){
 							$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false); 
 						} else if(checkedCampus === campusToCompare && timeDiffInMinutes < 5) {
 							conflict = true;
-							displayErrorMessage('Not enough time between classes!', 'red');
+							displayErrorMessage('Not enough time between selected classes!', 'red');
 							$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false); 
 						}
 					}
@@ -592,7 +607,7 @@ function conflictWithAlreadyRegisteredOrInCart(currentListId, data){
 						$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false); 
 						return true
 					} else if(checkedCampus === campusToCompare && timeDiffInMinutes < 5) {
-						displayErrorMessage('Not enough time between classes', 'red');
+						displayErrorMessage('Not enough time between selected classes', 'red');
 						$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false); 
 						return true;
 					}

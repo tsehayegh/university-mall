@@ -8,17 +8,17 @@
 	<link rel="stylesheet" type="text/css" href="responsive-design.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto|Roboto+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
+    
 </head>
 
 <body>
 	<section class = "app-logo row">
 		<label class = "app-header">
-			<i class="fas fa-university left-icon"></i> University Mall <i class="fas fa-university right-icon"></i>
+			<i class="fa fa-university left-icon" aria-hidden= "true"></i> University Mall <i class="fa fa-university right-icon" aria-hidden ="true"></i>
 		</label>
 	</section>
 
-	<nav class = "top-navigation hidden" role = "navigation" id="myTopnav">
+	<nav class = "top-navigation hidden row" role = "navigation" id="myTopnav">
 		<div class = "col-12">
 			<a href="#" class = "home" tabindex="1">Home</a>
 			<a href="#" class = "search-register" tabindex="2">Search and Register</a>
@@ -147,8 +147,8 @@
 
 
 	<form class = "registered-classes row frm hidden" action ="#" method = "get">
-		<legend>Registered Classes</legend>
 		<fieldset class = "my-classes col-12">
+			<legend>Registered Classes</legend>
 			<ul class = "sec-registered-list lst" id = "sec-registered-list">
 			</ul>
 			<input type = "submit" class  = "drop-class-button btn" disabled value = "Drop Selected">
@@ -156,12 +156,12 @@
 	</form>
 
 	<form class = "registered-classes-today frm hidden row" action = "#" method = "get">
-		<legend>Today's Schedule</legend>
 		<fieldset class = "my-classes-today col-12">
+			<legend>Today's Schedule</legend>
 			<ul class = "sec-registered-today-list lst" id = "sec-registered-today-list">
 			</ul>
 			<label class = "mapMyDay">Your classes for today on a map with driving route!</label>
-			<div id = "map-canvas" class = "map-canvas col-12 hidden"></div>
+			<div id = "map-canvas" class = "map-canvas"></div>
 		</fieldset>
 	</form>
 

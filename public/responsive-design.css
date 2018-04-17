@@ -47,12 +47,10 @@
 }
 
 
-@media screen and (max-width: 810px) {
-
+@media screen and (max-width: 600px) {
   .top-navigation a:not(:first-child) {
   	display: none;
   }
-
   .top-navigation a.icon {
     float: right;
     display: block;
@@ -60,7 +58,7 @@
 
 }
 
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 600px) {
 
   .top-navigation.responsive {
   	position: relative;
@@ -79,6 +77,7 @@
   }
   
 }
+
 
 @media only screen
 and (min-device-height: 320px)
