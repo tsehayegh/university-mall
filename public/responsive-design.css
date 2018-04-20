@@ -1,5 +1,7 @@
 * {
 	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 .row {
@@ -47,7 +49,7 @@
 }
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 676px) {
   .top-navigation a:not(:first-child) {
   	display: none;
   }
@@ -55,11 +57,9 @@
     float: right;
     display: block;
   }
-
 }
 
-@media screen and (max-width: 600px) {
-
+@media screen and (max-width: 676px) {
   .top-navigation.responsive {
   	position: relative;
   }
@@ -78,284 +78,335 @@
   
 }
 
-
+/*Mobiles in portrait */
 @media only screen
-and (min-device-height: 320px)
-and (max-device-height: 480px)
-and (orientation: portrait){
-	.frm {
-		font-size: 0.8em;
-		max-height: 480px;
+		and (min-device-width: 320px)
+		and (max-device-width: 480px)
+		and (orientation: portrait){
+
+	.app-instruction,
+	.user-information {
+		vertical-align: middle;
+		line-height: 1.3em;
+		padding: 20px 5px;
 	}
 
-	.lst {
-		height: 100%;
-	}
-}
-
-@media only screen
-and (min-device-height: 320px)
-and (max-device-height: 480px)
-and (orientation: landscape){
-	.frm {
-		max-height: 320px;
-		height: 100%;
-		font-size: 0.8em;
-	}
-}
-@media only screen
-and (min-device-width: 481px)
-and (max-device-width: 767px)
-and (orientation: portrait){
-	.frm {
-		max-height: 767;
-		font-size: 0.9em;
-	}
-}
-
-@media only screen
-and (min-device-width: 481px)
-and (max-device-width: 767px)
-and (orientation: landscape){
-	.frm {
-		max-height: 481;
-		font-size: 0.9em;
-	}
-}
-
-/*Mobiles in portrait mode*/
-/*
-@media only screen
-and (min-device-width: 320px)
-and (max-device-width: 480px)
-and (orientation: portrait){
-
-	.user-role {
-		height: 100%;
-		width: 100%;
-	}
-
-	.frm li {
-	  width: 100%;
-	  overflow-wrap: break-word;
-	}
-
-	.landing-page input[type=text], 
-	.landing-page select,
-	.instructor-space select{
-	  width:150px;
-	  padding-bottom: 0;
-	  line-height: 1em;
-	  margin: 0;
-
-	}
-
-	.landing-page label,
-	.instructor-space label{
-	  width:150px;
+	.search-sections label,
+	.user-info label{
+	  width:100%;
+	  float: left;
 	  text-align: center;
-	  padding-bottom: 0;
+	  vertical-align: middle;
 	  margin-bottom: 0;
-	  line-height: 1em;
 	}
 
-	.app-header {
-		font-size: 1.2em;
+	.search-sections input,
+	.user-info input {
+		margin-top:  0;
+		text-align: left;
+	}
+	
+
+
+	body {
+	  background-color: rgb(176, 224, 230);
 	}
 
-	.landing-page .group {
-		padding: 0;
-		margin: 0;
-	}
-}
-
-/*Mobiles in landscape mode*/
-/*
-@media only screen
-and (min-device-width: 320px)
-and (max-device-width: 480px)
-and (orientation: landscape){
-
-	.user-role {
-		
-		height: 100%;
-		width: 100%;
-	}
-
-	.frm li {
+	input[type="text"], 
+	select {
+	  min-width: 120px;
 	  width: 100%;
-	  overflow-wrap: break-word;
 	}
 
-	.landing-page input[type=text], 
-	.landing-page select,
-	.instructor-space select{
-	  width:100%;
+	input[type="checkbox"] {
+		width: 20px;
 	}
 
-	.landing-page label,
-	.instructor-space label{
-	  width:100%;
-	  text-align: center;
-	}
-
-}
-
-/*mobiles (larger) in portrait mode*/
-/*
-@media only screen
-and (min-device-width: 481px)
-and (max-device-width: 767px)
-and (orientation: portrait){
-
-	.user-role {
-		height: 100%;
-		width: 100%;
-	}
-
-	.frm li {
-	  width: 100%;
-	  overflow-wrap: break-word;
-	}
-
-	.landing-page input[type=text], 
-	.landing-page select,
-	.instructor-space select{
-	  width:160px;
-	}
-
-	.landing-page label,
-	.instructor-space label{
-	  width: 160px;
-	  text-align: center;
-	}
-}
-
-/*mobiles (larger) in landscape mode*/
-/*
-@media only screen
-and (min-device-width: 481px)
-and (max-device-width: 767px)
-and (orientation: landscape){
-
-	.user-role {
-		height: 100%;
-		width: 100%;
-	}
-
-	.user-info {
-		font-size: 0.9em;
-		height: 100%;
-	}
-
-	.frm li {
-	  width: 310px;
-	  overflow-wrap: break-word;
-	}
-
-	.landing-page input[type=text], 
-	.landing-page select,
-	.instructor-space select{
-	  width:160px;
-	}
-
-	.landing-page label,
-	.instructor-space label{
-	  width: 160px;
-	  text-align: center;
-	}
-}
-
-
-/*Tablets in portrait mode*/
-/*
-@media only screen
-and (min-device-width: 768px)
-and (max-device-width: 1024px)
-and (orientation: portrait){
-
-  .user-role {
+  .user-role,
+  .user-info {
   	position: fixed;
+  	line-height: 1.6em;
   	top: 50%;
   	left: 50%;
   	transform: translate(-50%, -50%);
+  	border: 1px solid black;
+  	border-bottom: none;
+  	border-top: none;
+  	width: 100%;
   }
 
-  .app-header {
-  	font-size: 24px;
+  .course-sections li{
+  	text-align: left;
+  	padding-left: 0;
+  	margin: 0;
   }
+}
 
-	.landing-page input[type=text], 
-	.landing-page select,
-	.instructor-space select{
-	  width:160px;
+/*Mobiles in landscape mode*/
+@media only screen
+		and (min-device-width: 320px)
+		and (max-device-width: 480px)
+		and (orientation: landscape){
+
+	body {
+	  background-color: rgb(176, 224, 230);
 	}
 
-	.landing-page label,
-	.instructor-space label{
-	  width: 150px;
-	  text-align: center;
+	.app-instruction,
+	.user-information {
+		vertical-align: middle;
+		line-height: 1.2em;
+		padding: 5px;
+	}
+
+	.group {
+		display: inline-block;
+		width: 100%;
+	}
+
+	.group label{
+		display: block;
+		float: left;
+		margin-right: 0.5em;
+		width: 140px;
+		text-align: right;	
+	}
+	
+ 	input[type="text"], 
+	select {
+	  width: 240px;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+	}
+	.user-demo {
+		text-align: left;
+		font-size: 17px;
+	}
+  .user-role,
+  .user-info {
+  	position: fixed;
+  	line-height: 1.6em;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	border: 1px solid black;
+  	border-bottom: none;
+  	border-top: none;
+  	width: 100%;
+  }
+}
+
+/*mobiles (larger) in portrait mode*/
+@media only screen
+and (min-device-width: 481px)
+and (max-device-width: 767px)
+and (orientation: portrait){
+	.app-instruction,
+	.user-information {
+		vertical-align: middle;
+		line-height: 1.5em;
+		padding: 60px 5px;
+	}
+
+	.group label,
+	.group input,
+	.group select, {
+		width: 100%;
+	}
+
+	body {
+	  background-color: rgb(176, 224, 230);
+	}
+
+  .user-role,
+  .user-info {
+  	position: fixed;
+  	line-height: 1.6em;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	border: 1px solid black;
+  	border-bottom: none;
+  	border-top: none;
+  	width: 100%;
+  	height: 80%;
+  }
+}
+
+/*mobiles (larger) in landscape mode*/
+@media only screen
+and (min-device-width: 481px)
+and (max-device-width: 767px)
+and (orientation: landscape){
+	.app-instruction,
+	.user-information {
+		vertical-align: middle;
+		line-height: 1.3em;
+	}
+
+	body {
+	  background-color: rgb(176, 224, 230);
+	}
+
+	.frm {
+		position: relative;
+		margin: 0 auto;
+	}
+
+	fieldset {
+		max-width: 600px;
+		position: relative;
+		margin: 0 auto;
+		border: 1px solid black;
+	}
+	.group {
+		display: inline-block;
+		width: 100%;
+	}
+
+	.group label{
+		display: block;
+		float: left;
+		width: 160px;
+		text-align: center;	
+	}
+	
+ 	input[type="text"], 
+	select {
+	  width: 260px;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+	}
+	.user-demo {
+		text-align: left;
+		font-size: 17px;
+	}
+  .user-role,
+  .user-info {
+  	position: fixed;
+  	line-height: 1.6em;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	border: none;
+
+  	width: 90%;
+  }
+}
+
+/*Tablets in portrait mode*/
+@media only screen
+and (min-device-width: 768px)
+and (max-device-width: 1023px)
+and (orientation: portrait){
+  .user-role,
+  .user-info {
+  	position: fixed;
+  	line-height: 1.8em;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	border: 1px solid black;
+  }
+
+  	.group {
+		display: inline-block;
+		width: 100%;
+	}
+
+	.group label{
+		display: block;
+		float: left;
+		width: 160px;
+		text-align: center;	
+	}
+
+	input[type="text"], 
+	select {
+	  width: 260px;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+	}
+  	.app-instruction,
+	.user-information {
+		padding: 30px 10px;
 	}
 
 }
 
 /*Tablets in landscape mode*/
-/*
 @media only screen
 and (min-device-width: 768px)
-and (max-device-width: 1024px)
+and (max-device-width: 1023px)
 and (orientation: landscape){
-
-  .user-role {
+  .user-role,
+  .user-info {
   	position: fixed;
+  	line-height: 1.4em;
   	top: 50%;
   	left: 50%;
   	transform: translate(-50%, -50%);
+  	border: 1px solid black;
+  	width: 90%;
   }
 
-	.landing-page input[type=text], 
-	.landing-page select,
-	.instructor-space select{
-	  width:160px;
+  	.group {
+		display: inline-block;
+		width: 100%;
 	}
 
-	.landing-page label,
-	.instructor-space label{
-	  width: 150px;
-	  text-align: center;
+	.group label{
+		display: block;
+		float: left;
+		width: 160px;
+		text-align: center;	
 	}
 
-  .app-header {
-  	font-size: 24px;
-  }
+	input[type="text"], 
+	select {
+	  width: 260px;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+	}
+  	.app-instruction,
+	.user-information {
+		padding: 5px;
+	}
+
 }
 
 
 /* Desktops and laptops ----------- */
-/*
-@media only screen  and (min-width : 1025px) {
-
-  .user-role {
+@media only screen  and (min-width : 1024px) {
+  .user-role,
+  .user-info {
   	position: fixed;
+  	line-height: 1.6em;
   	top: 50%;
   	left: 50%;
   	transform: translate(-50%, -50%);
+
+  	border: 1px solid black;
   }
 
-	.landing-page input[type=text], 
-	.landing-page select,
-	.instructor-space select{
-	  width:200px;
+	input[type="text"], 
+	select {
+	  width: 260px;
 	}
-
-	.landing-page label,
-	.instructor label{
-	  width: 150px;
-	  text-align: center;
+	
+	input[type="checkbox"] {
+		width: 20px;
 	}
-
-  .app-header {
-  	font-size: 40px;
-  }
-
+   	.app-instruction,
+	.user-information {
+		padding: 40px 40px;
+		line-height: 1.6em;
+	}
 }
+
+
+
