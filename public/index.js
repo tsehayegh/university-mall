@@ -267,8 +267,15 @@ function toggleHiddenClass(classToToggle){
 }
 function toggleResponsiveClass() {
   $('#myTopnav').toggleClass('responsive');
+	$('.search-sections').addClass('hidden');
+	$('.course-sections').addClass('hidden');
+	$('.registered-classes').addClass('hidden');
+	$('.registered-classes-today').addClass('hidden');
+	$('.map-canvas').addClass('hidden');
+	$('.sec-cart').addClass('hidden')
   countRecords();
 }
+
 
 //Render sections returned from search
 function renderSections(){

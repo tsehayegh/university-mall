@@ -16,7 +16,8 @@ label, legend, section{
 html, body {
   height: 100%;
   width: 100%;
-  margin: 0;
+  margin: 0px;
+  margin: 0px;
   box-sizing: border-box;
 }
 
@@ -36,6 +37,10 @@ ol, ul {
   font-family: 'Roboto', serif;
   box-sizing: border-box;
 }
+form {
+  background-color: rgb(176, 224, 230);
+}
+
 
 legend, h1, button {
   font-weight: bold;

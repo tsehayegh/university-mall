@@ -83,14 +83,48 @@
 		and (min-device-width: 320px)
 		and (max-device-width: 480px)
 		and (orientation: portrait){
+	
+  .user-info,
+  .search-sections {
+  	position: fixed;
+  	line-height: 1.6em;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	border-top: none;
+  	width: 100%;
+  }
 
+  .user-info,
+  .search-sections {
+  	margin: 0 auto;
+  	text-align: center;
+  	border-radius: 1px solid black;
+  	width: 280px;
+  }
+
+  .user-role {
+  	margin: 0 auto;
+  	text-align: center;
+  	position: relative;
+
+  }
 	.app-instruction,
-	.user-information {
+	.user-information,
+	.search-area {
 		vertical-align: middle;
-		line-height: 1.3em;
-		padding: 20px 5px;
+		line-height: 1.2em;
+		font-size: 20px;
+		vertical-align: middle;
+		margin: 0 auto;
 	}
 
+	.user-information {
+		max-width: 280px;
+		text-align: center;
+	}
+
+/*
 	.search-sections label,
 	.user-info label{
 	  width:100%;
@@ -99,15 +133,13 @@
 	  vertical-align: middle;
 	  margin-bottom: 0;
 	}
-
+*/
 	.search-sections input,
 	.user-info input {
 		margin-top:  0;
 		text-align: left;
 	}
 	
-
-
 	body {
 	  background-color: rgb(176, 224, 230);
 	}
@@ -121,19 +153,6 @@
 	input[type="checkbox"] {
 		width: 20px;
 	}
-
-  .user-role,
-  .user-info {
-  	position: fixed;
-  	line-height: 1.6em;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	border: 1px solid black;
-  	border-bottom: none;
-  	border-top: none;
-  	width: 100%;
-  }
 
   .course-sections li{
   	text-align: left;
@@ -291,8 +310,6 @@ and (orientation: landscape){
   	left: 50%;
   	transform: translate(-50%, -50%);
   	border: none;
-
-  	width: 90%;
   }
 }
 
@@ -350,7 +367,6 @@ and (orientation: landscape){
   	left: 50%;
   	transform: translate(-50%, -50%);
   	border: 1px solid black;
-  	width: 90%;
   }
 
   	.group {
@@ -389,7 +405,6 @@ and (orientation: landscape){
   	top: 50%;
   	left: 50%;
   	transform: translate(-50%, -50%);
-
   	border: 1px solid black;
   }
 
