@@ -4,32 +4,37 @@
 
 # Landing Page (1)
 <img width="467" alt="university mall - landing page" src="https://user-images.githubusercontent.com/34139675/39090085-e8429f54-45a2-11e8-9b02-24b39ad51437.png">
+
 # User Information (2)
 <img width="484" alt="university mall - user information" src="https://user-images.githubusercontent.com/34139675/39090095-f7148aec-45a2-11e8-9005-1f2a2f316670.png">
-# Main Page (3)
+
+# Main Page View 1 (3)
 <img width="467" alt="university mall - main page view 1" src="https://user-images.githubusercontent.com/34139675/39090094-f707990e-45a2-11e8-9fc1-7f438defb218.png">
-# Search Page (4)
+
+# Main Page View 2 (4)
+
+# Search Page (5)
 <img width="452" alt="university mall - search page 1" src="https://user-images.githubusercontent.com/34139675/39090093-f6fa28be-45a2-11e8-9a44-27294b7278f3.png">
 
-# Search Result View 1 (5)
+# Search Result View 1 (6)
 <img width="444" alt="university mall - search result view 2" src="https://user-images.githubusercontent.com/34139675/39090092-f6ef411a-45a2-11e8-9676-99cf8edea242.png">
 
-# Search Result View 2 (6)
+# Search Result View 2 (7)
 <img width="440" alt="university mall - search result view 3" src="https://user-images.githubusercontent.com/34139675/39090091-f6da86f8-45a2-11e8-8485-743aa0473f88.png">
 
-# Registered Classes View 1 (7)
+# Registered Classes View 1 (8)
 <img width="434" alt="university mall - registered classes view 1" src="https://user-images.githubusercontent.com/34139675/39090090-f6c64576-45a2-11e8-8c50-83fca796f247.png">
 
-# Registered Clsses View 2 (8)
+# Registered Clsses View 2 (9)
 <img width="451" alt="university mall - registered classes view 2" src="https://user-images.githubusercontent.com/34139675/39090089-f6bb5f76-45a2-11e8-9bcb-dc8b403fe96a.png">
 
-# Classes for Today (9)
+# Classes for Today (10)
 <img width="450" alt="university mall - classes for today" src="https://user-images.githubusercontent.com/34139675/39090088-f6aec324-45a2-11e8-99ce-100768542a15.png">
 
-# Shopping Cart View 1 (10)
+# Shopping Cart View 1 (11)
 <img width="461" alt="university mall - cart view 1" src="https://user-images.githubusercontent.com/34139675/39090087-f6a482ba-45a2-11e8-8db0-dcb1b1ca68dc.png">
 
-# Shopping Cart 2 (11)
+# Shopping Cart 2 (12)
 <img width="451" alt="university mall - cart view 2" src="https://user-images.githubusercontent.com/34139675/39090086-f697d0ec-45a2-11e8-88f0-569a2505c157.png">
 
 
