@@ -49,7 +49,7 @@
 }
 
 
-@media screen and (max-width: 676px) {
+@media screen and (max-width: 740px) {
   .top-navigation a:not(:first-child) {
   	display: none;
   }
@@ -59,7 +59,7 @@
   }
 }
 
-@media screen and (max-width: 676px) {
+@media screen and (max-width: 740px) {
   .top-navigation.responsive {
   	position: relative;
   }
@@ -79,121 +79,189 @@
 }
 
 /*Mobiles in portrait */
-@media only screen
-		and (min-device-width: 320px)
-		and (max-device-width: 480px)
-		and (orientation: portrait){
-	
-  .user-info,
-  .search-sections {
-  	position: fixed;
-  	line-height: 1.6em;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	border-top: none;
-  	width: 100%;
-  }
-
-  .user-info,
-  .search-sections {
-  	margin: 0 auto;
-  	text-align: center;
-  	border-radius: 1px solid black;
-  	width: 280px;
-  }
-
-  .user-role {
-  	margin: 0 auto;
-  	text-align: center;
-  	position: relative;
-
-  }
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: portrait){
+	body {
+	  background-color: rgb(176, 224, 230);
+	}
+	.user-role,
+	.user-info,
+	.search-sections {
+		margin: 0 auto;
+		text-align: center;
+		vertical-align: middle;
+	}
 	.app-instruction,
 	.user-information,
 	.search-area {
-		vertical-align: middle;
+		width: 100%;
+		position: relative;
+		border: 1px solid black;
+		border-top: 0;
+	}
+	.app-instruction {
 		line-height: 1.2em;
 		font-size: 20px;
-		vertical-align: middle;
-		margin: 0 auto;
+		border: 0;
 	}
-
-	.user-information {
-		max-width: 280px;
-		text-align: center;
-	}
-
-/*
-	.search-sections label,
-	.user-info label{
-	  width:100%;
-	  float: left;
-	  text-align: center;
-	  vertical-align: middle;
-	  margin-bottom: 0;
-	}
-*/
-	.search-sections input,
-	.user-info input {
-		margin-top:  0;
-		text-align: left;
-	}
-	
-	body {
-	  background-color: rgb(176, 224, 230);
-	}
-
-	input[type="text"], 
-	select {
-	  min-width: 120px;
-	  width: 100%;
-	}
-
-	input[type="checkbox"] {
-		width: 20px;
-	}
-
-  .course-sections li{
-  	text-align: left;
-  	padding-left: 0;
-  	margin: 0;
-  }
-}
-
-/*Mobiles in landscape mode*/
-@media only screen
-		and (min-device-width: 320px)
-		and (max-device-width: 480px)
-		and (orientation: landscape){
-
-	body {
-	  background-color: rgb(176, 224, 230);
-	}
-
-	.app-instruction,
-	.user-information {
-		vertical-align: middle;
-		line-height: 1.2em;
-		padding: 5px;
-	}
-
-	.group {
+	.group{
 		display: inline-block;
 		width: 100%;
 	}
-
-	.group label{
-		display: block;
-		float: left;
-		margin-right: 0.5em;
-		width: 140px;
-		text-align: right;	
+	.group input[type="text"],
+	.group select {
+		width: 240px;
 	}
-	
- 	input[type="text"], 
-	select {
-	  width: 240px;
+	.group label {
+		display: block;
+		width: 100%;
+	}
+	.user-demo {
+		text-align: left;
+		font-size: 17px;
+	}
+	.group input[type="text"],
+	.group select {
+		width: 240px;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+	}
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape){
+	body {
+	  background-color: rgb(176, 224, 230);
+	}
+	.user-role,
+	.user-info,
+	.search-sections {
+		margin: 0 auto;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.app-instruction,
+	.user-information,
+	.search-area {
+		max-width: 100%;
+		border: 1px solid black;
+		border-top:  0;
+	}
+	.app-instruction {
+		line-height: 1.1em;
+		font-size: 16px;
+		border: 0;
+	}
+	.group{
+		display: inline-block;
+		width: 100%;
+	}
+	.group input[type="text"],
+	.group select {
+		width: 240px;
+	}
+	.group label {
+		display: block;
+		width: 100%;
+	}
+	.user-demo {
+		text-align: left;
+		font-size: 17px;
+	}
+	.group input[type="text"],
+	.group select {
+		width: 240px;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+	}
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 767px) and (orientation: portrait){
+	body {
+	  background-color: rgb(176, 224, 230);
+	}
+	.user-role,
+	.user-info,
+	.search-sections {
+		margin: 0 auto;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.app-instruction,
+	.user-information,
+	.search-area {
+		width: 100%;
+		border: 1px solid black;
+		border-top: 0;
+
+	}
+	.app-instruction {
+		line-height: 1.2em;
+		font-size: 20px;
+		border: 0;
+	}
+	.group{
+		display: inline-block;
+		width: 100%;
+	}
+	.group input[type="text"],
+	.group select {
+		width: 240px;
+	}
+	.group label {
+		display: block;
+		width: 100%;
+	}
+	.user-demo {
+		text-align: left;
+		font-size: 17px;
+	}
+	.group input[type="text"],
+	.group select {
+		width: 240px;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+	}
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 767px) and (orientation: landscape){
+	body {
+	  background-color: rgb(176, 224, 230);
+	}
+	.user-role,
+	.user-info,
+	.search-sections {
+		margin: 0 auto;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.app-instruction,
+	.user-information,
+	.search-area {
+		max-width: 100%;
+		border: 1px solid black;
+		border-top: 0;
+	}
+	.app-instruction {
+		line-height: 1.1em;
+		font-size: 18px;
+		border: 0;
+	}
+	.group{
+		display: inline-block;
+		width: 100%;
+		max-width: 600px;
+	}
+
+	.group label {
+		float:  left;
+		width: 25%;
+	}
+
+	.group input[type="text"],
+	.group select {
+		width: 75%;
 	}
 	input[type="checkbox"] {
 		width: 20px;
@@ -202,226 +270,145 @@
 		text-align: left;
 		font-size: 17px;
 	}
-  .user-role,
-  .user-info {
-  	position: fixed;
-  	line-height: 1.6em;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	border: 1px solid black;
-  	border-bottom: none;
-  	border-top: none;
-  	width: 100%;
-  }
 }
 
-/*mobiles (larger) in portrait mode*/
-@media only screen
-and (min-device-width: 481px)
-and (max-device-width: 767px)
-and (orientation: portrait){
-	.app-instruction,
-	.user-information {
-		vertical-align: middle;
-		line-height: 1.5em;
-		padding: 60px 5px;
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait){
+	body {
+	  background-color: rgb(176, 224, 230);
 	}
-
-	.group label,
-	.group input,
-	.group select, {
+	.user-role,
+	.user-info,
+	.search-sections {
+		margin: 0 auto;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.app-instruction,
+	.user-information,
+	.search-area {
+		max-width: 100%;
+		border: 1px solid black;
+		border-top: 0;
+	}
+	.app-instruction {
+		line-height: 2em;
+		font-size: 24px;
+		border: 0;
+	}
+	.group{
+		display: inline-block;
 		width: 100%;
+		max-width: 600px;
 	}
-
-	body {
-	  background-color: rgb(176, 224, 230);
+	.group label {
+		float: left;
+		width: 25%;
 	}
-
-  .user-role,
-  .user-info {
-  	position: fixed;
-  	line-height: 1.6em;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	border: 1px solid black;
-  	border-bottom: none;
-  	border-top: none;
-  	width: 100%;
-  	height: 80%;
-  }
+	.user-demo {
+		text-align: left;
+		font-size: 17px;
+	}
+	.group input[type="text"],
+	.group select {
+		width: 75%;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+	}
 }
 
-/*mobiles (larger) in landscape mode*/
-@media only screen
-and (min-device-width: 481px)
-and (max-device-width: 767px)
-and (orientation: landscape){
-	.app-instruction,
-	.user-information {
-		vertical-align: middle;
-		line-height: 1.3em;
-	}
-
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape){
 	body {
 	  background-color: rgb(176, 224, 230);
 	}
-
-	.frm {
-		position: relative;
+	.user-role,
+	.user-info,
+	.search-sections {
 		margin: 0 auto;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.app-instruction,
+	.user-information,
+	.search-area {
+		max-width: 100%;
+		border: 1px solid black;
+		border-top: 0;
+	}
+	.app-instruction {
+		line-height: 1.3em;
+		font-size: 20px;
+		border: 0;
+	}
+	.group{
+		display: inline-block;
+		width: 100%;
+		max-width: 600px;
+	}
+	.group label {
+		float: left;
+		width: 25%;
+	}
+	.user-demo {
+		text-align: left;
+		font-size: 24px;
+	}
+	.group input[type="text"],
+	.group select {
+		width: 75%;
 	}
 
-	fieldset {
-		max-width: 600px;
-		position: relative;
+	input[type="checkbox"] {
+		width: 20px;
+	}
+}
+
+@media only screen and (min-device-width: 1025px){
+	.user-role,
+	.user-info,
+	.search-sections {
 		margin: 0 auto;
+		text-align: center;
+		vertical-align: middle;
 		border: 1px solid black;
 	}
-	.group {
+	.app-instruction,
+	.user-information,
+	.search-area {
+		max-width: 100%;
+		
+	}
+	.app-instruction {
+		line-height: 1.8em;
+		font-size: 24px;
+		border: 0;
+	}
+	.group{
 		display: inline-block;
 		width: 100%;
+		max-width: 600px;
 	}
 
-	.group label{
-		display: block;
+	.group label {
 		float: left;
-		width: 160px;
-		text-align: center;	
-	}
-	
- 	input[type="text"], 
-	select {
-	  width: 260px;
-	}
-	input[type="checkbox"] {
-		width: 20px;
+		width: 25%;
 	}
 	.user-demo {
 		text-align: left;
-		font-size: 17px;
-	}
-  .user-role,
-  .user-info {
-  	position: fixed;
-  	line-height: 1.6em;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	border: none;
-  }
-}
-
-/*Tablets in portrait mode*/
-@media only screen
-and (min-device-width: 768px)
-and (max-device-width: 1023px)
-and (orientation: portrait){
-  .user-role,
-  .user-info {
-  	position: fixed;
-  	line-height: 1.8em;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	border: 1px solid black;
-  }
-
-  	.group {
-		display: inline-block;
-		width: 100%;
+		font-size: 24px;
 	}
 
-	.group label{
-		display: block;
-		float: left;
-		width: 160px;
-		text-align: center;	
+	.group input[type="text"],
+	.group select {
+		width: 75%;
 	}
 
-	input[type="text"], 
-	select {
-	  width: 260px;
-	}
 	input[type="checkbox"] {
 		width: 20px;
 	}
-  	.app-instruction,
-	.user-information {
-		padding: 30px 10px;
-	}
 
 }
 
-/*Tablets in landscape mode*/
-@media only screen
-and (min-device-width: 768px)
-and (max-device-width: 1023px)
-and (orientation: landscape){
-  .user-role,
-  .user-info {
-  	position: fixed;
-  	line-height: 1.4em;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	border: 1px solid black;
-  }
-
-  	.group {
-		display: inline-block;
-		width: 100%;
-	}
-
-	.group label{
-		display: block;
-		float: left;
-		width: 160px;
-		text-align: center;	
-	}
-
-	input[type="text"], 
-	select {
-	  width: 260px;
-	}
-	input[type="checkbox"] {
-		width: 20px;
-	}
-  	.app-instruction,
-	.user-information {
-		padding: 5px;
-	}
-
-}
-
-
-/* Desktops and laptops ----------- */
-@media only screen  and (min-width : 1024px) {
-  .user-role,
-  .user-info {
-  	position: fixed;
-  	line-height: 1.6em;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	border: 1px solid black;
-  }
-
-	input[type="text"], 
-	select {
-	  width: 260px;
-	}
-	
-	input[type="checkbox"] {
-		width: 20px;
-	}
-   	.app-instruction,
-	.user-information {
-		padding: 40px 40px;
-		line-height: 1.6em;
-	}
-}
 
 
 

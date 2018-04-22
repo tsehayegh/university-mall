@@ -41,7 +41,7 @@
 				<h1>Features</h1>
 				<p>The app, will help you to:<br> 
 						1)Search for classes based on optional search parameters,<br> 
-						2)Select for classes if there is no schedule conflict with respect to campus location, <br>
+						2)Select for classes if there is no schedule conflict with respect to campus locations, <br>
 						3)Register for classes either selected from search result or saved in shopping cart, <br>
 						5)Save classes in a shopping cart, <br>
 						6)Drop classes eihter registered or saved in a shopping cart, or <br>
@@ -52,8 +52,9 @@
 			</fieldset>
 		</form>
 
+
 		<form class = "user-info row hidden" action = "#" method = "get" role = "region" id ="user-info">
-			<fieldset class = "user-information col-12">
+			<fieldset class = "user-information">
 				<legend>User</legend>
 				<div class = 'group'>
 						<label class = "lbl-student-id" for = "studentId">Student ID</label>
@@ -76,9 +77,12 @@
 							<option value = "2017FA">Fall 2017</option>
 						</select>
 					</div>
+					<div class = "group">
 					<button class = "submit-button" aria-label ="submit button">Submit</button>
+					</div>
 			</fieldset>
 		</form>
+
 
 		<form class = "search-sections row hidden" action = "#" method = "get" role = "region">
 			<fieldset class = "search-area col-12">
@@ -117,7 +121,9 @@
 						<option value = "171">171</option>
 					</select>
 				</div>
+				<div class ="group">
 				<button class = "search-button btn" disabled="">Search</button>
+				</div>
 			</fieldset>
 		</form>
 

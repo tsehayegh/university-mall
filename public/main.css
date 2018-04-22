@@ -12,6 +12,12 @@ label, legend, section{
   outline-style: none;
 }
 
+fieldset {
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
 
 html, body {
   height: 100%;
@@ -37,6 +43,7 @@ ol, ul {
   font-family: 'Roboto', serif;
   box-sizing: border-box;
 }
+
 form {
   background-color: rgb(176, 224, 230);
 }
@@ -51,7 +58,7 @@ legend, h1, button {
 legend {
   font-size: 1.2em;
   width: 100%;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid white;
   position: sticky;
 }
@@ -129,8 +136,6 @@ fieldset {
     color: black;
 }
 
-
-
 .top-navigation .icon {
   display: none;
 }
@@ -141,8 +146,6 @@ fieldset {
 
 .user-role,
 .user-info {
-    position: relative;
-    z-index: 9999;
     vertical-align: middle;
     background-color: rgb(176, 224, 230);
     font-size: 22px;
@@ -152,15 +155,6 @@ fieldset {
 .user-role p {
   text-align: left;
 }
-
-.group {
-  width: 100%
-  display: inline-block;
-  margin: 0 auto;
-  text-align: center;
-  vertical-align: middle;
-}
-
 
 button:focus,
 input[type="checkbox"]:focus {
@@ -189,16 +183,13 @@ select {
   background-color: white;
 }
 
-.search-area {
-  display: inline-block;
-  margin: 0 auto;
-}
 
 
 button {
   border: 1px solid white;
   border-radius: 2px;
   height: 36px;
+  font-size: 30px;
   vertical-align: middle;
   text-align: center;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 
@@ -233,15 +224,6 @@ button {
   z-index: 1;
 }
 
-
-
-.group {
-  width: 100%
-  display: inline-block;
-  margin: 0 auto;
-  text-align: center;
-  vertical-align: middle;
-}
 
 .search-sections label,
 .user-info label{

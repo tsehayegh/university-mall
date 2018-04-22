@@ -109,10 +109,15 @@ function keepUserDemo(){
 	publicState.firstName = $('#firstName').val();
 	publicState.lastName = $('#lastName').val();
 	publicState.semester = $('#semester-choice').val();
+	let displaySemeter = null;
+	if (publicState.semester.substr(-2) === "FA") displaySemeter = `Fall ${publicState.semester.substr(0,4)}`;
+	if (publicState.semester.substr(-2) === "SU") displaySemeter = `Summer ${publicState.semester.substr(0,4)}`;
+	if (publicState.semester.substr(-2) === "SP") displaySemeter = `Spring ${publicState.semester.substr(0,4)}`;
+
 	$('.user-demo').append(`<label class = "demo" aria-label = "user-demo">
-								Full Name: ${publicState.firstName} ${publicState.lastName},
+								${publicState.firstName} ${publicState.lastName},
 								Student ID: ${publicState.studentId}, 
-								Semester: ${publicState.semester}
+								${displaySemeter}
 							</label>`);
 };
 
@@ -140,7 +145,7 @@ function searchForSections(){
 	$('.search-button').on('click',function(event){
 		event.preventDefault();
 		$('.course-sections').removeClass('hidden');
-		toggleHiddenClass('.search-sections');
+		$('.search-sections').addClass('hidden');
 		renderSections();
 		displayErrorMessage('');	
 	});
@@ -228,7 +233,7 @@ function displayAndMapTodaysClasses(){
 		if(($('.cart-count').text() === "(0)")){
 			$('.register-from-cart-button').attr('disabled', true);
 			$('.clear-cart-button').attr('disabled', true);
-			displayErrorMessage(`Cart is empty. You can open the 'search and register' form from the menu!`, 'blue');
+			displayErrorMessage(`Shopping cart is empty. You can open the 'search and register' form from the menu!`, 'blue');
 		} else {
 			//toggleHiddenClass('.sec-cart');
 			$('.sec-cart').removeClass('hidden');
@@ -265,6 +270,7 @@ function pullClassesFromCart(){
 function toggleHiddenClass(classToToggle){
 	$(classToToggle).toggleClass("hidden")
 }
+
 function toggleResponsiveClass() {
   $('#myTopnav').toggleClass('responsive');
 	$('.search-sections').addClass('hidden');
@@ -273,7 +279,8 @@ function toggleResponsiveClass() {
 	$('.registered-classes-today').addClass('hidden');
 	$('.map-canvas').addClass('hidden');
 	$('.sec-cart').addClass('hidden')
-  countRecords();
+	$('.display-error').empty();
+  	countRecords();
 }
 
 
@@ -516,7 +523,7 @@ function selectCourses(){
 				displayErrorMessage('Course is already selected!', 'red');
 				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
 			} else if(checkConflict(currentListId, '.search-result-list')) {
-				displayErrorMessage('Schedule conflict!', 'red');
+				displayErrorMessage('Schedule conflict! Not enough driving time between classes!', 'red');
 				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
 			} else if(conflictWithAlreadyRegistered(currentListId)){
 				displayErrorMessage('Not enough driving time to get to your next class', 'red');
@@ -1132,7 +1139,6 @@ function refreshClassesInCart(){
 		});
 	});
 }
-
 
 function dropClassFromRegistration(){
 	$('.drop-class-button').on('click', function(event){
