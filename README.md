@@ -3,26 +3,26 @@
 # https://university-mall.herokuapp.com/
 
 # Landing Page (1)
-This is home page of the app. It lists a summary of the features of the app.
+This is the home page of the app. It lists a summary of the features of the app. The font size and spacing between lines may vary from device to device and orientation of the device.
 <img width="467" alt="university mall - landing page" src="https://user-images.githubusercontent.com/34139675/39090085-e8429f54-45a2-11e8-9b02-24b39ad51437.png">
 
 # User Information (2)
-This page expects you to enter your 3-digit student id provided to you by the university, your first and last name, and select the current semester. An error message will appear at the top of the page if you do not provide 3-digit student id, at least 2 characters first and last names. The current semester will be the default of the dropdpwn menu.
+This page expects you to enter your 3-digit student id provided to you by the university, your first and last name, and select the current semester. An error message will appear at the top of the page if you do not provide 3-digit student id, or at least 2 characters first and last names. The current semester will be the default of the dropdown menu.
 <img width="484" alt="university mall - user information" src="https://user-images.githubusercontent.com/34139675/39090095-f7148aec-45a2-11e8-9005-1f2a2f316670.png">
 
 # Main Page View 1 (3)
-The look of the main page will differ based on the device you are using. Small screen devices will show you a home menu, and a more icon. Clicking the home menu will refresh the app. Clicking the more icon will list the additional features of the app.
+The look of the main page will differ based on the device you are using. Small screen devices will show you a home menu, and a more icon. Clicking the home menu will refresh the app. Clicking the more icon will list all of the features of the app.
 <img width="467" alt="university mall - main page view 1" src="https://user-images.githubusercontent.com/34139675/39090094-f707990e-45a2-11e8-9fc1-7f438defb218.png">
 
 # Main Page View 2 (4)
 <img width="718" alt="university mall - main page view 2" src="https://user-images.githubusercontent.com/34139675/39090135-a12f5b82-45a4-11e8-99c8-7cdd64cf1a96.png">
 
 # Search Page (5)
-In this search area, you can either select any filtering parameters from the dropdown menus or simply click the Search button to search for classes. This page will disappear and a list of your search results will be displayed.
+In this search area, you can either select any filtering parameters from the dropdown menus or simply click the Search button to search for classes. This page will disappear and a list of the search results will be displayed.
 <img width="452" alt="university mall - search page 1" src="https://user-images.githubusercontent.com/34139675/39090093-f6fa28be-45a2-11e8-9a44-27294b7278f3.png">
 
 # Search Result View 1 (6)
-Each class will have a checkbox at the beginning of the list and you can check the checkbox to select or unselect the class. The app will check if there is any schedule conflict between the class you tried to select and other classes either previously selected, previous registered, or previously saved in cart. It also checks if you have enough driving time between classes if they are at multiple campuses. If any schedule conflict exists then you will see error message at the top of the page.
+Each list of a class will have a checkbox at the beginning of the list and you can check the checkbox to select or unselect the class. The app will check if there is any schedule conflict between the class you tried to select and other classes either previously selected, previous registered, or previously saved in cart. It also checks if you have enough driving time between classes if they are at multiple campuses. If any schedule conflict exists then you will see error message at the top of the page and the checkbox will remain unchecked.
 <img width="444" alt="university mall - search result view 2" src="https://user-images.githubusercontent.com/34139675/39090092-f6ef411a-45a2-11e8-9676-99cf8edea242.png">
 
 # Search Result View 2 (7)
@@ -59,23 +59,25 @@ Higher education institutions use different applications to manage their course 
 (f) delete classes saved in cart, or drop registered classes (for the future, this can be enabled or disabled based on the start date of the class)
 The app tests for screen size using MediaQueryList techniques. Some class information will be omitted from displaying in the lists if the screen size is smaller than 768 pixels.
 
-# How to use the app?
-	The user will see a landing page with some of main features of the app and a start button to begin using the app. (Form 1)
-	Once the user clicks (or hits the enter key), the user will be promoted to enter their student id, first name, last name, and select a current semester from a dropdown menu. (Form 2)
-	If the user enters correct information (3-digit student id, at least two character first and last names and select a current semester then they will land in a new form with a menu bar that lists the services offered by the app.  (Form 3)
-	If wrong user information is entered then a message will appear at the top of the page and the cursor will focus on the student id text box.
+# How to use the app? 
+Please read the short descriptions above for each screenshot.
+
+The user will see a landing page with some of main features of the app and a start button to begin using the app. Once the user clicks (or hits the enter key), the user will be promoted to enter their student id, first name, last name, and select a current semester from a dropdown menu. If the user enters correct information (3-digit student id, at least two character first and last names and select a current semester then they will land in a new form with a menu bar that lists the services offered by the app. If wrong user information is entered then a message will appear at the top of the page and the cursor will focus on the student id text box.
+
 # Home 
-		– this menu will refresh the page and restart the app.
-#Search and Register – 
-	this menu will open a new search area where a user may enter (optional) filtering criteria and click the search button. The search area will disappear and the search results will be listed. The list of a search result will have a checkbox, a link to the course, and other class information.
-		If the user decided to register for or save a class in a shopping cart then the user can either check the checkbox next to the class or click the course (ex. ENG-111 is English and the course number is 111).
-		If the class time with respect location  does not conflict with other selected or previously registered (or saved in cart) class schedules then a tick mark will be shown on checkmark. Otherwise, a message will be displayed at the top of the page telling the user why it was not possible to select class.
-		The user can either register for the selected class (or classes) directly or save them in a shopping cart for future use.
-			If the user was able to register for the class successfully then a success message will be displayed at the top of the page.
+– this menu will refresh the page and restart the app.
+
+# Search and Register  
+	-this menu will open a new search area where a user may enter (optional) filtering criteria and click the search button. The search area will disappear and the search results will be listed. The list of a search result will have a checkbox, a link to the course, and other class information.
+	If the user decided to register for or save a class in a shopping cart then the user can either check the checkbox next to the class or click the course (ex. ENG-111 is English and the course number is 111).
+	If the class time with respect location  does not conflict with other selected or previously registered (or saved in cart) class schedules then a tick mark will be shown on checkmark. Otherwise, a message will be displayed at the top of the page telling the user why it was not possible to select class.
+	The user can either register for the selected class (or classes) directly or save them in a shopping cart for future use.
+	If the user was able to register for the class successfully then a success message will be displayed at the top of the page.
+	
 # Registered Classes () 
 	– this menu lists all classes registered for the semester and the number of classes will be shown in parenthesis next to the menu name. I have used ‘n’ to represent class numbers. The list of registered classes has a checkbox (or course name with a link) and user can select one or multiple classes to drop the class for the semester. Another button can be added if the user prefers to transfer the class into a shopping cart rather than dropping it.
-# Today’s Classes () – 
-	this menu lists the classes for the day and a driving route from one class to the next class in sequential order of alphabets. A is the first class and B will be the second class and so on. If there is only one class a single alphabet will be displayed at the exact location of the campus.
+# Today’s Classes ()  
+	- this menu lists the classes for the day and a driving route from one class to the next class in sequential order of alphabets. A is the first class and B will be the second class and so on. If there is only one class a single alphabet will be displayed at the exact location of the campus.
 # Cart () – 
 	this menu lists the classes saved in a shopping cart. Each list of class has a checkbox and the user can either register for the class or delete the class from cart. 
 
@@ -90,4 +92,4 @@ More functionality can be added to the app. For example, a login feature can be 
 # Note
 1) The app may not work in Internet Explorer 11 because of some jQuery techniques employed in developing the app.
 2) The app will not refresh the counts of classes that were registered for or saved in a shopping cart immediately. For now, you can click the menus and the count will be refreshed. The 'trigger()' property of jQuery was tried to refresh the count but at this time it was not successful. I will continue exploring other techniques that will refresh each time the register, drop, or delete buttons are clicked.
-
+3)Clicking the checkboxes of the search results enables/disables the register or save to cart buttons. If there exists any schedule conflict the buttons will be enabled. In this situation, you might see the buttons enabled eventhough no checkbox was checked. To the best of my knowledge, jQuery has an issue when trying to uncheck a checkbox programmatically. It doesn't show you a check mark on the checkbox but the checkbox value remains true internally. I tried all possibilities and I will continue exploring if there are any other possibilities. 
