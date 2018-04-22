@@ -12,6 +12,7 @@
 <img width="467" alt="university mall - main page view 1" src="https://user-images.githubusercontent.com/34139675/39090094-f707990e-45a2-11e8-9fc1-7f438defb218.png">
 
 # Main Page View 2 (4)
+<img width="718" alt="university mall - main page view 2" src="https://user-images.githubusercontent.com/34139675/39090135-a12f5b82-45a4-11e8-99c8-7cdd64cf1a96.png">
 
 # Search Page (5)
 <img width="452" alt="university mall - search page 1" src="https://user-images.githubusercontent.com/34139675/39090093-f6fa28be-45a2-11e8-9a44-27294b7278f3.png">
