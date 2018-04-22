@@ -4,14 +4,17 @@
 
 # Landing Page (1)
 This is the home page of the app. It lists a summary of the features of the app. The font size and spacing between lines may vary from device to device and orientation of the device.
+
 <img width="467" alt="university mall - landing page" src="https://user-images.githubusercontent.com/34139675/39090085-e8429f54-45a2-11e8-9b02-24b39ad51437.png">
 
 # User Information (2)
 This page expects you to enter your 3-digit student id provided to you by the university, your first and last name, and select the current semester. An error message will appear at the top of the page if you do not provide 3-digit student id, or at least 2 characters first and last names. The current semester will be the default of the dropdown menu.
+
 <img width="484" alt="university mall - user information" src="https://user-images.githubusercontent.com/34139675/39090095-f7148aec-45a2-11e8-9005-1f2a2f316670.png">
 
 # Main Page View 1 (3)
 The look of the main page will differ based on the device you are using. Small screen devices will show you a home menu, and a more icon. Clicking the home menu will refresh the app. Clicking the more icon will list all of the features of the app.
+
 <img width="467" alt="university mall - main page view 1" src="https://user-images.githubusercontent.com/34139675/39090094-f707990e-45a2-11e8-9fc1-7f438defb218.png">
 
 # Main Page View 2 (4)
@@ -19,10 +22,12 @@ The look of the main page will differ based on the device you are using. Small s
 
 # Search Page (5)
 In this search area, you can either select any filtering parameters from the dropdown menus or simply click the Search button to search for classes. This page will disappear and a list of the search results will be displayed.
+
 <img width="452" alt="university mall - search page 1" src="https://user-images.githubusercontent.com/34139675/39090093-f6fa28be-45a2-11e8-9a44-27294b7278f3.png">
 
 # Search Result View 1 (6)
 Each list of a class will have a checkbox at the beginning of the list and you can check the checkbox to select or unselect the class. The app will check if there is any schedule conflict between the class you tried to select and other classes either previously selected, previous registered, or previously saved in cart. It also checks if you have enough driving time between classes if they are at multiple campuses. If any schedule conflict exists then you will see error message at the top of the page and the checkbox will remain unchecked.
+
 <img width="444" alt="university mall - search result view 2" src="https://user-images.githubusercontent.com/34139675/39090092-f6ef411a-45a2-11e8-9676-99cf8edea242.png">
 
 # Search Result View 2 (7)
@@ -30,6 +35,7 @@ Each list of a class will have a checkbox at the beginning of the list and you c
 
 # Registered Classes View 1 (8)
 This menu will show you all classes already registered for the semester. The list also has a checkbox and you can click the checkboxes to select and unselect them. You can drop the classes. This feature can be restricted based on timing of the semester. It should not allow you to delete once the semester passes a certain census date and this feature is not added at this time.
+
 <img width="434" alt="university mall - registered classes view 1" src="https://user-images.githubusercontent.com/34139675/39090090-f6c64576-45a2-11e8-8c50-83fca796f247.png">
 
 # Registered Clsses View 2 (9)
@@ -37,10 +43,12 @@ This menu will show you all classes already registered for the semester. The lis
 
 # Classes for Today (10)
 This menu will list your classes for the current day of the week and show you the driving routes from one class to the next class. The sequences of driving waypoints are indicated in A, B, ... alphabets. A class marked 'A' comes before a class marked 'B' and so on. You will see one alphabet mark on the map if you have only one class for the day. If you do not have no classes the day you will see a message that tells you that you don't have classes for today.
+
 <img width="450" alt="university mall - classes for today" src="https://user-images.githubusercontent.com/34139675/39090088-f6aec324-45a2-11e8-99ce-100768542a15.png">
 
 # Shopping Cart View 1 (11)
 The shopping cart menu lists if you have any classes saved in it. You can select classes by clicking the checkbox and either register for the classes or delete the class from the shopping cart. 
+
 <img width="461" alt="university mall - cart view 1" src="https://user-images.githubusercontent.com/34139675/39090087-f6a482ba-45a2-11e8-8db0-dcb1b1ca68dc.png">
 
 # Shopping Cart 2 (12)
