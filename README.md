@@ -91,5 +91,7 @@ More functionality can be added to the app. For example, a login feature can be 
 
 # Note
 1) The app may not work in Internet Explorer 11 because of some jQuery techniques employed in developing the app.
+
 2) The app will not refresh the counts of classes that were registered for or saved in a shopping cart immediately. For now, you can click the menus and the count will be refreshed. The 'trigger()' property of jQuery was tried to refresh the count but at this time it was not successful. I will continue exploring other techniques that will refresh each time the register, drop, or delete buttons are clicked.
-3)Clicking the checkboxes of the search results enables/disables the register or save to cart buttons. If there exists any schedule conflict the buttons will be enabled. In this situation, you might see the buttons enabled eventhough no checkbox was checked. To the best of my knowledge, jQuery has an issue when trying to uncheck a checkbox programmatically. It doesn't show you a check mark on the checkbox but the checkbox value remains true internally. I tried all possibilities and I will continue exploring if there are any other possibilities. 
+
+3) Clicking the checkboxes of the search results enables/disables the register or save to cart buttons. If there exists any schedule conflict the buttons will be enabled. In this situation, you might see the buttons enabled eventhough no checkbox was checked. To the best of my knowledge, jQuery has an issue when trying to uncheck a checkbox programmatically. It doesn't show you a check mark on the checkbox but the checkbox value remains true internally. I tried all possibilities and I will continue exploring if there are any other possibilities. 
