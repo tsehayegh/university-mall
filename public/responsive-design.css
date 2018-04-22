@@ -56,6 +56,7 @@
   .top-navigation a.icon {
     float: right;
     display: block;
+
   }
 }
 
@@ -77,6 +78,7 @@
   }
   
 }
+
 
 /*Mobiles in portrait */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: portrait){

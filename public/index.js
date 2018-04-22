@@ -271,8 +271,19 @@ function toggleHiddenClass(classToToggle){
 	$(classToToggle).toggleClass("hidden")
 }
 
+//Toggle down and up arrow icon
+$("nav div a").click(function (event) {
+   if($(this).find($(".fa")).hasClass('fa-chevron-down')){
+    	$(this).find($(".fa")).removeClass('fa-chevron-down').addClass('fa-chevron-up');
+   }
+   else if($(this).find($(".fa")).hasClass('fa-chevron-up')){                     
+        $(this).find($(".fa")).removeClass('fa-chevron-up').addClass('fa-chevron-down');   
+   }              
+});
+
+//Toggle classes for responsiveness
 function toggleResponsiveClass() {
-  $('#myTopnav').toggleClass('responsive');
+  	$('#myTopnav').toggleClass('responsive');
 	$('.search-sections').addClass('hidden');
 	$('.course-sections').addClass('hidden');
 	$('.registered-classes').addClass('hidden');
@@ -680,7 +691,7 @@ function countRecords(){
 		url: '/students',
 		data: ajaxData,
 		success: function(data){
-			$('.registered-count').html(data.studentrecords.length);
+			$('.registered-count').html(`(${data.studentrecords.length})`);
 		},
 		failure: function(status){
 			console.log('Failure', status);
@@ -695,7 +706,7 @@ function countRecords(){
 			dataType: 'json',
 			data: ajaxTodayData,
 			success: function(data) {
-				$('.registered-today-count').html(data.studentrecords.length);
+				$('.registered-today-count').html(`(${data.studentrecords.length})`);
 			},
 			failure: function(status){
 				console.log('Failure', status);
@@ -710,7 +721,7 @@ function countRecords(){
 		url: '/search/cart',
 		data: ajaxDataCart,
 		success: function(data){
-			$('.cart-count').html(data.carts.length);
+			$('.cart-count').html(`(${data.carts.length})`);
 		},
 		failure: function(status){
 			console.log('Failure', status);
