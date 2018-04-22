@@ -572,7 +572,6 @@ function checkConflict(currentListId, listParent){
 							conflict = true;
 							displayErrorMessage('Not enough time between selected classes!', 'red');
 							$('.register-button').attr('disabled', true);
-							console.log('Testing');
 							enableButtons();
 							$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
 						}
@@ -681,7 +680,7 @@ function countRecords(){
 		url: '/students',
 		data: ajaxData,
 		success: function(data){
-			$('.registered-count').html(`(${data.studentrecords.length})`)
+			$('.registered-count').html(data.studentrecords.length);
 		},
 		failure: function(status){
 			console.log('Failure', status);
@@ -696,7 +695,7 @@ function countRecords(){
 			dataType: 'json',
 			data: ajaxTodayData,
 			success: function(data) {
-				$('.registered-today-count').html(`(${data.studentrecords.length})`);
+				$('.registered-today-count').html(data.studentrecords.length);
 			},
 			failure: function(status){
 				console.log('Failure', status);
@@ -711,7 +710,7 @@ function countRecords(){
 		url: '/search/cart',
 		data: ajaxDataCart,
 		success: function(data){
-			$('.cart-count').html(`(${data.carts.length})`);
+			$('.cart-count').html(data.carts.length);
 		},
 		failure: function(status){
 			console.log('Failure', status);
@@ -875,6 +874,7 @@ function registerForClasses(){
 	});
 }
 $(registerForClasses);
+
 
 //Save classes in cart for future use
 function saveClassesToCart(){

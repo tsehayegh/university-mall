@@ -204,10 +204,7 @@
 		display: inline-block;
 		width: 100%;
 	}
-	.group input[type="text"],
-	.group select {
-		width: 240px;
-	}
+
 	.group label {
 		display: block;
 		width: 100%;
@@ -257,6 +254,7 @@
 	.group label {
 		float:  left;
 		width: 25%;
+		text-align: right;
 	}
 
 	.group input[type="text"],
@@ -303,6 +301,7 @@
 	.group label {
 		float: left;
 		width: 25%;
+		text-align: right;
 	}
 	.user-demo {
 		text-align: left;
@@ -348,6 +347,7 @@
 	.group label {
 		float: left;
 		width: 25%;
+		text-align: right;
 	}
 	.user-demo {
 		text-align: left;
@@ -392,6 +392,7 @@
 	.group label {
 		float: left;
 		width: 25%;
+		text-align: right;
 	}
 	.user-demo {
 		text-align: left;
