@@ -2,17 +2,36 @@
 
 # https://university-mall.herokuapp.com/
 
-# landingpage
-<img width="889" alt="university mall - landingpage" src="https://user-images.githubusercontent.com/34139675/38458457-94ecfb10-3a6c-11e8-942e-9b9263f5b70a.png">
+# Landing Page (1)
+<img width="467" alt="university mall - landing page" src="https://user-images.githubusercontent.com/34139675/39090085-e8429f54-45a2-11e8-9b02-24b39ad51437.png">
+# User Information (2)
+<img width="484" alt="university mall - user information" src="https://user-images.githubusercontent.com/34139675/39090095-f7148aec-45a2-11e8-9005-1f2a2f316670.png">
+# Main Page (3)
+<img width="467" alt="university mall - main page view 1" src="https://user-images.githubusercontent.com/34139675/39090094-f707990e-45a2-11e8-9fc1-7f438defb218.png">
+# Search Page (4)
+<img width="452" alt="university mall - search page 1" src="https://user-images.githubusercontent.com/34139675/39090093-f6fa28be-45a2-11e8-9a44-27294b7278f3.png">
 
-# student page 1
-<img width="1676" alt="university mall - student page1" src="https://user-images.githubusercontent.com/34139675/38458484-e5706824-3a6c-11e8-9693-0cab476c1960.png">
+# Search Result View 1 (5)
+<img width="444" alt="university mall - search result view 2" src="https://user-images.githubusercontent.com/34139675/39090092-f6ef411a-45a2-11e8-9676-99cf8edea242.png">
 
-# student page 2
-<img width="1669" alt="university mall - student page 2" src="https://user-images.githubusercontent.com/34139675/38458472-cdc748aa-3a6c-11e8-98cf-57d82e941e4c.png">
+# Search Result View 2 (6)
+<img width="440" alt="university mall - search result view 3" src="https://user-images.githubusercontent.com/34139675/39090091-f6da86f8-45a2-11e8-8485-743aa0473f88.png">
 
-# instructor page
-<img width="1669" alt="university mall - instructor page" src="https://user-images.githubusercontent.com/34139675/38458475-d7de8f92-3a6c-11e8-9150-28764c138563.png">
+# Registered Classes View 1 (7)
+<img width="434" alt="university mall - registered classes view 1" src="https://user-images.githubusercontent.com/34139675/39090090-f6c64576-45a2-11e8-8c50-83fca796f247.png">
+
+# Registered Clsses View 2 (8)
+<img width="451" alt="university mall - registered classes view 2" src="https://user-images.githubusercontent.com/34139675/39090089-f6bb5f76-45a2-11e8-9bcb-dc8b403fe96a.png">
+
+# Classes for Today (9)
+<img width="450" alt="university mall - classes for today" src="https://user-images.githubusercontent.com/34139675/39090088-f6aec324-45a2-11e8-99ce-100768542a15.png">
+
+# Shopping Cart View 1 (10)
+<img width="461" alt="university mall - cart view 1" src="https://user-images.githubusercontent.com/34139675/39090087-f6a482ba-45a2-11e8-8db0-dcb1b1ca68dc.png">
+
+# Shopping Cart 2 (11)
+<img width="451" alt="university mall - cart view 2" src="https://user-images.githubusercontent.com/34139675/39090086-f697d0ec-45a2-11e8-88f0-569a2505c157.png">
+
 
 # Background and functionality
 Higher education institutions use different applications to manage their course offerings and course schedules. Most of the large higher education institutions (universities or community colleges) build satellite campuses to offer classes at convenient locations throughout the region they server. In a multi-campus institutions, students may want to take classes offered at multiple campuses. The existing applications may help them if there is any schedule conflict in terms of time but they do not control if there is not enough time between classes located at different campuses. My app, University Mall, will help users, not only to check for any time conflicts within the same campus but also at multiple campuses. The app will also display the routes for the day on google maps. For the purpose of demonstration, I have selected one of the largest community colleges in North Carolina which has multiple campuses. 
