@@ -80,7 +80,7 @@
 }
 
 
-/*Mobiles in portrait */
+/*Media Queries */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: portrait){
 	body {
 	  background-color: rgb(176, 224, 230);
@@ -176,6 +176,9 @@
 	input[type="checkbox"] {
 		width: 20px;
 	}
+	legend {
+		text-align: center;
+	}
 }
 
 @media only screen and (min-device-width: 481px) and (max-device-width: 767px) and (orientation: portrait){
@@ -257,6 +260,7 @@
 		float:  left;
 		width: 25%;
 		text-align: right;
+		padding-right: 5px;
 	}
 
 	.group input[type="text"],
@@ -269,6 +273,9 @@
 	.user-demo {
 		text-align: left;
 		font-size: 17px;
+	}
+	legend {
+		text-align: center;
 	}
 }
 
@@ -316,6 +323,9 @@
 	input[type="checkbox"] {
 		width: 20px;
 	}
+	legend {
+		text-align: center;
+	}
 }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape){
@@ -350,6 +360,7 @@
 		float: left;
 		width: 25%;
 		text-align: right;
+		padding-right: 5px;
 	}
 	.user-demo {
 		text-align: left;
@@ -362,6 +373,9 @@
 
 	input[type="checkbox"] {
 		width: 20px;
+	}
+	legend {
+		text-align: center;
 	}
 }
 
@@ -390,24 +404,26 @@
 		width: 100%;
 		max-width: 600px;
 	}
-
 	.group label {
 		float: left;
 		width: 25%;
 		text-align: right;
+		padding-right: 5px;
 	}
 	.user-demo {
 		text-align: left;
 		font-size: 24px;
 	}
-
 	.group input[type="text"],
 	.group select {
 		width: 75%;
 	}
-
 	input[type="checkbox"] {
 		width: 20px;
+	}
+
+	legend {
+		text-align: center;
 	}
 
 }

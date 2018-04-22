@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<div role = "main"></div>
-		<header class = "app-logo row" role ="banner">
-			<label class = "app-header">
-				<i class="fa fa-university left-icon" aria-hidden= "true"></i> University Mall <i class="fa fa-university right-icon" aria-hidden ="true"></i>
-			</label>
-		</header>
+	<header class = "app-logo row" role ="banner">
+		<label class = "app-header">
+			<i class="fa fa-university left-icon" aria-hidden= "true"></i> University Mall <i class="fa fa-university right-icon" aria-hidden ="true"></i>
+		</label>
+	</header>
+	<div class ="main-pages" role = "main" id ="main">	
 		<nav class = "top-navigation app-logo hidden row" role = "navigation" id="myTopnav">
 			<div class = "col-12">
 				<a href="#" class = "home">Home</a>
@@ -23,39 +23,34 @@
 				<a href="#" class = "registered">Registered Classes <span class = "registered-count"></span></a>
 				<a href="#" class = "today-classes">Today's Classes <span class = "registered-today-count"></span></a>
 				<a href="#" class = "classes-cart">Cart <span class = "cart-count"></span></a>
-				<a href="#" class = "icon" onclick="toggleResponsiveClass()"><i class="fa fa-chevron-down" aria-hidden ="true"></i></a>
+				<a href="#" class = "icon" onclick="toggleResponsiveClass()" aria-label="More!"><i class="fa fa-chevron-down" aria-hidden ="true"></i></a>
 			</div>
 		</nav>
-
 		<section class = "demo row">
 			<div class = "user-demo col-12">
 			</div>
 		</section>
-
-		<div class = "display-error-info row">
-			<label class = "display-error col-12" role = "alert" aria-live = "polite"></label>
+		<div class = "display-error-info row" aria-live = "polite" id = "display-error-info">
+			<label class = "display-error col-12" role = "alert" aria-live = "polite" aria-label = "Information"></label>
 		</div>
-
 		<form class = "user-role row" role = "note">
 			<fieldset class = "app-instruction">
 				<h1>Features</h1>
 				<p>The app, will help you to:<br> 
-						1)Search for classes based on optional search parameters,<br> 
-						2)Select for classes if there is no schedule conflict with respect to campus locations, <br>
-						3)Register for classes either selected from search result or saved in shopping cart, <br>
-						5)Save classes in a shopping cart, <br>
-						6)Drop classes eihter registered or saved in a shopping cart, or <br>
-						7)See daily classes on a map with driving route<br>
+						1) Search for classes based on optional search parameters,<br> 
+						2) Select for classes if there is no schedule conflict with respect to campus locations, <br>
+						3) Register for classes either from the search result or saved in a shopping cart, <br>
+						5) Save classes in a shopping cart, <br>
+						6) Drop classes eihter registered or saved in a shopping cart, or <br>
+						7) See daily classes on a map with driving routes and waypoints<br>
 				</p> 
 				<p>If you are ready, click the <em>Start</em> button below!</p>
 				<button class = "start-button">Start</button>
 			</fieldset>
 		</form>
-
-
 		<form class = "user-info row hidden" action = "#" method = "get" role = "region" id ="user-info">
 			<fieldset class = "user-information">
-				<legend>User</legend>
+				<legend>User <span class = "span-user info">(Enter 3-digit id, name, and semester)</span></legend>
 				<div class = 'group'>
 						<label class = "lbl-student-id" for = "studentId">Student ID</label>
 						<input type="text" id = "studentId" required placeholder = "Ex. 001" aria-label ="student id">
@@ -82,11 +77,9 @@
 					</div>
 			</fieldset>
 		</form>
-
-
 		<form class = "search-sections row hidden" action = "#" method = "get" role = "region">
 			<fieldset class = "search-area col-12">
-				<legend>Search for Classes</legend>
+				<legend>Search for Classes <span class = "span-searh info">(Optional parameters)</legend>
 				<div class = "group">
 					<label for = "campus-choice">Campus</label>
 					<select class = "campuses" id = "campus-choice" aria-label ="campus list">
@@ -126,10 +119,9 @@
 				</div>
 			</fieldset>
 		</form>
-
 		<form class = "course-sections row frm hidden" action = "#" method = "post">
 			<fieldset class = "col-12">
-				<legend>Search Results</legend>
+				<legend>Search Results <span class = "span-resul info">(Click checkboxes to select/unselect classes)</legend>
 				<div class = "sec-search-result">
 					<ul class = "search-result-list lst" id = "search-result-list">
 					</ul>
@@ -138,9 +130,8 @@
 				</div>
 			</fieldset>
 		</form>	
-
 		<form class = "sec-cart row frm hidden">
-			<legend> Sections in Cart</legend>
+			<legend> Sections in Cart <span class = "span-cart info">(Check and register/delete)</legend>
 			<fieldset class = "col-12">
 				<ul class = "sec-cart-list lst" id = "sec-cart-list">
 				</ul>
@@ -150,24 +141,24 @@
 				</div>
 			</fieldset>
 		</form> 
-
 		<form class = "registered-classes row frm hidden" action ="#" method = "get">
 			<fieldset class = "my-classes col-12">
-				<legend>Registered Classes</legend>
+				<legend>Registered Classes <span class = "span-registered info">(Check and drop)</legend>
 				<ul class = "sec-registered-list lst" id = "sec-registered-list">
 				</ul>
 				<button class = "drop-class-button btn" aria-label = "Drop Selected" disabled="">Drop Selected</button>
 			</fieldset>
 		</form>
-
-		<form class = "registered-classes-today frm hidden row" action = "#" method = "get">
+	
+		<form class = "registered-classes-today frm hidden row" action = "#" method = "get" aria-label = "Daily Classes">
 			<fieldset class = "my-classes-today col-12">
-				<legend>Today's Schedule</legend>
+				<legend>Today's Schedule <span class = "span-today info">(Driving waypoints to today's classes)</legend>
 				<ul class = "sec-registered-today-list lst" id = "sec-registered-today-list">
 				</ul>
 			</fieldset>
 		</form>
-		<div class = "map-canvas hidden row" id = "map-canvas"></div>
+	</div>
+		<div class = "map-canvas hidden row" id = "map-canvas" aria-label = "Google Map"></div>
 
 		<!--jQuery Scripts -->
 		<script src = "https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -176,5 +167,6 @@
 	   <script async defer
 	  		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_QwlMKtRUYkhg4QXxm-EHdukRYJ1RnPs&libraries=geometry,places&callback=initMap">
 	  	</script>
+	 
 </body>
 </html>

@@ -18,7 +18,6 @@ fieldset {
   margin: 0;
 }
 
-
 html, body {
   height: 100%;
   width: 100%;
@@ -48,17 +47,15 @@ form {
   background-color: rgb(176, 224, 230);
 }
 
-
 legend, h1, button {
   font-weight: bold;
   font-size: 24;
 }
 
-
 legend {
   font-size: 1.2em;
   width: 100%;
-  text-align: center;
+  text-align: left;
   border-bottom: 1px solid white;
   position: sticky;
 }
@@ -66,9 +63,20 @@ legend {
 .html {
   overflow-y: scroll;
 }
+
 fieldset {
   text-align: center;
 }
+
+.info {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.display-error {
+  font-size: 24px;
+}
+
 .app-logo {
   background-color:  rgb(41, 142, 234);
   border: 1px solid black;
@@ -115,7 +123,6 @@ fieldset {
     padding:  10px;
 }
 
-*/
 .top-navigation a:focus,
 .top-navigation span:focus{
   background-color: #4caf50;
@@ -183,8 +190,6 @@ select {
   background-color: white;
 }
 
-
-
 button {
   border: 1px solid white;
   border-radius: 2px;
@@ -212,7 +217,6 @@ button {
   overflow-x: hidden;
 }
 
-
 .map-canvas {
   position: fixed;
   width: 100%;
@@ -223,7 +227,6 @@ button {
   text-align: center;
   z-index: 1;
 }
-
 
 .search-sections label,
 .user-info label{

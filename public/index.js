@@ -15,8 +15,7 @@ function initMap() {
  publicState.directionsDisplay = new google.maps.DirectionsRenderer;
 }
 
-//========================================================
-//Open/close forms based on the user's role
+//Open/close forms
 $(function startApp(){
 	$('.start-button').on('click', function(event) {
 		event.preventDefault();
@@ -44,7 +43,6 @@ function refreshPage(){
 }
 $(refreshPage);
 
-
 //Enable/disable button 
 function enableButtons() {
 	const n = $("input:checked").length;
@@ -57,7 +55,7 @@ function enableButtons() {
 	};
 };
 
-//On Change event of checkboxes
+//Enable/disable buttons on change event of checkboxes
 $(function(){
 	$('.sec-registered-list').on('change', "li input[type=checkbox]", function(event){
 		event.preventDefault();
@@ -152,7 +150,6 @@ function searchForSections(){
 };
 $(searchForSections);
 
-
 //Display all registered classes for the semester
 function displayRegisteredClasses(){
 	$('.registered').click(function(event){
@@ -161,7 +158,7 @@ function displayRegisteredClasses(){
 		displayErrorMessage('');
 		if(($('.registered-count').text()==="(0)")) {
 			$('.registered-classes').addClass('hidden');
-			displayErrorMessage(`You do not have registered classes for the semester. You can search and register for classes`, 'blue')
+			displayErrorMessage(`Registered Classes (0): You do not have registered classes for the semester. You can search and register for classes`, 'blue')
 		} else {
 			$('.registered-classes').removeClass('hidden');
 		}
@@ -182,7 +179,7 @@ function displayRegisteredClasses(){
 					sortList($('.sec-registered-list'));
 				});
 			} else {
-				displayErrorMessage(`You do not have registered classes for the semester. You can search and register for classes`, 'blue')
+				displayErrorMessage(`Registered Classes (0): You do not have registered classes for the semester. You can search and register for classes`, 'blue')
 			};
 		});
 		};
@@ -207,7 +204,7 @@ function displayClassesForTheDay(){
 		if(($('.registered-today-count').text() === "(0)")) {
 			$('.registered-classes-today').addClass('hdden');
 			$('.map-canvas').addClass('hidden');
-			displayErrorMessage('You do not have registered classes for today!', "blue");
+			displayErrorMessage(`Today's classes (0): You do not have registered classes for today!`, "blue");
 		} else {
 			toggleHiddenClass($('.registered-classes-today'));
 			toggleHiddenClass($('.map-canvas'));
@@ -233,9 +230,8 @@ function displayAndMapTodaysClasses(){
 		if(($('.cart-count').text() === "(0)")){
 			$('.register-from-cart-button').attr('disabled', true);
 			$('.clear-cart-button').attr('disabled', true);
-			displayErrorMessage(`Shopping cart is empty. You can open the 'search and register' form from the menu!`, 'blue');
+			displayErrorMessage(`Shopping Cart (0): Shopping cart is empty. You can open the 'search and register' form from the menu!`, 'blue');
 		} else {
-			//toggleHiddenClass('.sec-cart');
 			$('.sec-cart').removeClass('hidden');
 			$('.register-from-cart-button').attr('disabled', true);
 			$('.clear-cart-button').attr('disabled', true);
@@ -294,7 +290,6 @@ function toggleResponsiveClass() {
   	countRecords();
 }
 
-
 //Render sections returned from search
 function renderSections(){
 	let searchURL = `/sections/?campus=${$('.campuses option:selected').val().toLowerCase()}`;
@@ -311,7 +306,6 @@ function renderSections(){
 	});
 }
 
-
 //MediaQueryList - response to screen change
 function screenTest(e) {
 	let mediumScreen = false;
@@ -320,7 +314,6 @@ function screenTest(e) {
   	}
   return mediumScreen;
 };
-
 function onMediaQueryChange(){
 	let mql = publicState.mediaQueryList.maxWidthMedium;
 	mql.addListener(screenTest);
@@ -404,7 +397,6 @@ function appendDataToList(data, listClassName){
 	const endtime = data.endtime.toLowerCase().replace(/\s+/g, '');
 	const meetingdays = meetingDays.toLowerCase();
 	const parentId = listClassName.substr(1);
-
 	let htmlString = `<li id = "${sectionname}" aria-label ="${parentId}"
 					data-starttime = ${starttime}
 					data-endtime = ${endtime}
@@ -503,7 +495,6 @@ function theSameList(currentListId){
 	return theSameItem;	
 }
 
-
 //Add sections to cart - buffer area
 function selectCourses(){
 	$('.search-result-list').on('change', 'li input[type=checkbox]', function(event){
@@ -525,10 +516,10 @@ function selectCourses(){
 		const selectedSemester = publicState.semester;
 		if(this.checked) {
 			if(alreadyRegisteredForCourse(currentListId, ajaxData)){
-				displayErrorMessage('You have already registered for the course!', 'red');
+				displayErrorMessage('You have already registered for the same course!', 'red');
 				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
 			} else if(classAlreadySavedInCart(currentListId, ajaxData)){
-				displayErrorMessage('Course is already saved in cart!', 'red');
+				displayErrorMessage('Course is already saved in Shopping cart!', 'red');
 				$(`.search-result-list li[id=${currentListId}] input[type=checkbox]`).prop('checked', false);
 			} else if (courseAlreadySelected(currentListId)) {
 				displayErrorMessage('Course is already selected!', 'red');
